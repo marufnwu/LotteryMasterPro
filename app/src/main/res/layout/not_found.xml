@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/update_body_backg"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingBottom="@dimen/_10sdp"
+    android:paddingLeft="@dimen/_5sdp"
+    android:paddingRight="@dimen/_5sdp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_90sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:src="@drawable/not_found"/>
+
+    <TextView
+        android:id="@+id/connectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        android:text="@string/not_found_title"
+        android:layout_marginTop="@dimen/_10sdp"/>
+
+    <TextView
+        android:id="@+id/connectionMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/not_found_description"
+        android:layout_margin="@dimen/_15sdp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingRight="@dimen/_15sdp"
+        android:paddingTop="@dimen/_8sdp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:paddingBottom="@dimen/_8sdp"
+        android:id="@+id/tryAgainBtn"/>
+
+
+</LinearLayout>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="one_st_middle_head">১ কোটি</string>
+    <string name="one_st_middle_body">এই মিডিলগুলো বেশি খেলে</string>
+    <string name="one_st_middle_footer">প্রথম পুরষ্কার</string>
+    <string name="two_nd_middle_head">₹ 9000</string>
+    <string name="two_nd_middle_body">এই মিডিলগুলো বেশি খেলে</string>
+    <string name="two_nd_middle_footer">দ্বিতীয় পুরষ্কার</string>
+    <string name="accept_trams">আমি নিয়ম ও শর্ত মেনে নিচ্ছি</string>
+    <string name="disible_title">অ্যাকাউন্ট নিষ্ক্রিয়</string>
+    <string name="disible_description">লটারি মাস্টার প্রো গোপনীয়তা নীতি অনুসরণ না করার জন্য আপনার অ্যাকাউন্টটি অক্ষম করা হয়েছে আপনি ভবিষ্যতে এটি অ্যাক্সেস করতে পারবেন না এবং এটি লটারি মাস্টার প্রো -তে কারো কাছে দৃশ্যমান হবে না</string>
+    <string name="login_desc">দয়া করে এখানে আপনার ফোন নম্বরটি দিন \n এবং একটি ভাষা সিলেক্ট করুন পরে সাবমিট করুন</string>
+    <string name="login_status_phone">দয়া করে একটি বৈধ ফোন নম্বর লিখুন</string>
+    <string name="login_status_lang">অনুগ্রহ করে একটি ভাষা নির্বাচন করুন</string>
+    <string name="login_box_hint">আপনার ফোন নম্বর</string>
+    <string name="log_out">লগ আউট</string>
+    <string name="facebook_like">ফেসবুক</string>
+    <string name="youtube_subs">ইউটিউব</string>
+    <string name="live_support">লাইভ সাপোর্ট</string>
+    <string name="paid_activity">পরিষেবা পরিকল্পনা</string>
+    <string name="try_again">আবার চেষ্টা করুন</string>
+    <string name="guaranteed_percent">আমাদের বিশেষ</string>
+    <string name="guaranteed_button">আজ এই নাম্বার কিনুন</string>
+    <string name="guaranteed_footer">নিশ্চিত পুরষ্কার জিতবেন</string>
+    <string name="importanttips">গুরুত্বপূর্ণ টিপসের ভিডিও</string>
+    <string name="dont_miss">মিস করবেন না</string>
+    <string name="not_found_title">পাওয়া যায়নি</string>
+    <string name="not_found_description">এই নাম্বারটি এখনও একবারও খেলেনি।</string>
+    <string name="loading">লোড হচ্ছে...</string>
+    <string name="common_login_issue">এখানে আপনার সমস্যা লিখুন</string>
+    <string name="join_lottery_class">লটারি ক্লাসে যোগদিন</string>
+    <string name="weak_internet_message">আপনার ফোনের ইন্টারনেট সংযোগ খুবই দুর্বল। আপনার ডেটা প্যাক চেক করুন অথবা আবার চেষ্টা করুন।</string>
+    <string name="no_internet_message">আপনার ফোন এ Wi-Fi বা মোবাইল ডেটা চালু নেই দয়া করে ইন্টারনেট সংযুক্ত করুন এবং আবার চেষ্টা করুন </string>
+    <string name="no_internet">ইন্টারনেট সংযোগ নেই</string>
+    <string name="weak_internet">দুর্বল ইন্টারনেট সংযোগ</string>
+    <string name="paid_service_message">এই পরিসেবা টি ব্যবহার করতে উপরের ভিডিওটা দেখুন।ভিডিওটা দেখার পর নাম্বার/মিডিল বা প্রাইজ সম্পর্কিত প্রশ্ন থাকলে বা বুঝতে অসুবিধা হলে ফোন করুন বা হোয়াটসঅ্যাপে ম্যাসেজ করুন।</string>
+    <string name="login_status_check">এই নম্বরটি ইতিমধ্যেই একটি ডিভাইসে লগ ইন করা আছে, দয়া করে যেকোন একটি ডিভাইস থেকে লগআউট করুন অথবা আপনার সমস্যা আমাদের জানান</string>
+    <string name="yearly_text">বার্ষিক</string>
+    <string name="submit">কন্টিনিউ</string>
+    <string name="result_not_publish_title">রেজাল্ট এর টাইম</string>
+    <string name="result_not_publish_bottom_text">আমরা লটারীর রেজাল্ট একটি নির্দিষ্ট সময়ে প্রকাশ করে থাকি \n অনুগ্রহ করে অপেক্ষা করুন\n ধন্যবাদ</string>
+
+    <string name="search_number">টিকিট বাছাই করুন</string>
+    <string name="today_result">আজকের রেজাল্ট</string>
+    <string name="yesterday_result">গতকালের রেজাল্ট</string>
+    <string name="yesterday_and_pre">গতকাল এবং আগের দিন</string>
+    <string name="old_result">পুরোনো রেজাল্ট</string>
+    <string name="special_or_bumper">স্পেশাল ও বাম্পার</string>
+    <string name="winning_number">বিজয়ী সংখ্যাগুলি</string>
+    <string name="support_email_subject">লটারি সংবাদ প্রো অ্যাপ্লিকেশন সম্পর্কে ব্যবহারকারী জিজ্ঞাসা</string>
+    <string name="support_email_message">এখানে আপনার বার্তা অনুগ্রহ করে লিখুন...</string>
+    <string name="morning_time">দুপুর ১ টা</string>
+    <string name="evening_time">সন্ধ্যা ৬ টা</string>
+    <string name="night_time">রাত ৮ টা</string>
+    <string name="bumper_night_time">বাম্পার রাত ৮ টা</string>
+    <string name="choose_your_language">আপনার ভাষা নির্বাচন করুন</string>
+    <string name="change_language">ভাষা পরিবর্তন করুন</string>
+    <string name="share">শেয়ার</string>
+    <string name="privacy_policy">গোপনীয়তা নীতি</string>
+    <string name="contact_us">যোগাযোগ করুন</string>
+    <string name="more_apps">আরো অ্যাপ্লিকেশান</string>
+    <string name="last_four_degit_of_lottery_number">লটারির সংখ্যাটির শেষ 4 সংখ্যা</string>
+    <string name="common_number">এই নাম্বার গুলো বেশি খেলে</string>
+    <string name="these_middle_play_less">এই মিডিল গুলো কম খেলে</string>
+    <string name="middle_details_first">মাঝখানে </string>
+    <string name="middle_details_last"> আছে</string>
+    <string name="middle_number">এই মিডিল গুলো বেশি খেলে</string>
+    <string name="found_new_version">নতুন সংস্করণ পাওয়া গেছে</string>
+    <string name="app_update_message">আপনার অ্যাপ্লিকেশন আপডেট করা হয়নি, দয়া করে সর্বশেষ সংস্করণে আপডেট করুন।</string>
+    <string name="ok">ঠিক আছে</string>
+    <string name="cancel">বাতিল</string>
+    <string name="search_number_description">আপনি যে টিকিট কিনবেন,সেই টিকিট লাষ্ট কবে খেলেছে,এখানে সেটা সার্চ করে দেখে নিন।</string>
+    <string name="need_to_accept_permission">এই বিকল্পটি ব্যবহার করার জন্য আপনাকে অনুমতি গ্রহণ করতে হবে।</string>
+    <string name="view_details">বিস্তারিত দেখুন</string>
+    <string name="choose_one">একটি নির্বাচন করুন</string>
+    <string name="input_your_phone_number_title">নিচের বাক্সে আপনার ফোন নম্বর লিখুন এবং Submit বোতাম টিপুন</string>
+    <string name="input_phone_number">ইনপুট ফোন নম্বর</string>
+    <string name="active_premium_service">Active premium service</string>
+    <string name="premium_active_message">এই পরিষেবাটি ব্যবহার করতে, দয়া করে সহায়তা কেন্দ্রের সাথে যোগাযোগ করুন।</string>
+
+
+
+
+    <string name="not_implemented_message">অনুগ্রহপূর্বক অপেক্ষা করুন. এই বিকল্পটি এখনও কার্যকর করা হয়নি</string>
+
+    <string name="firstDigitFirstPrize">ফাষ্ট প্রাইজের লাষ্ট ডিজিট</string>
+
+    <string name="result_not_publish_morning_time" >শীগ্রই রেজাল্ট পাবলিশ হবে</string>
+    <string name="result_not_publish_night_time" >শীগ্রই রেজাল্ট পাবলিশ হবে</string>
+    <string name="result_not_publish_day_time" >শীগ্রই রেজাল্ট পাবলিশ হবে</string>
+    <string name="gotAprize">প্রাইজ পেয়েছেন?</string>
+</resources>

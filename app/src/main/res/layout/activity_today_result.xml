@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/purple_700"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".ui.today_result.TodayResultActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_gravity="center"
+        android:id="@+id/rvResultSlots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ScrollView
+        android:visibility="gone"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/_5sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.smb.glowbutton.NeonButton
+                android:id="@+id/morningButton"
+                style="@style/MyNeonButtonStyle"
+                app:nb_text="@string/morning_time"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.smb.glowbutton.NeonButton
+                android:id="@+id/eveningButton"
+                style="@style/MyNeonButtonStyle"
+                app:nb_text="@string/evening_time"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.smb.glowbutton.NeonButton
+                android:id="@+id/nightButton"
+                style="@style/MyNeonButtonStyle"
+                app:nb_text="@string/night_time"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.smb.glowbutton.NeonButton
+                android:id="@+id/bumperNightButton"
+                style="@style/MyNeonButtonStyle"
+                app:nb_text="@string/bumper_night_time"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

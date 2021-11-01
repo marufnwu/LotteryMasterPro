@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/drawable/arrow_icon_backg.xml" value="0.19375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/drawable/arrow_icon_backg_gray.xml" value="0.19375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/drawable/border_tv_bg.xml" value="0.16944444444444445" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/drawable/ic_arrow_down_icon.xml" value="0.19375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/drawable/ic_baseline_play_circle_outline_24.xml" value="0.19375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/drawable/service_plan_backg.xml" value="0.16944444444444445" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/activity_common_number.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/activity_got_prize.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/activity_last_digit_first_prize.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/activity_login_confirm.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/activity_lottery_number_check.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/activity_lottery_result_info.xml" value="0.33" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/activity_one_st_middle_number.xml" value="0.12314814814814815" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/activity_register.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/activity_special_number.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/activity_today_result.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/activity_two_nd_middle_plays_more.xml" value="0.25" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/activity_yesterday_result.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/connection_check_dialog.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/custom_loading_dialog_layout.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/layout_popup.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/layout_result_slot.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/lottery_number_recycler_view_model_layout.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/lottery_result_child_recycler_view_model_layout.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/layout/lottery_result_recycler_view_model_layout.xml" value="0.1734375" />
+        <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/menu/main_menu.xml" value="0.1734375" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

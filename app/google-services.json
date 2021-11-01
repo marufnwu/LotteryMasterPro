@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "281461522722",
+    "project_id": "lotteryresultpro",
+    "storage_bucket": "lotteryresultpro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281461522722:android:f73eb6861fe651dfc6a57b",
+        "android_client_info": {
+          "package_name": "com.skithub.resultdear"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "281461522722-20h1q8oto070nes2uq07d0fm13tcipk8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZL55EeYa2R-D9zg2aeD1tM_KEm1KUtbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "281461522722-20h1q8oto070nes2uq07d0fm13tcipk8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

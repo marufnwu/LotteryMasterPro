@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:visible="false"
+        android:id="@+id/option_license"
+        android:icon="@drawable/ic_license"
+        android:title="@string/paid_activity"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/option_share"
+        android:icon="@drawable/ic_share_24"
+        android:title="@string/share" />
+    <item
+        android:id="@+id/option_moreApps"
+        android:icon="@drawable/moreapps"
+        android:title="@string/more_apps" />
+    <item
+        android:id="@+id/option_logout"
+        android:icon="@drawable/moreapps"
+        android:title="@string/log_out" />
+</menu>

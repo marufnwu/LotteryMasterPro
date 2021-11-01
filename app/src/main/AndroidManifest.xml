@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.skithub.resultdear">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".ui.MyApplication"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Lutt"
+        android:usesCleartextTraffic="true"
+        tools:ignore="UnusedAttribute">
+        <activity
+            android:name=".ui.got_a_prize.GotPrizeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.last_digit_first_prize.LastDigitFirstPrizeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Lutt.NoTitle">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.register_activity.LoginConfirmActivity"
+            android:theme="@style/Theme.Lutt.NoTitle" />
+        <activity android:name=".ui.middle_details.OneStMiddleDetailsActivity" />
+        <activity android:name=".ui.tow_nd_middle_plays_more.OneStMiddleNumberActivity" />
+        <activity android:name=".ui.middle_details.TwoNDmiddleDetailsActivity" />
+        <activity android:name=".ui.tow_nd_middle_plays_more.TwoNdMiddlePlaysMoreActivity" />
+        <activity android:name=".ui.get_help.AboutActivity" />
+        <activity android:name=".ui.importent_tips.ImportentTipsActivity" />
+        <activity android:name=".ui.special_number.SpecialNumberActivity" />
+        <activity android:name=".ui.live_support.LiveSupportActivity" />
+        <activity android:name=".ui.tutorial_video.TutorialVideoActivity" />
+        <activity android:name=".ui.paid_service.ServiceInfoActivity" />
+        <activity android:name=".ui.middle_details.MiddleDetailsActivity" />
+        <activity
+            android:name=".ui.register_activity.RegisterActivity"
+            android:theme="@style/Theme.Lutt.NoTitle" />
+        <activity android:name=".ui.middle_play_less.PlaylessActivity" />
+        <activity android:name=".ui.middle_number.MiddleNumberActivity" />
+        <activity android:name=".ui.common_number_details.CommonNumberDetailsActivity" />
+        <activity android:name=".ui.common_number.CommonNumberActivity" />
+        <activity android:name=".ui.winning_number.WinningNumberActivity" />
+        <activity android:name=".ui.privacy_policy.PrivacyPolicyActivity" />
+        <activity android:name=".ui.lottery_number_check.LotteryNumberCheckActivity" />
+        <activity
+            android:name=".ui.lottery_result_info.LotteryResultInfoActivity"
+            android:theme="@style/Theme.Lutt.NoTitle" />
+        <activity android:name=".ui.yes_vs_pre.YesVsPreActivity" />
+        <activity android:name=".ui.yesterday_result.YesterdayResultActivity" />
+        <activity
+            android:name=".ui.today_result.TodayResultActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".ui.get_help.To_Get_HelpActivity" />
+        <activity android:name=".ui.special_or_bumper.SplOrBumperActivity" />
+        <activity android:name=".ui.old_result.OldResultActivity" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Lutt.NoTitle" />
+
+        <service
+            android:name=".services.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+    </application>
+
+</manifest>

@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.MainActivity"
+    tools:openDrawer="start">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/purple_700"
+        android:layout_height="match_parent">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/Theme.DrewarApplication.AppBarOverlay"
+            tools:ignore="MissingConstraints">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/Theme.DrewarApplication.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/adLayout"
+            android:layout_below="@+id/appbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/marqueeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/purple_500"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:padding="@dimen/_10sdp"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="gone" />
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/tutorialImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_200sdp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY" />
+
+                    <com.skyfishjy.library.RippleBackground
+                        android:id="@+id/content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        app:rb_color="#636200EE"
+                        app:rb_duration="3000"
+                        app:rb_radius="@dimen/_15sdp"
+                        app:rb_rippleAmount="4"
+                        app:rb_scale="6">
+
+                        <ImageView
+                            android:id="@+id/centerImage"
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_baseline_play_circle_outline_24" />
+                    </com.skyfishjy.library.RippleBackground>
+
+                </FrameLayout>
+
+                <com.hanks.htextview.rainbow.RainbowTextView
+                    android:id="@+id/pickTicketDescriptionTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:gravity="center"
+                    android:text="@string/search_number_description"
+                    android:textSize="@dimen/_15ssp"
+                    app:colorSpace="150dp"
+                    app:colorSpeed="4dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_down_arrow" />
+
+                <com.smb.glowbutton.NeonButton
+                    android:id="@+id/lotteryNumberCheck"
+                    style="@style/MyNeonButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:nb_drawableStart="@drawable/ic_search"
+                    app:nb_gradientEnd="@color/gradient_center"
+                    app:nb_gradientStart="@color/neon_color_one"
+                    app:nb_text="@string/search_number" />
+
+                <com.smb.glowbutton.NeonButton
+                    android:id="@+id/commonNumberButton"
+                    style="@style/MyNeonButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:nb_drawableStart="@drawable/ic_search"
+                    app:nb_gradientEnd="@color/gradient_center"
+                    app:nb_gradientStart="@color/neon_color_one"
+                    app:nb_text="@string/common_number" />
+
+                <com.smb.glowbutton.NeonButton
+                    android:id="@+id/middleNumberButton"
+                    style="@style/MyNeonButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:nb_drawableStart="@drawable/ic_search"
+                    app:nb_gradientEnd="@color/gradient_center"
+                    app:nb_gradientStart="@color/neon_color_one"
+                    app:nb_text="@string/middle_number" />
+
+                <com.smb.glowbutton.NeonButton
+                    android:id="@+id/playlessNumberButton"
+                    style="@style/MyNeonButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:nb_drawableStart="@drawable/ic_search"
+                    app:nb_gradientEnd="@color/gradient_center"
+                    app:nb_gradientStart="@color/neon_color_one"
+                    app:nb_text="@string/these_middle_play_less" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_10sdp">
+
+
+                    <LinearLayout
+                        android:id="@+id/vip_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="19dp"
+                        android:background="@drawable/importent_tips_btn"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp">
+
+
+                            <TextView
+                                android:id="@+id/oneSTMiddlePrize"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:background="@drawable/guaranteed_button_text"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_20sdp"
+                                android:paddingBottom="@dimen/_20sdp"
+                                android:shadowColor="@color/gradient_center"
+                                android:shadowDx="-2"
+                                android:shadowDy="-2"
+                                android:shadowRadius="1"
+                                android:text="@string/one_st_middle_body"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:textColor="@color/neon_color_one"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:layout_editor_absoluteX="0dp" />
+
+                            <TextView
+                                android:id="@+id/crore_one_bottom"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/guaranteed_top_view"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:text="@string/one_st_middle_footer"
+                                android:textColor="@color/white"
+                                app:layout_constraintBottom_toBottomOf="@+id/oneSTMiddlePrize"
+                                app:layout_constraintDimensionRatio="w,1:1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/oneSTMiddlePrize" />
+
+                            <TextView
+                                android:id="@+id/crore_one_view"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/guaranteed_top_view"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:text="@string/one_st_middle_head"
+                                android:textColor="@color/white"
+                                app:layout_constraintBottom_toTopOf="@+id/oneSTMiddlePrize"
+                                app:layout_constraintDimensionRatio="w,1:1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/oneSTMiddlePrize" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp">
+
+
+                            <TextView
+                                android:id="@+id/twondMiddlePrize"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="19dp"
+                                android:background="@drawable/guaranteed_button_text"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_20sdp"
+                                android:paddingBottom="@dimen/_20sdp"
+                                android:shadowColor="@color/gradient_center"
+                                android:shadowDx="-2"
+                                android:shadowDy="-2"
+                                android:shadowRadius="1"
+                                android:text="@string/two_nd_middle_body"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:textColor="@color/neon_color_one"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/imageViewThree"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/guaranteed_top_view"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:text="@string/two_nd_middle_footer"
+                                android:textColor="@color/white"
+                                app:layout_constraintBottom_toBottomOf="@+id/twondMiddlePrize"
+                                app:layout_constraintDimensionRatio="w,1:1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/twondMiddlePrize" />
+
+                            <TextView
+                                android:id="@+id/imageView1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/guaranteed_top_view"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:text="@string/two_nd_middle_head"
+                                android:textColor="@color/white"
+                                app:layout_constraintBottom_toTopOf="@+id/twondMiddlePrize"
+                                app:layout_constraintDimensionRatio="w,1:1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/twondMiddlePrize" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/vip_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/importent_btn_view"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="VIP"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toTopOf="@+id/vip_layout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/vip_layout" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_10sdp">
+
+
+                    <TextView
+                        android:id="@+id/videoTipsButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="19dp"
+                        android:background="@drawable/important_video_backg"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:maxLines="1"
+                        android:paddingTop="@dimen/_30sdp"
+                        android:paddingBottom="@dimen/_30sdp"
+                        android:shadowColor="@color/gradient_center"
+                        android:shadowDx="-2"
+                        android:shadowDy="-2"
+                        android:shadowRadius="1"
+                        android:text="@string/importanttips"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/purple_200"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/class_join"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/importent_btn_view"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="@string/join_lottery_class"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toTopOf="@+id/videoTipsButton"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/videoTipsButton" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_10sdp">
+
+
+                    <LinearLayout
+                        android:id="@+id/pro_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="19dp"
+                        android:background="@drawable/importent_tips_btn"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp">
+
+
+                            <TextView
+                                android:drawableLeft="@drawable/ic_flower_left"
+                                android:drawableRight="@drawable/ic_flower_right"
+                                android:id="@+id/view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="19dp"
+                                android:background="@drawable/guaranteed_button_text"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_20sdp"
+                                android:paddingBottom="@dimen/_20sdp"
+                                android:shadowColor="@color/gradient_center"
+                                android:shadowDx="-2"
+                                android:shadowDy="-2"
+                                android:shadowRadius="1"
+                                android:text="@string/guaranteed_button"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:textColor="@color/neon_color_one"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/imageViewTwo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/guaranteed_top_view"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:text="@string/guaranteed_footer"
+                                android:textColor="@color/white"
+                                app:layout_constraintBottom_toBottomOf="@+id/view"
+                                app:layout_constraintDimensionRatio="w,1:1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/view" />
+
+                            <TextView
+                                android:id="@+id/imageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/guaranteed_top_view"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:text="@string/dont_miss"
+                                android:textColor="@color/white"
+                                app:layout_constraintBottom_toTopOf="@+id/view"
+                                app:layout_constraintDimensionRatio="w,1:1"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/view" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/pro_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/importent_btn_view"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="PRO"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toTopOf="@+id/pro_layout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/pro_layout" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <com.smb.glowbutton.NeonButton
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:id="@+id/btnFirstDigitFirstPrize"
+                    style="@style/MyNeonButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:nb_drawableStart="@drawable/ic_search"
+                    app:nb_gradientEnd="@color/gradient_center"
+                    app:nb_gradientStart="@color/neon_color_one"
+                    app:nb_text="@string/firstDigitFirstPrize" />
+
+                <com.smb.glowbutton.NeonButton
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:id="@+id/btnGotAPrize"
+                    style="@style/MyNeonButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:nb_drawableStart="@drawable/ic_search"
+                    app:nb_gradientEnd="@color/neon_color_start"
+                    app:nb_gradientStart="@color/neon_color_start"
+                    app:nb_text="@string/gotAprize" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/HomeButtonParentLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp">
+
+                    <ImageView
+                        android:id="@+id/newTextAnimationImageView"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        app:layout_constraintEnd_toEndOf="@id/todayResultCardView"
+                        app:layout_constraintStart_toStartOf="@+id/todayResultCardView"
+                        app:layout_constraintTop_toTopOf="@+id/todayResultCardView" />
+
+                    <com.smb.glowbutton.NeonButton
+                        app:gb_drawablePadding="50dp"
+                        app:gb_drawableTint="@color/black"
+                        android:id="@+id/todayResultCardView"
+                        style="@style/MyNeonButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        app:layout_constraintEnd_toStartOf="@+id/yesterDayResultCardView"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:nb_text="@string/today_result" >
+                    </com.smb.glowbutton.NeonButton>
+
+                    <com.smb.glowbutton.NeonButton
+                        android:id="@+id/yesterDayResultCardView"
+                        style="@style/MyNeonButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="1"
+                        app:layout_constraintStart_toEndOf="@+id/todayResultCardView"
+                        app:nb_text="@string/yesterday_result" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    style="@style/HomeButtonParentLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <com.smb.glowbutton.NeonButton
+                        android:id="@+id/yesterDayVsPreResultCardView"
+                        style="@style/MyNeonButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:nb_text="@string/yesterday_and_pre" />
+
+                    <com.smb.glowbutton.NeonButton
+                        android:id="@+id/oldResultCardView"
+                        style="@style/MyNeonButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:nb_text="@string/old_result" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/HomeButtonParentLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <com.smb.glowbutton.NeonButton
+                        android:id="@+id/specialOrBumperResultCardView"
+                        style="@style/MyNeonButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:nb_text="@string/special_or_bumper" />
+
+                    <com.smb.glowbutton.NeonButton
+                        android:id="@+id/winingNumberCardView"
+                        style="@style/MyNeonButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:nb_text="@string/winning_number" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/spin_kit"
+            style="@style/SpinKitView.Large.Circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:SpinKit_Color="@color/red" />
+
+        <ImageView
+            android:id="@+id/adUpArrowBtn"
+            android:layout_above="@+id/adLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_down_icon"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/arrow_icon_backg"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_5sdp"
+            android:visibility="gone"
+            android:paddingRight="@dimen/_5sdp"/>
+        <ImageView
+            android:id="@+id/adDownArrowBtn"
+            android:layout_above="@+id/adLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_up_icon"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/arrow_icon_backg"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_5sdp"
+            android:visibility="visible"
+            android:paddingRight="@dimen/_5sdp"/>
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:id="@+id/adLayout"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="MissingConstraints">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/white"/>
+            <ImageView
+                android:id="@+id/imageBanner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_70sdp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"/>
+        </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_live_support"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/_10sdp"
+            android:visibility="gone"
+            android:tintMode="@color/white"/>
+    </RelativeLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:visibility="gone"
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:itemTextColor="@color/nav_item_color"
+        app:itemIconTint="@color/nav_item_color"
+        android:background="@color/white"
+        app:headerLayout="@layout/heder"
+        app:menu="@menu/iconmenu" />
+</androidx.drawerlayout.widget.DrawerLayout>

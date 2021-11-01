@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.register_activity.RegisterActivity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:id="@+id/reiScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <FrameLayout
+                    android:id="@+id/thumLayout"
+                    android:layout_width="match_parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/ytthumbail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxHeight="@dimen/_200sdp"
+                        android:adjustViewBounds="true"/>
+
+                    <com.skyfishjy.library.RippleBackground
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/content"
+                        app:rb_color="#636200EE"
+                        android:layout_gravity="center"
+                        app:rb_radius="@dimen/_15sdp"
+                        app:rb_rippleAmount="4"
+                        app:rb_duration="3000"
+                        app:rb_scale="6">
+                        <ImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_centerInParent="true"
+                            android:id="@+id/centerImage"
+                            android:src="@drawable/ic_baseline_play_circle_outline_24"/>
+                    </com.skyfishjy.library.RippleBackground>
+
+                </FrameLayout>
+
+
+
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/countryname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ccp_autoDetectCountry="true"
+                    app:ccp_showFullName="true"
+                    app:ccp_showPhoneCode="false"
+                    android:background="@drawable/text_input_bg"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:padding="@dimen/_5sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/thumLayout"/>
+
+                <EditText
+                    android:id="@+id/country_code_text"
+                    android:layout_width="64dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/text_input_bg"
+                    android:focusable="false"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textAlignment="center"
+                    android:inputType="number"
+                    android:paddingBottom="16dp"
+                    android:paddingTop="16dp"
+                    android:text="+91"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/countryname" />
+
+                <EditText
+                    android:id="@+id/phoneNumberText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="32dp"
+                    android:background="@drawable/text_input_bg"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:hint="@string/login_box_hint"
+                    android:inputType="phone"
+                    android:maxLength="13"
+                    android:padding="16dp"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/country_code_text"
+                    app:layout_constraintTop_toBottomOf="@+id/countryname" />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/langGroup"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/langGroup">
+
+                <CheckBox
+                    android:id="@+id/agreeCheck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+
+                <TextView
+                    android:id="@+id/tramsBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accept_trams"
+                    android:textColor="@color/purple_500"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/buttonFooter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_15sdp"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+
+
+                <LinearLayout
+                    android:id="@+id/loggedinBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="MissingConstraints">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ProgressBar
+                            android:id="@+id/loginprogressbar"
+                            style="?android:attr/progressBarStyle"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="@+id/numberSubmitbtn"
+                            app:layout_constraintEnd_toEndOf="@+id/numberSubmitbtn"
+                            app:layout_constraintTop_toTopOf="@+id/numberSubmitbtn" />
+
+                        <Button
+                            android:id="@+id/numberSubmitbtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/primary_btn_bg"
+                            android:drawableLeft="@drawable/ic_double_arrow"
+                            android:fontFamily="@font/open_sans_semibold"
+                            android:minWidth="@dimen/_200sdp"
+                            android:paddingRight="@dimen/_35sdp"
+                            android:text="@string/submit"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/background_light"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/whatsAppBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:maxWidth="@dimen/_150sdp"
+                android:adjustViewBounds="true"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:src="@drawable/whats_app_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints" />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/videoRootlayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_5sdp"
+        android:layout_margin="@dimen/_5sdp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/Thumbail"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_170sdp"
+                    android:src="@drawable/tutorial_thumb"
+                    android:scaleType="fitXY"/>
+                <ImageView
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:adjustViewBounds="true"
+                    android:layout_gravity="center"
+                    android:src="@drawable/play_icon"/>
+            </FrameLayout>
+            <TextView
+                android:id="@+id/videoTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hellow world Hellow  world Hellow world Hellow world Hellow world Hellow world Hellow worldHellow world"
+                android:textStyle="bold"
+                android:maxLines="2"
+                android:justificationMode="inter_word"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:padding="@dimen/_5sdp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

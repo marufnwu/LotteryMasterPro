@@ -1,0 +1,108 @@
+<resources>
+    <string name="app_name" translatable="false">Lottery Master Pro</string>
+
+    <string name="notify_title_morning" translatable="false">Morning 01:00pm</string>
+    <string name="notify_title_day" translatable="false">Day 06:00pm</string>
+    <string name="notify_title_evening" translatable="false">Night 08:00pm</string>
+    <string name="notify_msg_common" translatable="false">💐------All The Best------💐</string>
+
+    <string name="open" translatable="false">Open</string>
+    <string name="close" translatable="false">Close</string>
+    <string name="support_email" translatable="false">clist.abd@gmail.com</string>
+    <string name="dear" translatable="false">DEAR</string>
+    <string name="nagaland_state" translatable="false">Nagaland State Lotteries</string>
+    <string name="copied_successfully" translatable="false">copied successfully.</string>
+    <string name="result_not_publish_morning_time">Results will be published soon</string>
+    <string name="result_not_publish_night_time">Results will be published soon</string>
+    <string name="result_not_publish_day_time">Results will be published soon</string>
+
+    <string name="result_not_publish_morning" translatable="false">Morning</string>
+    <string name="result_not_publish_day" translatable="false">Day</string>
+    <string name="result_not_publish_night" translatable="false">Night</string>
+
+    <string name="accept_trams">I accept Terms &amp; Condition</string>
+    <string name="official_gov" translatable="false">Please check the results with relevent Official Government Gazatte</string>
+    <string name="submit">Continue</string>
+    <string name="disible_title">Account disabled</string>
+    <string name="disible_description">Your account has been disabled for not following the Lottery Master Pro privacy policy you won\'t be able to access it in the future, and it won\'t be visible to anyone on Lottery Master Pro</string>
+    <string name="login_desc">Please enter your phone number here \n and select a language then submit</string>
+    <string name="login_status_phone">Please enter a valid phone number</string>
+    <string name="login_status_lang">Please select a language</string>
+    <string name="login_box_hint">Your phone number</string>
+    <string name="log_out">Log Out</string>
+    <string name="facebook_like">Facebook</string>
+    <string name="youtube_subs">YouTube</string>
+    <string name="live_support">Live Support</string>
+    <string name="paid_activity">Service plan</string>
+    <string name="guaranteed_percent">Our special</string>
+    <string name="guaranteed_button">Buy This Number Today</string>
+    <string name="guaranteed_footer">You Will Surely Win Prizes</string>
+    <string name="dont_miss">Don\'t Miss</string>
+    <string name="join_lottery_class">Join Lottery Class</string>
+    <string name="one_st_middle_head">1 Crore</string>
+    <string name="one_st_middle_body">This Middle Plays More</string>
+    <string name="one_st_middle_footer">First Prize</string>
+    <string name="two_nd_middle_head">₹ 9000</string>
+    <string name="two_nd_middle_body">This Middle Plays More</string>
+    <string name="two_nd_middle_footer">Second Prize</string>
+    <string name="not_found_title">Not found</string>
+    <string name="not_found_description">This Number Has Never Been Played Yet.</string>
+    <string name="importanttips">Video of important tips</string>
+    <string name="loading">Loading...</string>
+    <string name="common_login_issue">Enter your problem here</string>
+    <string name="try_again">Try Again</string>
+    <string name="weak_internet_message">Your phone\'s internet connection is very weak. Check your data pack or try again.</string>
+    <string name="no_internet_message">Your phone does not have Wi-Fi or mobile data turned on. Please connect to the internet and try again</string>
+    <string name="no_internet">No Internet connection</string>
+    <string name="weak_internet">Weak Internet connection</string>
+    <string name="paid_service_message">Watch the video above to use this service. After watching the video, if you have any questions about numbers/middle or prizes or have difficulty understanding, call or message on WhatsApp.</string>
+    <string name="login_status_check">This number is already logged in on a device, please logout from any one device or let us know your problem</string>
+    <string name="yearly_text">Yearly</string>
+    <string name="result_not_publish_title">Result Time</string>
+    <string name="result_not_publish_bottom_text">We publish lottery results at a specific time \n Please wait\n Thanks</string>
+    <string name="home_activity_title" translatable="false">Lottery Master Pro</string>
+    <string name="search_number">Pick a ticket</string>
+    <string name="today_result">Today Result</string>
+    <string name="yesterday_result">Yesterday Result</string>
+    <string name="yesterday_and_pre">Yesterday &amp; Previous</string>
+    <string name="old_result">Old Result</string>
+    <string name="special_or_bumper">SPL or Bumper</string>
+    <string name="winning_number">Winning Numbers</string>
+    <string name="support_email_subject">User Query About Lottery Sambad Pro App</string>
+    <string name="support_email_message">Please write your message here...</string>
+    <string name="morning_time">Noon 1 PM</string>
+    <string name="evening_time">Evening 6 PM</string>
+    <string name="night_time">Night 8 PM</string>
+    <string name="bumper_night_time">Bumper Night 8 PM</string>
+    <string name="choose_your_language">Choose your language</string>
+    <string name="change_language">Change Language</string>
+    <string name="share">Share</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="more_apps">More Apps</string>
+    <string name="last_four_degit_of_lottery_number">last 4 digit of lottery number</string>
+    <string name="common_number">The numbers that play more</string>
+    <string name="these_middle_play_less">This middle play less</string>
+    <string name="middle_number">This middle plays more</string>
+    <string name="middle_details_first">There are </string>
+    <string name="middle_details_last"> in the middle</string>
+    <string name="found_new_version">Found New Version</string>
+    <string name="app_update_message">Your app is not updated, Please update to latest version.</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="search_number_description">The ticket that you will buy, when the ticket was last played, search it here.</string>
+    <string name="need_to_accept_permission">You need to accept the permission to use this option.</string>
+    <string name="view_details">View Details</string>
+    <string name="choose_one">Choose one</string>
+    <string name="input_your_phone_number_title">Input your phone number to below box and press submit button</string>
+    <string name="input_phone_number">Input phone number</string>
+    <string name="active_premium_service">Active premium service</string>
+    <string name="premium_active_message">To use this service, please contact with support center.</string>
+
+
+    <string name="not_implemented_message">Please wait. This option is not implemented yet.</string>
+    <string name="firstDigitFirstPrize">Last Digit Of First Prize</string>
+    <string name="gotAprize">Got a prize?</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+</resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/liveSupport"
+        android:icon="@drawable/ic_live_support"
+        android:title="@string/live_support" />
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_share_24"
+        android:title="@string/share" />
+    <item
+        android:id="@+id/appPrivacy"
+        android:icon="@drawable/ic_privacy_tip_24"
+        android:title="@string/privacy_policy" />
+    <item
+        android:id="@+id/contactUs"
+        android:icon="@drawable/mail"
+        android:title="@string/contact_us" />
+    <item
+        android:id="@+id/moreApps"
+        android:icon="@drawable/moreapps"
+        android:title="@string/more_apps" />
+    <item android:title="Follow Us">
+        <menu>
+            <item
+                android:id="@+id/facebook"
+                android:icon="@drawable/ic_facebook"
+                android:title="@string/facebook_like" />
+            <item
+                android:id="@+id/youtube"
+                android:icon="@drawable/ic_youtube"
+                android:title="@string/youtube_subs" />
+        </menu>
+    </item>
+</menu>

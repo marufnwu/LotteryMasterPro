@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/purple_700"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.lottery_number_check.LotteryNumberCheckActivity">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/resultRootLayout"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+    <!--    <me.ibrahimsn.particle.ParticleView-->
+    <!--        android:id="@+id/particleView"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        app:particleCount="60"-->
+    <!--        app:particleMinRadius="5"-->
+    <!--        app:particleMaxRadius="15"-->
+    <!--        app:particlesBackgroundColor="@color/purple_700"-->
+    <!--        app:particleColor="@color/neon_color_start"-->
+    <!--        app:particleLineColor="@color/neon_color_start"-->
+    <!--        app:particleLinesEnabled="true" />-->
+
+            <com.hanks.htextview.rainbow.RainbowTextView
+                android:id="@+id/pickTicketDescriptionTextView"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/search_number_description"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:colorSpace="150dp"
+                app:colorSpeed="4dp"/>
+            <ImageView
+                android:src="@drawable/ic_down_arrow"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/lotteryNumberEditText"
+        android:layout_gravity="center"
+        android:background="@drawable/rounded_transparent_bg"
+        android:hint="@string/last_four_degit_of_lottery_number"
+        android:inputType="number"
+        android:maxLength="5"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:paddingStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_40sdp" />
+    <com.smb.glowbutton.NeonButton
+        android:id="@+id/lotteryNumberCheckButton"
+        style="@style/MyNeonButtonStyle"
+        android:layout_gravity="center"
+        app:nb_text="Check"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    app:layout_constraintTop_toBottomOf="@+id/lotteryNumberCheckButton"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:padding="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <com.github.ybq.android.spinkit.SpinKitView
+                    android:id="@+id/spin_kit"
+                    style="@style/SpinKitView.Large.Circle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:SpinKit_Color="@color/red" />
+            </FrameLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

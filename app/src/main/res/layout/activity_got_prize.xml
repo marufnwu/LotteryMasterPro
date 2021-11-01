@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_700"
+    tools:context=".ui.got_a_prize.GotPrizeActivity">
+
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/standerdLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:padding="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/service_plan_backg"
+            android:layout_height="match_parent" >
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/imageBanner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_180sdp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"/>
+
+            <LinearLayout
+                android:id="@+id/contactLayout"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/whatsAppBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_60sdp"
+                    android:src="@drawable/whats_app_icon"
+                    android:adjustViewBounds="true"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/_10sdp"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

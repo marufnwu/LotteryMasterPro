@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/purple_700"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/ani"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        app:lottie_rawRes="@raw/profile_icon"
+        app:lottie_autoPlay="true"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:lottie_loop="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="@string/home_activity_title"
+        android:textSize="@dimen/_20ssp"
+        android:layout_marginStart="@dimen/_11sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ani" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/purple_500"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        tools:ignore="MissingConstraints">
+
+        <RadioButton
+            android:id="@+id/hindiLanguageTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_weight="0.5"
+            android:padding="@dimen/_7sdp"
+            android:text="हिंदी"
+            android:textAlignment="center"
+            android:textColor="@color/white" />
+
+        <RadioButton
+            android:textAlignment="center"
+            android:id="@+id/banglaLanguageTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_weight="0.5"
+            android:padding="@dimen/_7sdp"
+            android:text="বাংলা"
+            android:textColor="@color/white" />
+
+        <RadioButton
+            android:textAlignment="center"
+            android:id="@+id/englishLanguageTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_weight="0.5"
+            android:padding="@dimen/_7sdp"
+            android:text="English"
+            android:textColor="@color/white" />
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.register_activity.RegisterActivity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:id="@+id/thumLayout"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/ytthumbail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="@dimen/_200sdp"
+            android:adjustViewBounds="true"/>
+
+        <com.skyfishjy.library.RippleBackground
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/content"
+            app:rb_color="#636200EE"
+            android:layout_gravity="center"
+            app:rb_radius="@dimen/_15sdp"
+            app:rb_rippleAmount="4"
+            app:rb_duration="3000"
+            app:rb_scale="6">
+            <ImageView
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_centerInParent="true"
+                android:id="@+id/centerImage"
+                android:src="@drawable/ic_baseline_play_circle_outline_24"/>
+        </com.skyfishjy.library.RippleBackground>
+
+    </FrameLayout>
+
+    <RadioGroup
+        android:id="@+id/langGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:gravity="left"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/thumLayout">
+
+        <RadioButton
+            android:id="@+id/rglangbn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" বাংলা ভাষা"
+            android:textSize="@dimen/_20sdp" />
+
+        <RadioButton
+            android:id="@+id/rglanghi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" हिंदी भाषा"
+            android:textSize="@dimen/_20sdp" />
+
+        <RadioButton
+            android:id="@+id/rglangen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" English Language"
+            android:textSize="@dimen/_20sdp" />
+
+        <RadioButton
+            android:id="@+id/rglangbn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" বাংলা ভাষা"
+            android:textSize="@dimen/_20sdp" />
+
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

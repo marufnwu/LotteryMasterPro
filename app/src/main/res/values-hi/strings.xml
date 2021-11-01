@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="one_st_middle_head">1 करोर</string>
+    <string name="one_st_middle_body">यह मिडील अधिक खेलता है</string>
+    <string name="one_st_middle_footer">পप्रथम पुरस्कार</string>
+    <string name="two_nd_middle_head">₹ 9000</string>
+    <string name="two_nd_middle_body">यह मिडील अधिक खेलता है</string>
+    <string name="two_nd_middle_footer">द्वितीय पुरस्कार</string>
+    <string name="accept_trams">मुझे नियम और शर्तें स्वीकार हैं</string>
+    <string name="disible_title">खाता निष्क्रिय किया गया</string>
+    <string name="disible_description">आपका खाता लॉटरी मास्टर प्रो गोपनीयता नीति का पालन नहीं करने के कारण अक्षम कर दिया गया है जिसे आप भविष्य में एक्सेस नहीं कर पाएंगे, और यह लॉटरी मास्टर प्रो पर किसी को भी दिखाई नहीं देगा।</string>
+    <string name="login_desc">कृपया अपना फोन नंबर दर्ज करें \n और भाषा चुनें और सबमिट करें</string>
+    <string name="login_status_phone">एक मान्य दूरभाष क्रमांक दर्ज करे</string>
+    <string name="login_status_lang">कृपया कोई भाषा चुनें</string>
+    <string name="login_box_hint">आपकी दूरभाष संख्या</string>
+    <string name="log_out">लॉग आउट</string>
+    <string name="facebook_like">फेसबुक</string>
+    <string name="youtube_subs">यूट्यूब</string>
+    <string name="live_support">लाइव सहायता</string>
+    <string name="paid_activity">सेवा योजना</string>
+    <string name="try_again">पुनः प्रयास करें</string>
+    <string name="guaranteed_percent">हमारा विशेष</string>
+    <string name="guaranteed_button">आज ही इस नंबर को खरीदें</string>
+    <string name="guaranteed_footer">निश्चित रूप से आपको इनाम मिलेगा</string>
+    <string name="importanttips">महत्वपूर्ण टिप्स का वीडियो</string>
+    <string name="dont_miss">मिस मैट कैरे</string>
+    <string name="not_found_title">नहीं मिला</string>
+    <string name="not_found_description">यह संख्या अभी तक नहीं जीती है</string>
+    <string name="loading">लोड हो रहा है...</string>
+    <string name="common_login_issue">अपनी समस्या यहाँ दर्ज करें</string>
+    <string name="join_lottery_class">लॉटरी क्लास में शामिल हों</string>
+    <string name="weak_internet_message">आपके फ़ोन का इंटरनेट कनेक्शन बहुत कमज़ोर है. कृपया अपना डेटा पैक जांचें या पुन: प्रयास करें।</string>
+    <string name="no_internet_message">आपके फ़ोन में वाई-फ़ाई या मोबाइल डेटा चालू नहीं है। कृपया इंटरनेट से कनेक्ट करें और पुन: प्रयास करें</string>
+    <string name="no_internet">कोई इंटरनेट कनेक्शन नहीं</string>
+    <string name="weak_internet">कमजोर इंटरनेट कनेक्शन</string>
+    <string name="paid_service_message">इस सेवा का उपयोग करने के लिए ऊपर दिया गया वीडियो देखें।वीडियो देखने के बाद, यदि आपके पास नंबर /मिडीलॉ या पुरस्कार के बारे में कोई प्रश्न हैं या समझने में कठिनाई है, तो व्हाट्सएप पर कॉल या मैसेज करें।</string>
+    <string name="login_status_check">यह नंबर पहले से ही एक डिवाइस पर लॉग इन है, कृपया किसी एक डिवाइस से लॉगआउट करें या हमें अपनी समस्या बताएं</string>
+    <string name="yearly_text">सालाना</string>
+    <string name="submit">जारी रखना</string>
+    <string name="result_not_publish_title">परिणाम समय</string>
+    <string name="result_not_publish_bottom_text">हम एक विशिष्ट समय पर लॉटरी परिणाम प्रकाशित करते हैं \n कृपया प्रतीक्षा कीजिये\n धन्यवाद</string>
+    <string name="search_number">टिकट चुनें</string>
+    <string name="today_result">आज का परिणाम</string>
+    <string name="yesterday_result">कल का परिणाम</string>
+    <string name="yesterday_and_pre">कल और परसों</string>
+    <string name="old_result">पुराने परिणाम</string>
+    <string name="special_or_bumper">विशेष और बम्पर</string>
+    <string name="winning_number">विजेता संख्या</string>
+    <string name="support_email_subject">लॉटरी सांबद प्रो ऐप के बारे में उपयोगकर्ता प्रश्न</string>
+    <string name="support_email_message">कृपया अपना संदेश यहां लिखें...</string>
+    <string name="morning_time">दोपहर 1 बजे</string>
+    <string name="evening_time">शाम 6 बजे</string>
+    <string name="night_time">रात 8 बजे</string>
+    <string name="bumper_night_time">रात 8 बजे बंपर</string>
+    <string name="choose_your_language">अपनी भाषा चुनिए</string>
+    <string name="change_language">भाषा बदलें</string>
+    <string name="share">शेयर</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="contact_us">संपर्क करें</string>
+    <string name="more_apps">और ऐप</string>
+    <string name="last_four_degit_of_lottery_number">लॉटरी संख्या का अंतिम 4 अंक</string>
+    <string name="common_number">ये नंबर अधिक खेलते हैं</string>
+    <string name="these_middle_play_less">यह बीच कम खेलता है</string>
+    <string name="middle_number">यह मध्य अधिक खेलता है</string>
+    <string name="middle_details_first">बीच में </string>
+    <string name="middle_details_last"> हैं</string>
+    <string name="found_new_version">नया संस्करण मिला</string>
+    <string name="app_update_message">आपका ऐप अपडेट नहीं है, कृपया नवीनतम संस्करण में अपडेट करें।</string>
+    <string name="ok">ठीक है</string>
+    <string name="cancel">रद्द करना</string>
+    <string name="search_number_description">आप जो टिकट खरीदेंगे, जब टिकट आखिरी बार खेला गया था, उसे यहां खोजें और देखें।</string>
+    <string name="need_to_accept_permission">इस विकल्प का उपयोग करने के लिए आपको अनुमति स्वीकार करनी होगी।</string>
+    <string name="view_details">विवरण देखें</string>
+    <string name="choose_one">एक का चयन</string>
+    <string name="input_your_phone_number_title">नीचे दिए गए बॉक्स में अपना फोन नंबर डालें और सबमिट बटन दबाएं press</string>
+    <string name="input_phone_number">इनपुट फोन नंबर</string>
+    <string name="active_premium_service">Active premium service</string>
+    <string name="premium_active_message">इस सेवा का उपयोग करने के लिए, कृपया सहायता केंद्र से संपर्क करें।</string>
+
+
+
+
+    <string name="not_implemented_message">कृपया प्रतीक्षा करें। यह विकल्प अभी तक लागू नहीं किया गया है</string>
+
+
+    <string name="firstDigitFirstPrize">प्रथम पुरस्कार की अंतिम संख्या</string>
+
+    <string name="result_not_publish_morning_time" >रेजॉल्ट जल्द ही आने वाला है</string>
+    <string name="result_not_publish_night_time" >रेजॉल्ट जल्द ही आने वाला है</string>
+    <string name="result_not_publish_day_time" >रेजॉल्ट जल्द ही आने वाला है</string>
+    <string name="gotAprize">पुरस्कार मिला?</string>
+</resources>
