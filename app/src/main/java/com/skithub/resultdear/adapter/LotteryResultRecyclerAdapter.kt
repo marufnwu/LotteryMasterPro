@@ -21,17 +21,21 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.skithub.resultdear.R
 import com.skithub.resultdear.databinding.AdsImageViewLayoutBinding
+import com.skithub.resultdear.databinding.FifthLotteryNumberResultBinding
 import com.skithub.resultdear.databinding.LotteryResultRecyclerViewModelLayoutBinding
 import com.skithub.resultdear.model.AdsImageModel
 import com.skithub.resultdear.model.LotteryNumberModel
 import com.skithub.resultdear.model.LotteryResultRecyclerModel
+import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.utils.CommonMethod
 import com.skithub.resultdear.utils.Constants
+import com.skithub.resultdear.utils.Coroutines
 
 class LotteryResultRecyclerAdapter(val context: Context, val list: MutableList<LotteryResultRecyclerModel>, val adsImageList: MutableList<AdsImageModel>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val lotteryViewType: Int=0
     private val imageViewType: Int=1
+    private val fifthResultViewType: Int=2
     private val adsImagePosition: Int=3
     private val lotteryNumberColumnCount: Int=5
     private val lotteryNumberVerticalSpanCount: Int=20
@@ -42,19 +46,34 @@ class LotteryResultRecyclerAdapter(val context: Context, val list: MutableList<L
         if (viewType==lotteryViewType) {
             val binding=LotteryResultRecyclerViewModelLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
             return LotteryResultRecyclerViewHolder(binding)
-        } else {
+        }else if (viewType==fifthResultViewType) {
+            val binding=FifthLotteryNumberResultBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+            return FifthLotteryResultRecyclerViewHolder(binding)
+        }  else {
             val binding=AdsImageViewLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
             return LotteryResultRecyclerImageViewHolder(binding)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+        val view = getItemViewType(position)
+
         if (position<adsImagePosition) {
-            (holder as LotteryResultRecyclerViewHolder).bind(list[position])
+
+            if(view == fifthResultViewType){
+                (holder as FifthLotteryResultRecyclerViewHolder).bind(list[position])
+            }else{
+                (holder as LotteryResultRecyclerViewHolder).bind(list[position])
+            }
         } else if (position==adsImagePosition) {
             (holder as LotteryResultRecyclerImageViewHolder).bind()
         } else if (position>adsImagePosition){
-            (holder as LotteryResultRecyclerViewHolder).bind(list[position-1])
+            if(view == fifthResultViewType){
+                (holder as FifthLotteryResultRecyclerViewHolder).bind(list[position-1])
+            }else{
+                (holder as LotteryResultRecyclerViewHolder).bind(list[position-1])
+            }
         }
     }
 
@@ -66,10 +85,33 @@ class LotteryResultRecyclerAdapter(val context: Context, val list: MutableList<L
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position==adsImagePosition) {
-            imageViewType
-        } else {
-            lotteryViewType
+//        return if (position==adsImagePosition) {
+//            imageViewType
+//        } else {
+//            val winType = list[position].winType
+//            if(winType==Constants.winTypeFifth){
+//
+//            }
+//            lotteryViewType
+//        }
+
+        if (position<adsImagePosition) {
+            val winType = list[position].winType
+            if(winType==Constants.winTypeFifth){
+                return fifthResultViewType
+            }
+           return lotteryViewType
+        } else if (position==adsImagePosition) {
+
+            return imageViewType
+        } else if (position>adsImagePosition){
+            val winType = list[position-1].winType
+            if(winType==Constants.winTypeFifth){
+                return fifthResultViewType
+            }
+           return lotteryViewType
+        }else{
+            return lotteryViewType
         }
     }
 
@@ -91,6 +133,61 @@ class LotteryResultRecyclerAdapter(val context: Context, val list: MutableList<L
                 val adapter: LotteryResultChildRecyclerAdapter=LotteryResultChildRecyclerAdapter(context,childList,lotteryNumberColumnCount)
                 binding.resultChildRecyclerView.layoutManager=layoutManager
                 binding.resultChildRecyclerView.adapter=adapter
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+    inner class FifthLotteryResultRecyclerViewHolder(val binding: FifthLotteryNumberResultBinding): RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: LotteryResultRecyclerModel) {
+
+            Log.d("MainList", "Printing==>")
+            item.data!!.forEach {
+                println(it.lotteryNumber)
+            }
+
+            try {
+                binding.resultTypeTextView.text="${item.winType} Prize \u20B9 ${getPrizeAmount(item.winType)}"
+
+                val childList: MutableList<LotteryNumberModel> =item.data!!
+                childList.sortBy {
+                    it.lotteryNumber
+                }
+
+
+
+                val chunkList = childList.chunked(childList.size/2)
+
+                Log.d("Chunklist1", "Printing==>")
+                chunkList[0].forEach {
+                    println(it.lotteryNumber)
+                }
+
+                Log.d("Chunklist2", "Printing==>")
+                chunkList[1].forEach {
+                    println(it.lotteryNumber)
+                }
+
+                val list1 = chunkList[0].toMutableList()
+                var layoutManager1: GridLayoutManager = GridLayoutManager(context,list1.size/lotteryNumberColumnCount,GridLayoutManager.HORIZONTAL,false)
+
+                val list2 = chunkList[1].toMutableList()
+                var layoutManager2: GridLayoutManager = GridLayoutManager(context,list2.size/lotteryNumberColumnCount,GridLayoutManager.HORIZONTAL,false)
+
+
+                val adapter1: LotteryResultChildRecyclerAdapter=LotteryResultChildRecyclerAdapter(context,list1,lotteryNumberColumnCount)
+                val adapter2: LotteryResultChildRecyclerAdapter=LotteryResultChildRecyclerAdapter(context,list2,lotteryNumberColumnCount)
+                binding.resultChildRecyclerView1.layoutManager=layoutManager1
+                binding.resultChildRecyclerView1.adapter=adapter1
+
+                binding.resultChildRecyclerView2.layoutManager=layoutManager2
+                binding.resultChildRecyclerView2.adapter=adapter2
+                val myApi= (context.applicationContext as MyApplication).myApi
+                Coroutines.main {
+                    CommonMethod.getBanner("fifthResultAd", binding.ivAd, myApi, context)
+                }
+
             } catch (e: Exception) {
 
             }

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.media.AudioAttributes
 import android.media.MediaPlayer
-import android.media.MediaTimestamp
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +12,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
@@ -22,16 +20,10 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.gson.JsonElement
 import com.skithub.resultdear.R
 import com.skithub.resultdear.database.network.ApiInterface
 import com.skithub.resultdear.database.network.MyApi
 import com.skithub.resultdear.database.network.RetrofitClient
-import com.skithub.resultdear.databinding.ActivityMiddleNumberBinding
 import com.skithub.resultdear.databinding.ActivitySpecialNumberBinding
 import com.skithub.resultdear.model.response.AudioResponse
 import com.skithub.resultdear.ui.MyApplication
@@ -39,8 +31,6 @@ import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModel
 import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModelFactory
 import com.skithub.resultdear.utils.*
 import com.skyfishjy.library.RippleBackground
-import org.json.JSONArray
-import org.json.JSONException
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -101,13 +91,13 @@ class SpecialNumberActivity : AppCompatActivity() {
 
 
         if (license_check.equals("0")){
-            getPremiumStatus(false)
+            getContctInformation(false)
         }else if (license_check.equals("2")){
             binding.coomingSoon.visibility = View.VISIBLE
             binding.standerdLayout.visibility = View.GONE
         }else{
             getDataLoad()
-            getPremiumStatus(true)
+            getContctInformation(true)
             loadPremiumBanner()
         }
     }
@@ -118,7 +108,7 @@ class SpecialNumberActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPremiumStatus(isPremium : Boolean) {
+    private fun getContctInformation(isPremium : Boolean) {
         Coroutines.main {
             try {
                 loadingDialog.show()
@@ -132,7 +122,27 @@ class SpecialNumberActivity : AppCompatActivity() {
                         if(isPremium){
                             binding.content.visibility = View.GONE
                             binding.tvInstruction.visibility = View.GONE
+                            binding.whatsAppBtn.setOnClickListener {
+                                try {
+                                    val mobile = response.body()?.whats_app
+                                    val msg = ""
+                                    startActivity(
+                                        Intent(
+                                            Intent.ACTION_VIEW,
+                                            Uri.parse("https://api.whatsapp.com/send?phone=$mobile&text=$msg")
+                                        )
+                                    )
+                                } catch (e: java.lang.Exception) {
+                                    Toast.makeText(
+                                        this,
+                                        "WhatsApp not Installed",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+
                         }else{
+                            binding.whatsAppBtn.visibility = View.GONE
                             val rippleBackground = findViewById<View>(R.id.content) as RippleBackground
                             rippleBackground.startRippleAnimation()
                             loadingDialog.show()
@@ -175,6 +185,33 @@ class SpecialNumberActivity : AppCompatActivity() {
                                 startActivity(Intent.createChooser(webIntent,"Choose one:"))
                             }
 
+                            val whatsAppRes = myApi.getWhatsapp("Pro");
+                            if(whatsAppRes.isSuccessful && whatsAppRes.body()!=null){
+                                if(!whatsAppRes.body()!!.error!!) {
+                                    if (whatsAppRes.body()!!.number != null) {
+                                        binding.whatsAppBtn.visibility = View.VISIBLE
+                                        binding.whatsAppBtn.setOnClickListener {
+                                            try {
+                                                val mobile = whatsAppRes.body()!!.number
+                                                val msg = ""
+                                                startActivity(
+                                                    Intent(
+                                                        Intent.ACTION_VIEW,
+                                                        Uri.parse("https://api.whatsapp.com/send?phone=$mobile&text=$msg")
+                                                    )
+                                                )
+                                            } catch (e: java.lang.Exception) {
+                                                Toast.makeText(
+                                                    this,
+                                                    "WhatsApp not Installed",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
                             getAudioFile()
 
                         }
@@ -198,22 +235,6 @@ class SpecialNumberActivity : AppCompatActivity() {
                             val dialIntent = Intent(Intent.ACTION_DIAL)
                             dialIntent.data = Uri.parse("tel:" + response.body()?.phone_three)
                             startActivity(dialIntent)
-                        }
-
-                        binding.whatsAppBtn.setOnClickListener {
-                            try {
-                                val mobile = response.body()?.whats_app
-                                val msg = ""
-                                startActivity(
-                                    Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse("https://api.whatsapp.com/send?phone=$mobile&text=$msg")
-                                    )
-                                )
-                            } catch (e: java.lang.Exception) {
-                                Toast.makeText(this@SpecialNumberActivity, "WhatsApp not Installed", Toast.LENGTH_SHORT).show()
-                            }
-
                         }
 
                     }

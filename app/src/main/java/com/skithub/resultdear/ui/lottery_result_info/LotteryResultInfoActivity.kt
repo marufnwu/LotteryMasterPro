@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.JsonElement
 import com.skithub.resultdear.R
 import com.skithub.resultdear.adapter.LotteryResultRecyclerAdapter
+import com.skithub.resultdear.adapter.VideoTutorialAdapter
 import com.skithub.resultdear.database.network.ApiInterface
 import com.skithub.resultdear.database.network.MyApi
 import com.skithub.resultdear.database.network.RetrofitClient
@@ -27,6 +29,7 @@ import com.skithub.resultdear.databinding.ConnectionCheckDialogBinding
 import com.skithub.resultdear.model.AdsImageModel
 import com.skithub.resultdear.model.LotteryNumberModel
 import com.skithub.resultdear.model.LotteryResultRecyclerModel
+import com.skithub.resultdear.model.VideoTutorModel
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.utils.CommonMethod
 import com.skithub.resultdear.utils.Constants
@@ -42,6 +45,10 @@ import java.util.*
 
 
 class LotteryResultInfoActivity : AppCompatActivity() {
+
+    private lateinit var videoAdapter: VideoTutorialAdapter
+    private lateinit var videoLayoutManager: LinearLayoutManager
+    private var videoList: MutableList<VideoTutorModel> = arrayListOf()
 
     private lateinit var myApi: MyApi
     private var resultSlotId: Int = 0
@@ -238,6 +245,9 @@ class LotteryResultInfoActivity : AppCompatActivity() {
         binding.rightDateTextView.text=resultDate
         binding.rightTimeTextView.text=resultTime
         binding.stateNameTextView.text=resources.getString(R.string.nagaland_state)
+
+
+
     }
 
     private fun setUpRecyclerView() {
@@ -245,6 +255,8 @@ class LotteryResultInfoActivity : AppCompatActivity() {
         adapter= LotteryResultRecyclerAdapter(this,finalList,adsImageList)
         binding.resultRecyclerView.layoutManager=layoutManager
         binding.resultRecyclerView.adapter=adapter
+
+        ViewCompat.setNestedScrollingEnabled(binding.resultRecyclerView, false);
     }
 
     private fun loadAdsImageInfo() {
@@ -285,6 +297,7 @@ class LotteryResultInfoActivity : AppCompatActivity() {
                             list.clear()
                             list.addAll(response.body()?.data!!)
                             if (list.size>0) {
+                                 getLotteryClassVideo()
                                 filteringLotteryNumber(list)
                                 binding.resultRootLayout.visibility=View.VISIBLE
                                 binding.waitingRootLayout.visibility=View.GONE
@@ -357,6 +370,35 @@ class LotteryResultInfoActivity : AppCompatActivity() {
                 Liveuserdb.child(prefs.userToken!!).setValue(map)*/
             }
         }
+    }
+
+    private fun getLotteryClassVideo() {
+            Coroutines.main {
+                try {
+                    binding.spinKit.visibility= View.VISIBLE
+                    val response=myApi.getVideoListInResultInfo("")
+                    if (response.isSuccessful && response.code()==200) {
+                        binding.spinKit.visibility= View.GONE
+                        if (response.body()!=null) {
+                            if (response.body()?.status.equals("success",true)) {
+                                videoList.addAll(response.body()?.data!!)
+                                videoLayoutManager= LinearLayoutManager(this)
+                                videoAdapter= VideoTutorialAdapter(this,videoList)
+
+                                binding.recyLotteryClass.layoutManager= videoLayoutManager
+                                binding.recyLotteryClass.adapter=videoAdapter
+
+                                binding.recyLotteryClass.isNestedScrollingEnabled = false
+                            }
+                        }
+                    } else {
+                        binding.spinKit.visibility= View.GONE
+
+                    }
+                } catch (e: Exception) {
+                    binding.spinKit.visibility= View.GONE
+                }
+            }
     }
 
     private fun filteringLotteryNumber(list: MutableList<LotteryNumberModel>) {

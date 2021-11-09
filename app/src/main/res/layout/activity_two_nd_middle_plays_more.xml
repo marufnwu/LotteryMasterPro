@@ -180,78 +180,87 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:orientation="vertical">
                         <LinearLayout
-                            android:id="@+id/PhoneOne"
+                            android:id="@+id/phoneNumberLayout"
+                            android:visibility="gone"
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/_10sdp"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:background="@drawable/service_plan_backg"
-                            android:orientation="horizontal">
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/service_plan_backg"
-                                android:padding="@dimen/_5sdp"
-                                android:src="@drawable/ic_call_phone"/>
-                            <TextView
-                                android:id="@+id/pnOne"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:id="@+id/PhoneOne"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                                android:textStyle="bold"
-                                android:textColor="@color/white"
-                                android:layout_marginLeft="@dimen/_10sdp"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/PhoneTwo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/_10sdp"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:background="@drawable/service_plan_backg"
-                            android:orientation="horizontal">
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:padding="@dimen/_10sdp"
+                                android:layout_margin="@dimen/_5sdp"
                                 android:background="@drawable/service_plan_backg"
-                                android:padding="@dimen/_5sdp"
-                                android:src="@drawable/ic_call_phone"/>
-                            <TextView
-                                android:id="@+id/pnTwo"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/service_plan_backg"
+                                    android:padding="@dimen/_5sdp"
+                                    android:src="@drawable/ic_call_phone"/>
+                                <TextView
+                                    android:id="@+id/pnOne"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:layout_marginLeft="@dimen/_10sdp"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/PhoneTwo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                                android:textStyle="bold"
-                                android:textColor="@color/white"
-                                android:layout_marginLeft="@dimen/_10sdp"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/PhoneThree"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="@dimen/_10sdp"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:background="@drawable/service_plan_backg"
-                            android:orientation="horizontal">
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:padding="@dimen/_10sdp"
+                                android:layout_margin="@dimen/_5sdp"
                                 android:background="@drawable/service_plan_backg"
-                                android:padding="@dimen/_5sdp"
-                                android:src="@drawable/ic_call_phone"/>
-                            <TextView
-                                android:id="@+id/pnThree"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/service_plan_backg"
+                                    android:padding="@dimen/_5sdp"
+                                    android:src="@drawable/ic_call_phone"/>
+                                <TextView
+                                    android:id="@+id/pnTwo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:layout_marginLeft="@dimen/_10sdp"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/PhoneThree"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                                android:textStyle="bold"
-                                android:textColor="@color/white"
-                                android:layout_marginLeft="@dimen/_10sdp"/>
+                                android:padding="@dimen/_10sdp"
+                                android:layout_margin="@dimen/_5sdp"
+                                android:background="@drawable/service_plan_backg"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/service_plan_backg"
+                                    android:padding="@dimen/_5sdp"
+                                    android:src="@drawable/ic_call_phone"/>
+                                <TextView
+                                    android:id="@+id/pnThree"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:layout_marginLeft="@dimen/_10sdp"/>
+                            </LinearLayout>
                         </LinearLayout>
+
                         <ImageView
+                            android:visibility="gone"
                             android:id="@+id/whatsAppBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_60sdp"

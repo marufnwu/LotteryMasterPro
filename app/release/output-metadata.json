@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 30,
-      "versionName": "1.30",
-      "outputFile": "Lmp_V1.30-release.apk"
+      "versionCode": 33,
+      "versionName": "1.33",
+      "outputFile": "Lmp_V1.33-release.apk"
     }
   ],
   "elementType": "File"

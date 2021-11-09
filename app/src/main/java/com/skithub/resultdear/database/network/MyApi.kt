@@ -8,6 +8,7 @@ import com.skithub.resultdear.model.*
 import com.skithub.resultdear.model.response.AudioResponse
 import com.skithub.resultdear.model.response.BannerRes
 import com.skithub.resultdear.model.response.LotterySlotResponse
+import com.skithub.resultdear.model.response.WhatsappResponse
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -131,6 +132,11 @@ interface MyApi {
         @Query("userId") itemCount: String
     ): Response<VideoTutorResponse>
 
+    @GET("get_video_in_result_info.php?")
+    suspend fun getVideoListInResultInfo(
+        @Query("userId") itemCount: String
+    ): Response<VideoTutorResponse>
+
     @GET("get_ads_info.php?")
     suspend fun getAdsInfo(): Response<AdsImageResponse>
 
@@ -170,6 +176,11 @@ interface MyApi {
     suspend fun getBanner(
         @Query("bannerName") bannerName: String,
     ): Response<BannerRes>
+
+    @GET("api/helper.getWhatsapp.php")
+    suspend fun getWhatsapp(
+        @Query("place") place: String,
+    ): Response<WhatsappResponse>
 
     @GET("api/audio.getAudio.php")
      fun getAudio(

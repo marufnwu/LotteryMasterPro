@@ -19,12 +19,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.gson.Gson
 import com.skithub.resultdear.R
 import com.skithub.resultdear.adapter.DuplicateLotteryNumberRecyclerAdapter
 import com.skithub.resultdear.model.LotteryNumberModel
@@ -37,8 +35,6 @@ import com.skithub.resultdear.database.network.RetrofitClient
 import com.skithub.resultdear.databinding.ActivityOneStMiddleNumberBinding
 import com.skithub.resultdear.databinding.ConnectionCheckDialogBinding
 import com.skithub.resultdear.model.response.AudioResponse
-import com.skithub.resultdear.model.response.BannerRes
-import com.skithub.resultdear.model.response.BannerResponse
 import com.skithub.resultdear.utils.*
 import com.skyfishjy.library.RippleBackground
 import retrofit2.Call
@@ -114,7 +110,7 @@ class OneStMiddleNumberActivity : AppCompatActivity() {
         if (CommonMethod.haveInternet(connectivityManager)) {
 
             if (license_check.equals("0")){
-                getPremiumStatus(false)
+                getContactInformation(false)
             }else if (license_check.equals("2")){
                 binding.coomingSoon.visibility = View.VISIBLE
                 binding.standerdLayout.visibility = View.GONE
@@ -123,7 +119,7 @@ class OneStMiddleNumberActivity : AppCompatActivity() {
                 binding.standerdLayout.visibility = View.GONE
                 setupRecyclerView()
                 loadDuplicateLotteryNumber()
-                getPremiumStatus(true)
+                getContactInformation(true)
                 loadPremiumBanner()
             }
 
@@ -173,7 +169,7 @@ class OneStMiddleNumberActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPremiumStatus(isPremium : Boolean) {
+    private fun getContactInformation(isPremium : Boolean) {
         Coroutines.main {
             try {
                 loadingDialog.show()
@@ -188,8 +184,26 @@ class OneStMiddleNumberActivity : AppCompatActivity() {
                         if(isPremium){
                             binding.content.visibility = View.GONE
                             binding.tvInstruction.visibility = View.GONE
-                            binding.contactLayout.visibility = View.VISIBLE
+                            binding.phoneNumberLayout.visibility = View.VISIBLE
+
+                            binding.whatsAppBtn.setOnClickListener {
+                            try {
+                                val mobile = response.body()?.whats_app
+                                val msg = ""
+                                startActivity(
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse("https://api.whatsapp.com/send?phone=$mobile&text=$msg")
+                                    )
+                                )
+                            } catch (e: java.lang.Exception) {
+                                Toast.makeText(this@OneStMiddleNumberActivity, "WhatsApp not Installed", Toast.LENGTH_SHORT).show()
+                            }
+
+                        }
+
                         }else{
+                            binding.whatsAppBtn.visibility = View.GONE
                             val rippleBackground = findViewById<View>(R.id.content) as RippleBackground
                             rippleBackground.startRippleAnimation()
 
@@ -236,7 +250,36 @@ class OneStMiddleNumberActivity : AppCompatActivity() {
                                 startActivity(Intent.createChooser(webIntent,"Choose one:"))
                             }
 
+                            val whatsAppRes = myApi.getWhatsapp("Vip");
+                            if(whatsAppRes.isSuccessful && whatsAppRes.body()!=null){
+                                if(!whatsAppRes.body()!!.error!!) {
+                                    if (whatsAppRes.body()!!.number != null) {
+                                        binding.whatsAppBtn.visibility = View.VISIBLE
+                                        binding.whatsAppBtn.setOnClickListener {
+                                            try {
+                                                val mobile = whatsAppRes.body()!!.number
+                                                val msg = ""
+                                                startActivity(
+                                                    Intent(
+                                                        Intent.ACTION_VIEW,
+                                                        Uri.parse("https://api.whatsapp.com/send?phone=$mobile&text=$msg")
+                                                    )
+                                                )
+                                            } catch (e: java.lang.Exception) {
+                                                Toast.makeText(
+                                                    this@OneStMiddleNumberActivity,
+                                                    "WhatsApp not Installed",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
                             getAudioFile()
+
+
                         }
 
                         binding.pnOne.text = response.body()?.phone_one
@@ -259,53 +302,20 @@ class OneStMiddleNumberActivity : AppCompatActivity() {
                             startActivity(dialIntent)
                         }
 
-                        binding.whatsAppBtn.setOnClickListener {
-                            try {
-                                val mobile = response.body()?.whats_app
-                                val msg = ""
-                                startActivity(
-                                    Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse("https://api.whatsapp.com/send?phone=$mobile&text=$msg")
-                                    )
-                                )
-                            } catch (e: java.lang.Exception) {
-                                Toast.makeText(this@OneStMiddleNumberActivity, "WhatsApp not Installed", Toast.LENGTH_SHORT).show()
-                            }
-
-                        }
-
-
-
-//                        if (response.body()?.banner_image!!.length > 6){
-//                            binding.adUpArrowBtn.setImageResource(R.drawable.ic_arrow_down_icon)
-//                            Glide.with(this@OneStMiddleNumberActivity).load(response.body()?.banner_image).placeholder(R.drawable.loading_placeholder).into(binding.imageBanner)
-//                            binding.imageBanner.setOnClickListener {
-//                                val webIntent: Intent= Intent(Intent.ACTION_VIEW,Uri.parse(response.body()?.target_link))
-//                                startActivity(Intent.createChooser(webIntent,"Choose one:"))
+//                        binding.whatsAppBtn.setOnClickListener {
+//                            try {
+//                                val mobile = response.body()?.whats_app
+//                                val msg = ""
+//                                startActivity(
+//                                    Intent(
+//                                        Intent.ACTION_VIEW,
+//                                        Uri.parse("https://api.whatsapp.com/send?phone=$mobile&text=$msg")
+//                                    )
+//                                )
+//                            } catch (e: java.lang.Exception) {
+//                                Toast.makeText(this@OneStMiddleNumberActivity, "WhatsApp not Installed", Toast.LENGTH_SHORT).show()
 //                            }
-//                            /*val hide: Animation =
-//                                AnimationUtils.loadAnimation(this@MainActivity, R.anim.bottom_top)
-//                            binding.adLayout.startAnimation(hide)*/
-//                            binding.adLayout.visibility = View.VISIBLE
-//                            binding.adUpArrowBtn.visibility = View.VISIBLE
 //
-//                            binding.adUpArrowBtn.setOnClickListener {
-//                                binding.adUpArrowBtn.visibility = View.GONE
-//                                binding.adDownArrowBtn.visibility = View.VISIBLE
-//                                binding.imageBanner.visibility = View.GONE
-//                                /*val hide: Animation =
-//                                    AnimationUtils.loadAnimation(this@MainActivity, R.anim.top_bottom)
-//                                binding.adLayout.startAnimation(hide)*/
-//                            }
-//                            binding.adDownArrowBtn.setOnClickListener {
-//                                binding.adUpArrowBtn.visibility = View.VISIBLE
-//                                binding.adDownArrowBtn.visibility = View.GONE
-//                                binding.imageBanner.visibility = View.VISIBLE
-//                                /*val hide: Animation =
-//                                    AnimationUtils.loadAnimation(this@MainActivity, R.anim.bottom_top)
-//                                binding.adLayout.startAnimation(hide)*/
-//                            }
 //                        }
 
                     }
@@ -353,7 +363,7 @@ class OneStMiddleNumberActivity : AppCompatActivity() {
         connectionDialogBinding.tryAgainBtn.setOnClickListener {
             if (CommonMethod.haveInternet(connectivityManager)) {
                 if (!license_check.equals("1")){
-                    getPremiumStatus(false)
+                    getContactInformation(false)
                     binding.recyclerView.visibility = View.GONE
                     binding.standerdLayout.visibility = View.VISIBLE
                 }else{
@@ -361,7 +371,7 @@ class OneStMiddleNumberActivity : AppCompatActivity() {
                     binding.standerdLayout.visibility = View.GONE
                     setupRecyclerView()
                     loadDuplicateLotteryNumber()
-                    getPremiumStatus(true)
+                    getContactInformation(true)
 
                 }
                 connectionAlertDialog?.dismiss()

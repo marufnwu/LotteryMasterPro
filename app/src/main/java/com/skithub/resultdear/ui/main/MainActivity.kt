@@ -109,7 +109,6 @@ class MainActivity : AppCompatActivity() {
 
         connectivityManager=getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
 
-
         if (CommonMethod.haveInternet(connectivityManager)) {
 
                 if (!SharedPreUtils.getStringFromStorageWithoutSuspend(this,Constants.userIdKey,Constants.defaultUserId).equals("")) {
@@ -127,6 +126,8 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
 
 
     private fun postUpdateCheck(){
@@ -261,14 +262,28 @@ class MainActivity : AppCompatActivity() {
             banglalang.isChecked = true
             hindilang.isChecked = false
             englishlang.isChecked = false
+
+            binding.rbBang.isChecked = true
+            binding.rbEng.isChecked = false
+            binding.rbHindi.isChecked = false
+
         }else if (lanCode.equals("hi")){
             banglalang.isChecked = false
             hindilang.isChecked = true
             englishlang.isChecked = false
+
+            binding.rbBang.isChecked = false
+            binding.rbEng.isChecked = false
+            binding.rbHindi.isChecked = true
+
         }else if (lanCode.equals("en_US")){
             banglalang.isChecked = false
             hindilang.isChecked = false
             englishlang.isChecked = true
+
+            binding.rbBang.isChecked = false
+            binding.rbEng.isChecked = true
+            binding.rbHindi.isChecked = false
         }
         banglalang.setOnClickListener {
             changeLocale("bn")
@@ -279,7 +294,22 @@ class MainActivity : AppCompatActivity() {
         hindilang.setOnClickListener {
             changeLocale("hi")
         }
+
+        binding.rbBang.setOnClickListener {
+            changeLocale("bn")
+        }
+
+        binding.rbHindi.setOnClickListener {
+            changeLocale("hi")
+        }
+
+        binding.rbEng.setOnClickListener {
+            changeLocale("en_US")
+        }
+
     }
+
+
 
     private fun getPremiumStatus() {
         val call: Call<JsonElement> = apiInterface!!.getDeshCount(SharedPreUtils.getStringFromStorageWithoutSuspend(this,Constants.userIdKey,Constants.defaultUserId),SharedPreUtils.getStringFromStorageWithoutSuspend(this,Constants.fcmTokenKey,Constants.defaultUserToken),BuildConfig.VERSION_NAME)

@@ -24,7 +24,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
-                app:popupTheme="@style/Theme.DrewarApplication.PopupOverlay" />
+                app:popupTheme="@style/Theme.DrewarApplication.PopupOverlay">
+                <RadioGroup
+                    android:id="@+id/rgLang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/name"
+                    tools:ignore="MissingConstraints">
+                    <RadioButton
+                        android:textAlignment="center"
+                        android:id="@+id/rbBang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="বাংলা ভাষা সেট করুন"
+                        android:textColor="@color/white" />
+                    <RadioButton
+                        android:visibility="gone"
+                        android:id="@+id/rbHindi"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="हिंदी"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+
+
+
+                    <RadioButton
+                        android:visibility="gone"
+                        android:textAlignment="center"
+                        android:id="@+id/rbEng"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="English"
+                        android:textColor="@color/white" />
+                </RadioGroup>
+            </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -347,7 +384,7 @@
                         android:shadowRadius="1"
                         android:text="@string/importanttips"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/purple_200"
+                        android:textColor="@color/black"
                         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -355,13 +392,13 @@
                         android:id="@+id/class_join"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/importent_btn_view"
+                        android:background="@drawable/important_video_backg"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingRight="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:text="@string/join_lottery_class"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         app:layout_constraintBottom_toTopOf="@+id/videoTipsButton"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

@@ -17,21 +17,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.skithub.resultdear.R
 import com.skithub.resultdear.adapter.DuplicateLotteryNumberRecyclerAdapter
-import com.skithub.resultdear.databinding.ActivityMiddleNumberBinding
 import com.skithub.resultdear.model.LotteryNumberModel
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.utils.MyExtensions.shortToast
 
-import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.view.WindowManager
+import android.widget.ImageView
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.gson.JsonElement
 import com.skithub.resultdear.database.network.ApiInterface
 import com.skithub.resultdear.database.network.MyApi
 import com.skithub.resultdear.database.network.RetrofitClient
@@ -40,8 +38,6 @@ import com.skithub.resultdear.databinding.ConnectionCheckDialogBinding
 import com.skithub.resultdear.model.response.AudioResponse
 import com.skithub.resultdear.utils.*
 import com.skyfishjy.library.RippleBackground
-import org.json.JSONArray
-import org.json.JSONException
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -116,7 +112,7 @@ class TwoNdMiddlePlaysMoreActivity : AppCompatActivity() {
 
         if (CommonMethod.haveInternet(connectivityManager)) {
             if (license_check.equals("0")){
-                getPremiumStatus(false)
+                getContactInformation(false)
             }else if (license_check.equals("2")){
                 binding.coomingSoon.visibility = View.VISIBLE
                 binding.standerdLayout.visibility = View.GONE
@@ -125,7 +121,7 @@ class TwoNdMiddlePlaysMoreActivity : AppCompatActivity() {
                 binding.standerdLayout.visibility = View.GONE
                 setupRecyclerView()
                 loadDuplicateLotteryNumber()
-                getPremiumStatus(true)
+                getContactInformation(true)
                 loadPremiumBanner()
             }
         }else{
@@ -174,7 +170,7 @@ class TwoNdMiddlePlaysMoreActivity : AppCompatActivity() {
             loadingDialog.hide()
         }
     }
-    private fun getPremiumStatus(isPremium : Boolean) {
+    private fun getContactInformation(isPremium : Boolean) {
         Coroutines.main {
             try {
                 loadingDialog.show()
@@ -189,8 +185,28 @@ class TwoNdMiddlePlaysMoreActivity : AppCompatActivity() {
                         if(isPremium){
                             binding.tvInstruction.visibility = View.GONE
                             binding.content.visibility = View.GONE
-                            binding.contactLayout.visibility = View.VISIBLE
+                            binding.phoneNumberLayout.visibility = View.VISIBLE
+
+
+                            binding.whatsAppBtn.setOnClickListener {
+                                try {
+                                    val mobile = response.body()?.whats_app
+                                    val msg = ""
+                                    startActivity(
+                                        Intent(
+                                            Intent.ACTION_VIEW,
+                                            Uri.parse("https://api.whatsapp.com/send?phone=$mobile&text=$msg")
+                                        )
+                                    )
+                                } catch (e: java.lang.Exception) {
+                                    Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT).show()
+                                }
+
+                            }
+
                         }else{
+                            binding.whatsAppBtn.visibility = View.GONE
+
                             val rippleBackground = findViewById<View>(R.id.content) as RippleBackground
                             rippleBackground.startRippleAnimation()
 
@@ -235,6 +251,8 @@ class TwoNdMiddlePlaysMoreActivity : AppCompatActivity() {
                                 val webIntent: Intent= Intent(Intent.ACTION_VIEW,Uri.parse(response.body()?.video_link))
                                 startActivity(Intent.createChooser(webIntent,"Choose one:"))
                             }
+
+                           loadWhatsApp("Vip", binding.whatsAppBtn)
 
                             getAudioFile()
 
@@ -324,6 +342,36 @@ class TwoNdMiddlePlaysMoreActivity : AppCompatActivity() {
     }
 
 
+    private suspend fun loadWhatsApp(place: String, whatsAppBtn: ImageView){
+        val whatsAppRes = myApi.getWhatsapp(place);
+        if(whatsAppRes.isSuccessful && whatsAppRes.body()!=null){
+            if(!whatsAppRes.body()!!.error!!) {
+                if (whatsAppRes.body()!!.number != null) {
+                    whatsAppBtn.visibility = View.VISIBLE
+                    whatsAppBtn.setOnClickListener {
+                        try {
+                            val mobile = whatsAppRes.body()!!.number
+                            val msg = ""
+                            startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("https://api.whatsapp.com/send?phone=$mobile&text=$msg")
+                                )
+                            )
+                        } catch (e: java.lang.Exception) {
+                            Toast.makeText(
+                                this,
+                                "WhatsApp not Installed",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.option_menu, menu)
@@ -355,7 +403,7 @@ class TwoNdMiddlePlaysMoreActivity : AppCompatActivity() {
         connectionDialogBinding.tryAgainBtn.setOnClickListener {
             if (CommonMethod.haveInternet(connectivityManager)) {
                 if (!license_check.equals("1")){
-                    getPremiumStatus(false)
+                    getContactInformation(false)
                     binding.recyclerView.visibility = View.GONE
                     binding.standerdLayout.visibility = View.VISIBLE
                 }else{
@@ -363,7 +411,7 @@ class TwoNdMiddlePlaysMoreActivity : AppCompatActivity() {
                     binding.standerdLayout.visibility = View.GONE
                     setupRecyclerView()
                     loadDuplicateLotteryNumber()
-                    getPremiumStatus(true)
+                    getContactInformation(true)
 
                 }
                 connectionAlertDialog?.dismiss()
