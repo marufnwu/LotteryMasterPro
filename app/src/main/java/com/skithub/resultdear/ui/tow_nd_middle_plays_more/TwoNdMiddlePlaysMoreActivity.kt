@@ -119,6 +119,7 @@ class TwoNdMiddlePlaysMoreActivity : AppCompatActivity() {
             }else{
                 binding.recyclerView.visibility = View.VISIBLE
                 binding.standerdLayout.visibility = View.GONE
+                checkBannerAd()
                 setupRecyclerView()
                 loadDuplicateLotteryNumber()
                 getContactInformation(true)
@@ -139,6 +140,100 @@ class TwoNdMiddlePlaysMoreActivity : AppCompatActivity() {
 
 
     }
+
+    private fun checkBannerAd(){
+        Coroutines.main {
+
+            try {
+                val res =  myApi.getBanner("VipMemBannerAd")
+                if(res.isSuccessful && res.body()!=null){
+                    res.body()!!.let { banner ->
+                        if(!banner!!.error){
+                            if (banner.imageUrl != null) {
+                                binding.adLayout.visibility = View.VISIBLE
+
+                                binding.adUpArrowBtn.setImageResource(R.drawable.ic_arrow_down_icon)
+                                binding.adUpArrowBtn.visibility = View.VISIBLE
+
+                                binding.adUpArrowBtn.setOnClickListener {
+                                    binding.adUpArrowBtn.visibility = View.GONE
+                                    binding.adDownArrowBtn.visibility = View.VISIBLE
+                                    binding.imageBanner.visibility = View.GONE
+                                    /*val hide: Animation =
+                                        AnimationUtils.loadAnimation(this@MainActivity, R.anim.top_bottom)
+                                    binding.adLayout.startAnimation(hide)*/
+                                }
+                                binding.adDownArrowBtn.setOnClickListener {
+                                    binding.adUpArrowBtn.visibility = View.VISIBLE
+                                    binding.adDownArrowBtn.visibility = View.GONE
+                                    binding.imageBanner.visibility = View.VISIBLE
+                                    /*val hide: Animation =
+                                        AnimationUtils.loadAnimation(this@MainActivity, R.anim.bottom_top)
+                                    binding.adLayout.startAnimation(hide)*/
+                                }
+
+                                Glide.with(applicationContext)
+                                    .load(banner.imageUrl)
+                                    .thumbnail(Glide.with(applicationContext).load(R.drawable.placeholder))
+                                    .into(binding.imageBanner)
+                                binding.imageBanner.setOnClickListener(View.OnClickListener {
+                                    if (banner.actionType === 1) {
+                                        //open url
+                                        if (banner.actionUrl != null) {
+                                            val url: String = banner.actionUrl!!
+                                            val linkHost = Uri.parse(url).host
+                                            val uri = Uri.parse(url)
+                                            if (linkHost == null) {
+                                                return@OnClickListener
+                                            }
+                                            if (linkHost == "play.google.com") {
+                                                val appId = uri.getQueryParameter("id")
+                                                val intent = Intent(Intent.ACTION_VIEW)
+                                                intent.data = Uri.parse("market://details?id=$appId")
+                                                startActivity(intent)
+                                            } else if (linkHost == "www.youtube.com") {
+                                                try {
+                                                    val intent = Intent(Intent.ACTION_VIEW, uri)
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                    intent.setPackage("com.google.android.youtube")
+                                                    startActivity(intent)
+                                                }catch (e : Exception){
+                                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                    startActivity(intent)
+                                                }
+                                            } else if (url != null && (url.startsWith("http://") || url.startsWith(
+                                                    "https://"
+                                                ))
+                                            ) {
+                                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                startActivity(intent)
+                                            }
+                                        }
+                                    } else if (banner.actionType === 2) {
+                                        //open activity
+                                    }
+                                })
+
+                            }else{
+                                binding.adLayout.visibility = View.GONE
+                            }
+                        }else{
+                            binding.adLayout.visibility = View.GONE
+                            Log.d("Banner", banner.msg!!)
+                        }
+                    }
+                }
+
+            }catch (e : Exception){
+
+            }
+
+
+        }
+    }
+
     private fun getAudioFile() {
         loadingDialog.show()
         try {
@@ -186,6 +281,7 @@ class TwoNdMiddlePlaysMoreActivity : AppCompatActivity() {
                             binding.tvInstruction.visibility = View.GONE
                             binding.content.visibility = View.GONE
                             binding.phoneNumberLayout.visibility = View.VISIBLE
+                            binding.whatsAppBtn.visibility = View.VISIBLE
 
 
                             binding.whatsAppBtn.setOnClickListener {

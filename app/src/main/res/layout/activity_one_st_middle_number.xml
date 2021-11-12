@@ -8,89 +8,10 @@
     android:background="@color/purple_700"
     tools:context=".ui.tow_nd_middle_plays_more.OneStMiddleNumberActivity">
 
-  <LinearLayout
-      android:id="@+id/coomingSoon"
-      android:layout_width="match_parent"
-      android:background="@color/white"
-      android:gravity="center"
-      android:visibility="gone"
-      android:orientation="vertical"
-      android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:orientation="horizontal">
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="এই ফাংশনটি"
-          android:textColor="@color/black"
-          android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text=" 01-10-2021 "
-          android:textColor="@color/red"
-          android:textStyle="bold"
-          android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="থেকে চালু হবে"
-          android:textColor="@color/black"
-          android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:orientation="horizontal">
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="This function will start on"
-          android:textColor="@color/black"
-          android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text=" 01-10-2021"
-          android:textColor="@color/red"
-          android:textStyle="bold"
-          android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:orientation="horizontal">
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="यह समारोह"
-          android:textColor="@color/black"
-          android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text=" 01-10-2021 "
-          android:textColor="@color/red"
-          android:textStyle="bold"
-          android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="से शुरू होगा"
-          android:textColor="@color/black"
-          android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-    </LinearLayout>
-  </LinearLayout>
+
 
   <androidx.core.widget.NestedScrollView
+      android:layout_above="@+id/adLayout"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
     <LinearLayout

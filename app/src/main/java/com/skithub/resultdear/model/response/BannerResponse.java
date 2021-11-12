@@ -28,6 +28,20 @@ public class BannerResponse{
 	@SerializedName("error")
 	private boolean error;
 
+	public BannerResponse() {
+	}
+
+	public BannerResponse(String msg, int actionType, boolean visible, String activity, String imageUrl, String actionUrl, String id, boolean error) {
+		this.msg = msg;
+		this.actionType = actionType;
+		this.visible = visible;
+		this.activity = activity;
+		this.imageUrl = imageUrl;
+		this.actionUrl = actionUrl;
+		this.id = id;
+		this.error = error;
+	}
+
 	public String getMsg(){
 		return msg;
 	}

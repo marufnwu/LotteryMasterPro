@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,19 +11,12 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.gson.JsonElement
 import com.skithub.resultdear.R
-import com.skithub.resultdear.adapter.DuplicateLotteryNumberRecyclerAdapter
 import com.skithub.resultdear.adapter.VideoTutorialAdapter
 import com.skithub.resultdear.database.network.ApiInterface
 import com.skithub.resultdear.database.network.RetrofitClient
+import com.skithub.resultdear.database.network.api.SecondServerApi
 import com.skithub.resultdear.databinding.ActivityImportentTipsBinding
-import com.skithub.resultdear.databinding.ActivitySpecialNumberBinding
-import com.skithub.resultdear.model.LotteryNumberModel
 import com.skithub.resultdear.model.VideoTutorModel
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModel
@@ -32,16 +24,11 @@ import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModelFactory
 import com.skithub.resultdear.utils.CommonMethod
 import com.skithub.resultdear.utils.Constants
 import com.skithub.resultdear.utils.Coroutines
-import com.skithub.resultdear.utils.MyExtensions.shortToast
 import com.skithub.resultdear.utils.SharedPreUtils
-import org.json.JSONArray
-import org.json.JSONException
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ImportentTipsActivity : AppCompatActivity() {
 
+    private lateinit var secondServerApi: SecondServerApi
     private lateinit var binding: ActivityImportentTipsBinding
     private var apiInterface: ApiInterface? = null
     val CUSTOM_PREF_NAME = "User_data_extra"
@@ -59,11 +46,13 @@ class ImportentTipsActivity : AppCompatActivity() {
         viewModel= ViewModelProvider(this,factory).get(MiddleNumberViewModel::class.java)
         supportActionBar?.title = getString(R.string.importanttips)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        secondServerApi = (application as MyApplication).secondServerApi
+
         apiInterface = RetrofitClient.getApiClient().create(ApiInterface::class.java)
         //getPremiumStatus()
 
         setupRecyclerView()
-        loadDuplicateLotteryNumber()
+        getVideos()
 
     }
 
@@ -191,11 +180,11 @@ class ImportentTipsActivity : AppCompatActivity() {
         binding.recyclerView.adapter=adapter
     }
 
-    private fun loadDuplicateLotteryNumber() {
+    private fun getVideos() {
         Coroutines.main {
             try {
                 binding.spinKit.visibility= View.VISIBLE
-                val response=viewModel.getVideo("")
+                val response=secondServerApi.getVideoList("")
                 if (response.isSuccessful && response.code()==200) {
                     binding.spinKit.visibility= View.GONE
                     if (response.body()!=null) {

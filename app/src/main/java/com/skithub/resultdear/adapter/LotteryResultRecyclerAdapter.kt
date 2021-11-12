@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -26,6 +27,7 @@ import com.skithub.resultdear.databinding.LotteryResultRecyclerViewModelLayoutBi
 import com.skithub.resultdear.model.AdsImageModel
 import com.skithub.resultdear.model.LotteryNumberModel
 import com.skithub.resultdear.model.LotteryResultRecyclerModel
+import com.skithub.resultdear.model.response.BannerResponse
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.utils.CommonMethod
 import com.skithub.resultdear.utils.Constants
@@ -39,6 +41,7 @@ class LotteryResultRecyclerAdapter(val context: Context, val list: MutableList<L
     private val adsImagePosition: Int=3
     private val lotteryNumberColumnCount: Int=5
     private val lotteryNumberVerticalSpanCount: Int=20
+
 
 
 
@@ -142,11 +145,6 @@ class LotteryResultRecyclerAdapter(val context: Context, val list: MutableList<L
 
         fun bind(item: LotteryResultRecyclerModel) {
 
-            Log.d("MainList", "Printing==>")
-            item.data!!.forEach {
-                println(it.lotteryNumber)
-            }
-
             try {
                 binding.resultTypeTextView.text="${item.winType} Prize \u20B9 ${getPrizeAmount(item.winType)}"
 
@@ -156,28 +154,31 @@ class LotteryResultRecyclerAdapter(val context: Context, val list: MutableList<L
                 }
 
 
+                var list1 = mutableListOf<LotteryNumberModel>()
+                var list2= mutableListOf<LotteryNumberModel>()
 
-                val chunkList = childList.chunked(childList.size/2)
 
-                Log.d("Chunklist1", "Printing==>")
-                chunkList[0].forEach {
-                    println(it.lotteryNumber)
+                var chunkList = childList.chunked(childList.size/5)
+
+
+                chunkList.forEach{
+                    val childChunk = it.chunked(it.size/2)
+                    list1.addAll(childChunk[0])
+                    list2.addAll(childChunk[1])
+
+
                 }
 
-                Log.d("Chunklist2", "Printing==>")
-                chunkList[1].forEach {
-                    println(it.lotteryNumber)
-                }
 
-                val list1 = chunkList[0].toMutableList()
+
+
                 var layoutManager1: GridLayoutManager = GridLayoutManager(context,list1.size/lotteryNumberColumnCount,GridLayoutManager.HORIZONTAL,false)
 
-                val list2 = chunkList[1].toMutableList()
                 var layoutManager2: GridLayoutManager = GridLayoutManager(context,list2.size/lotteryNumberColumnCount,GridLayoutManager.HORIZONTAL,false)
 
 
-                val adapter1: LotteryResultChildRecyclerAdapter=LotteryResultChildRecyclerAdapter(context,list1,lotteryNumberColumnCount)
-                val adapter2: LotteryResultChildRecyclerAdapter=LotteryResultChildRecyclerAdapter(context,list2,lotteryNumberColumnCount)
+                val adapter1 =LotteryResultChildRecyclerAdapter(context, list1, lotteryNumberColumnCount)
+                val adapter2 =LotteryResultChildRecyclerAdapter(context, list2, lotteryNumberColumnCount)
                 binding.resultChildRecyclerView1.layoutManager=layoutManager1
                 binding.resultChildRecyclerView1.adapter=adapter1
 

@@ -28,8 +28,8 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         appUpdate = AppUpdateManagerFactory.create(this)
-        //startActivity(Intent(this, MainActivity::class.java));
-        checkUpdate()
+        startActivity(Intent(this, MainActivity::class.java));
+        //checkUpdate()
     }
 
 

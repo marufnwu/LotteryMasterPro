@@ -527,18 +527,16 @@
                     app:nb_gradientStart="@color/neon_color_one"
                     app:nb_text="@string/firstDigitFirstPrize" />
 
-                <com.smb.glowbutton.NeonButton
+                <ImageView
+                    android:src="@drawable/whats_app_icon"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:id="@+id/btnGotAPrize"
                     style="@style/MyNeonButtonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_60sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    app:nb_drawableStart="@drawable/ic_search"
-                    app:nb_gradientEnd="@color/neon_color_start"
-                    app:nb_gradientStart="@color/neon_color_start"
-                    app:nb_text="@string/gotAprize" />
+                    />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     style="@style/HomeButtonParentLayoutStyle"

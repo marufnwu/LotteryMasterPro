@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.register_activity.RegisterActivity"
@@ -40,12 +41,12 @@
     </FrameLayout>
 
     <RadioGroup
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_20sdp"
         android:id="@+id/langGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:gravity="left"
         android:layout_marginTop="@dimen/_10sdp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,6 +74,15 @@
             android:text=" English Language"
             android:textSize="@dimen/_20sdp" />
 
+        <TextView
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/red"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="বাংলা পড়তে পারেন? তবে অবশ্যই বাংলা ভাষা সিলেক্ট করুন,কারন আমাদের এপ বাংলায় তৈরি হয়েছে।।"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+
         <RadioButton
             android:id="@+id/rglangbn2"
             android:layout_width="wrap_content"
@@ -82,4 +92,5 @@
 
     </RadioGroup>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

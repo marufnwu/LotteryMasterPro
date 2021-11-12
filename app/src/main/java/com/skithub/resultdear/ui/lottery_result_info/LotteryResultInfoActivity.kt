@@ -24,6 +24,7 @@ import com.skithub.resultdear.adapter.VideoTutorialAdapter
 import com.skithub.resultdear.database.network.ApiInterface
 import com.skithub.resultdear.database.network.MyApi
 import com.skithub.resultdear.database.network.RetrofitClient
+import com.skithub.resultdear.database.network.api.SecondServerApi
 import com.skithub.resultdear.databinding.ActivityLotteryResultInfoBinding
 import com.skithub.resultdear.databinding.ConnectionCheckDialogBinding
 import com.skithub.resultdear.model.AdsImageModel
@@ -46,6 +47,7 @@ import java.util.*
 
 class LotteryResultInfoActivity : AppCompatActivity() {
 
+    private lateinit var secondServerApi: SecondServerApi
     private lateinit var videoAdapter: VideoTutorialAdapter
     private lateinit var videoLayoutManager: LinearLayoutManager
     private var videoList: MutableList<VideoTutorModel> = arrayListOf()
@@ -82,6 +84,7 @@ class LotteryResultInfoActivity : AppCompatActivity() {
         apiInterface = RetrofitClient.getApiClient().create(ApiInterface::class.java)
 
         myApi = (application as MyApplication).myApi
+        secondServerApi = (application as MyApplication).secondServerApi
 
         val bundle=intent.extras
         if (bundle!=null) {
@@ -376,7 +379,7 @@ class LotteryResultInfoActivity : AppCompatActivity() {
             Coroutines.main {
                 try {
                     binding.spinKit.visibility= View.VISIBLE
-                    val response=myApi.getVideoListInResultInfo("")
+                    val response=secondServerApi.getVideoListInResultInfo("")
                     if (response.isSuccessful && response.code()==200) {
                         binding.spinKit.visibility= View.GONE
                         if (response.body()!=null) {

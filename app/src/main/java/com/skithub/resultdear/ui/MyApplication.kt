@@ -14,6 +14,7 @@ import com.google.firebase.messaging.ktx.messaging
 import com.skithub.resultdear.R
 import com.skithub.resultdear.database.network.MyApi
 import com.skithub.resultdear.database.network.api.RetrofitClient
+import com.skithub.resultdear.database.network.api.SecondServerApi
 import com.skithub.resultdear.utils.CommonMethod
 
 class MyApplication : Application() {
@@ -22,7 +23,13 @@ class MyApplication : Application() {
     val MY_NOTIFICATION_CHANNEL_ID: String="MY_NOTIFICATION_CHANNEL_ID"
     private lateinit var notificationManager: NotificationManager
 //    val appDatabase by lazy { AppDatabase.getDatabase(this) }
-    val myApi by lazy { MyApi.invoke() }
+    val myApi by lazy {
+        MyApi.invoke()
+    }
+
+    val secondServerApi by lazy {
+        SecondServerApi.invoke()
+    }
 
     public val iRetrofitApiCall by lazy {
         RetrofitClient.invoke()

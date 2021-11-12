@@ -16,8 +16,8 @@ android {
         applicationId "com.skithub.resultdear"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 35
-        versionName "1.35"
+        versionCode 37
+        versionName "1.37"
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "Lmp_V"+versionName)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -38,6 +38,7 @@ android {
             it.buildConfigField 'String', 'BASE_URL', lotteryBaseUrl
             it.buildConfigField 'String', 'USER_NAME', userName
             it.buildConfigField 'String', 'USER_PASSWORD', userPassword
+            it.buildConfigField 'String', 'SECOND_SERVER_BASE_URL', SecondServer
         }
     }
     buildFeatures{

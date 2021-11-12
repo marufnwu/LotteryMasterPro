@@ -301,11 +301,44 @@ class SpecialNumberActivity : AppCompatActivity() {
                         binding.numberFour.text = response.body()?.number_four
                         binding.numberFive.text = response.body()?.number_five
 
-                        binding.numberSix.text = response.body()?.number_six
-                        binding.numberSeven.text = response.body()?.number_seven
-                        binding.numberEight.text = response.body()?.number_eight
-                        binding.numberNine.text = response.body()?.number_nine
-                        binding.numberTen.text = response.body()?.number_ten
+                        val num6= response.body()?.number_six!!.trim()
+                        val num7 = response.body()?.number_seven!!.trim()
+                        val num8 = response.body()?.number_eight!!.trim()
+                        val num9 = response.body()?.number_nine!!.trim()
+                        val num10 = response.body()?.number_ten!!.trim()
+
+                        if(!num6.isNullOrEmpty()){
+                            binding.numberSix.text = num6
+                        }else{
+                            binding.numberSix.visibility = View.GONE
+                        }
+                        if(!num7.isNullOrEmpty()){
+                            binding.numberSeven.text = response.body()?.number_seven
+
+                        }else{
+                            binding.numberSeven.visibility = View.GONE
+
+                        }
+                        if(!num8.isNullOrEmpty()){
+                            binding.numberEight.text = response.body()?.number_eight
+
+                        }else{
+                            binding.numberEight.visibility = View.GONE
+
+                        }
+                        if(!num9.isNullOrEmpty()){
+                            binding.numberNine.text = response.body()?.number_nine
+                        }else{
+                            binding.numberNine.visibility = View.GONE
+
+                        }
+                        if(!num10.isNullOrEmpty()){
+                            binding.numberTen.text = response.body()?.number_ten
+                        }else{
+                            binding.numberTen.visibility = View.GONE
+
+                        }
+
 
                         binding.uploadDate.text = response.body()?.upload_date
 
