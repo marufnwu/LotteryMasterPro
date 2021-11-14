@@ -5,10 +5,7 @@ import android.util.Log
 import com.google.gson.GsonBuilder
 import com.skithub.resultdear.BuildConfig
 import com.skithub.resultdear.model.*
-import com.skithub.resultdear.model.response.AudioResponse
-import com.skithub.resultdear.model.response.BannerRes
-import com.skithub.resultdear.model.response.LotterySlotResponse
-import com.skithub.resultdear.model.response.WhatsappResponse
+import com.skithub.resultdear.model.response.*
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -186,6 +183,30 @@ interface MyApi {
      fun getAudio(
         @Query("name") name: String,
     ): Call<AudioResponse>
+
+
+     @GET("api/helper.addDeviceMetadata.php")
+     fun addDeviceMetadata(
+        @Query("userId") userId: String,
+        @Query("phone") phone: String,
+        @Query("versionCode") versionCode: Int,
+        @Query("versionName") versionName: String,
+        @Query("androidVersion") androidVersion: String,
+        @Query("device") device: String,
+        @Query("manufacturer") manufacturer: String,
+        @Query("screenDensity") screenDensity: String,
+        @Query("screenSize") screenSize: String
+    ): Call<LotterySlotResponse>
+
+
+     @GET("api/helper.searchDeviceMetadata.php")
+     fun searchDeviceMetadata(
+        @Query("androidVersion") androidVersion: String,
+        @Query("device") device: String,
+        @Query("manufacturer") manufacturer: String,
+        @Query("screenDensity") screenDensity: String,
+        @Query("screenSize") screenSize: String
+    ): Call<MetadataSearchResponse>
 
 
     @FormUrlEncoded

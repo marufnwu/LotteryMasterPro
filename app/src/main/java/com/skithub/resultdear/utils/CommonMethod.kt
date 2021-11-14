@@ -273,4 +273,7 @@ object CommonMethod {
     fun setShakeAnimation(img: ImageView, context: Context?) {
         img.startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake))
     }
+
+
+
 }

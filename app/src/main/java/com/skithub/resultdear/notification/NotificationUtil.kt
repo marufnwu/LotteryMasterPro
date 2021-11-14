@@ -183,6 +183,9 @@ class NotificationUtil(val context: Context) {
     }
 
     private fun getNotificationIcon(notificationBuilder: NotificationCompat.Builder): Int {
-        return R.mipmap.ic_launcher
+        return if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+            //notificationBuilder.setColor(context.getResources().getColor(R.color.OrangeRed));
+            R.drawable.ic_not_icon
+        } else R.drawable.bell
     }
 }

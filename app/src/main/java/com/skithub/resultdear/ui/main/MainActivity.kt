@@ -4,15 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Point
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.telephony.TelephonyManager
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.RadioButton
@@ -28,13 +26,17 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.database.*
+import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.skithub.resultdear.BuildConfig
 import com.skithub.resultdear.R
 import com.skithub.resultdear.database.network.ApiInterface
+import com.skithub.resultdear.database.network.MyApi
 import com.skithub.resultdear.database.network.RetrofitClient
 import com.skithub.resultdear.databinding.*
 import com.skithub.resultdear.model.AdsImageModel
+import com.skithub.resultdear.model.Metadata
+import com.skithub.resultdear.model.response.LotterySlotResponse
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.ui.common_number.CommonNumberActivity
 import com.skithub.resultdear.ui.get_help.To_Get_HelpActivity
@@ -70,13 +72,15 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 import okhttp3.ResponseBody
+import android.os.Build
 
-
-
+import android.util.DisplayMetrics
+import android.view.*
 
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var myApi: MyApi
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private var tog: ActionBarDrawerToggle? = null
@@ -106,8 +110,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = getString(R.string.home_activity_title)
-
+        myApi = (application as MyApplication).myApi
         connectivityManager=getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val deviceMetadata = Metadata(this)
+
+        //deviceMetadata.print()
 
         if (CommonMethod.haveInternet(connectivityManager)) {
 
@@ -115,6 +123,7 @@ class MainActivity : AppCompatActivity() {
                     intil()
                     getPremiumStatus()
                     GetLanguage()
+                    sendToServer(deviceMetadata)
                 } else {
                     var intent = Intent(this, RegisterActivity::class.java)
                     startActivity(intent)
@@ -128,6 +137,52 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    private  fun sendToServer(metadata: Metadata){
+
+        myApi.addDeviceMetadata(
+            SharedPreUtils.getStringFromStorageWithoutSuspend(this, Constants.userIdKey, Constants.defaultUserId)!!,
+                       "",
+                       metadata.versionCode,
+                       metadata.versionName,
+                       metadata.androidVersion!!,
+                       metadata.device,
+                       metadata.manufacturer,
+                       metadata.screenDensity!!,
+                       metadata.screenSize!!,
+               ).enqueue(object : Callback<LotterySlotResponse>{
+            override fun onResponse(
+                call: Call<LotterySlotResponse>,
+                response: Response<LotterySlotResponse>
+            ) {
+
+            }
+
+            override fun onFailure(call: Call<LotterySlotResponse>, t: Throwable) {
+                Toast.makeText(this@MainActivity, t.message!!, Toast.LENGTH_SHORT).show()
+            }
+
+        })
+//
+//       Coroutines.main {
+//           try {
+//
+//                   myApi.addDeviceMetadata(
+//                       SharedPreUtils.getStringFromStorageWithoutSuspend(this, Constants.userIdKey, Constants.defaultUserId)!!,
+//                       "",
+//                       metadata.versionCode,
+//                       metadata.versionName,
+//                       metadata.androidVersion!!,
+//                       metadata.device,
+//                       metadata.manufacturer,
+//                       metadata.screenDensity!!,
+//                       metadata.screenSize!!,
+//                   )
+//           }catch (e: Exception){
+//               throw e
+//           }
+//       }
+
+    }
 
 
     private fun postUpdateCheck(){
