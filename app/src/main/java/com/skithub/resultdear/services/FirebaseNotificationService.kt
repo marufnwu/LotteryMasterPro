@@ -16,7 +16,7 @@ import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.ui.today_result.TodayResultActivity
 import com.skithub.resultdear.utils.Constants
 
-class MyFirebaseMessagingService: FirebaseMessagingService() {
+class FirebaseNotificationService: FirebaseMessagingService() {
 
     private var notificationManager: NotificationManager?=null
 

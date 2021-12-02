@@ -81,6 +81,7 @@ import android.view.*
 
 class MainActivity : AppCompatActivity() {
 
+    private var isActivityPause: Boolean = false
     private var isPause: Boolean = false
     private lateinit var myApi: MyApi
     private lateinit var binding: ActivityMainBinding
@@ -596,7 +597,9 @@ class MainActivity : AppCompatActivity() {
     }
     private fun serverIssueDialog(til: String, msg: String) {
 
-        media!!.start()
+        if(!isActivityPause){
+            media!!.start()
+        }
 
         var serverIssueDialogBinding  = ServerIssueDialogBinding.inflate(layoutInflater)
         serverIssueDialogBinding.connectionTitle.text = til
@@ -824,6 +827,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        isActivityPause = false
         if(isPause && media!=null){
             media!!.start()
         }
@@ -831,10 +835,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        media!!.isPlaying.let {
-            if(it){
-                isPause = true
-                media!!.pause()
+        isActivityPause = true
+        if(media!=null){
+            media!!.isPlaying.let {
+                if(it){
+                    isPause = true
+                    media!!.pause()
+                }
             }
         }
     }

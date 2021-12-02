@@ -75,7 +75,7 @@
             android:theme="@style/Theme.Lutt.NoTitle" />
 
         <service
-            android:name=".services.MyFirebaseMessagingService"
+            android:name=".services.FirebaseNotificationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

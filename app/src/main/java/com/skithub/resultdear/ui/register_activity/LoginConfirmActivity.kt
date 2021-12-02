@@ -35,7 +35,7 @@ import java.util.*
 
 
 class LoginConfirmActivity : AppCompatActivity() {
-
+    private var isActivityPause : Boolean = false
     private var isPause: Boolean = false
     private lateinit var binding: ActivityLoginConfirmBinding
     private lateinit var viewModel: MainViewModel
@@ -217,7 +217,9 @@ class LoginConfirmActivity : AppCompatActivity() {
 
     private fun serverIssueDialog(til: String, msg: String) {
 
-        media!!.start()
+       if(!isActivityPause){
+           media!!.start()
+       }
 
         var serverIssueDialogBinding  = ServerIssueDialogBinding.inflate(layoutInflater)
         serverIssueDialogBinding.connectionTitle.text = til
@@ -312,6 +314,7 @@ class LoginConfirmActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        isActivityPause = false
         if(isPause && media!=null){
             media!!.start()
         }
@@ -319,10 +322,13 @@ class LoginConfirmActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        media!!.isPlaying.let {
-            if(it){
-                isPause = true
-                media!!.pause()
+        isActivityPause = true
+        if(media!=null){
+            media!!.isPlaying.let {
+                if(it){
+                    isPause = true
+                    media!!.pause()
+                }
             }
         }
     }
