@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
+import android.media.MediaPlayer
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
@@ -80,6 +81,7 @@ import android.view.*
 
 class MainActivity : AppCompatActivity() {
 
+    private var isPause: Boolean = false
     private lateinit var myApi: MyApi
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
@@ -99,7 +101,7 @@ class MainActivity : AppCompatActivity() {
     var licensePositionPRO: String = "turjo"
     var updateAction: String = "0"
     private var apiInterface: ApiInterface? = null
-
+    var media : MediaPlayer? = null
 
     @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,6 +114,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.home_activity_title)
         myApi = (application as MyApplication).myApi
         connectivityManager=getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        media = MediaPlayer.create(this, R.raw.serverissue)
 
         val deviceMetadata = Metadata(this)
 
@@ -133,6 +137,7 @@ class MainActivity : AppCompatActivity() {
         }else{
             noInternetDialog(getString(R.string.no_internet),getString(R.string.no_internet_message))
         }
+
 
     }
 
@@ -364,8 +369,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-
     private fun getPremiumStatus() {
         val call: Call<JsonElement> = apiInterface!!.getDeshCount(SharedPreUtils.getStringFromStorageWithoutSuspend(this,Constants.userIdKey,Constants.defaultUserId),SharedPreUtils.getStringFromStorageWithoutSuspend(this,Constants.fcmTokenKey,Constants.defaultUserToken),BuildConfig.VERSION_NAME)
         call.enqueue(object : Callback<JsonElement> {
@@ -484,20 +487,19 @@ class MainActivity : AppCompatActivity() {
                         "Unknown error occurred.",
                         Toast.LENGTH_SHORT
                     ).show()
+
+
                 }
             }
 
             override fun onFailure(call: Call<JsonElement>, t: Throwable) {
-                noInternetDialog(getString(R.string.weak_internet),getString(R.string.weak_internet_message))
+                t.printStackTrace()
+                serverIssueDialog("Server Down",getString(R.string.server_issue_msg))
+
+                //noInternetDialog(getString(R.string.weak_internet),getString(R.string.weak_internet_message))
             }
         })
     }
-
-
-
-
-
-
 
     private fun AcDisibleDialog(){
         disibleDialogBinding= AcDisibledDialogBinding.inflate(layoutInflater)
@@ -592,7 +594,60 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+    private fun serverIssueDialog(til: String, msg: String) {
 
+        media!!.start()
+
+        var serverIssueDialogBinding  = ServerIssueDialogBinding.inflate(layoutInflater)
+        serverIssueDialogBinding.connectionTitle.text = til
+        serverIssueDialogBinding.connectionMessage.text = msg
+
+        serverIssueDialogBinding.tryAgainBtn.visibility = View.INVISIBLE
+
+
+
+        serverIssueDialogBinding.imgThumb.setOnClickListener {
+            val url = "https://www.youtube.com/watch?v=xf8x1V1JscQ"
+            val webIntent: Intent= Intent(Intent.ACTION_VIEW,Uri.parse(url))
+            startActivity(Intent.createChooser(webIntent,"Choose one:"))
+        }
+        val builder= AlertDialog.Builder(this)
+                .setCancelable(false)
+                .setView(serverIssueDialogBinding.root)
+
+        var serverIssueAlertDialog=builder.create()
+        if (serverIssueAlertDialog.window!=null) {
+            serverIssueAlertDialog.window!!.attributes.windowAnimations=R.style.DialogTheme
+        }
+
+        serverIssueDialogBinding.tryAgainBtn.setOnClickListener {
+            if (CommonMethod.haveInternet(connectivityManager)) {
+                intil()
+                getPremiumStatus()
+                serverIssueAlertDialog.dismiss()
+            }
+        }
+
+        if (!isFinishing) {
+            serverIssueAlertDialog.show()
+        }
+
+        serverIssueAlertDialog.setOnDismissListener {
+            if(media!!.isPlaying){
+                media!!.stop()
+            }
+        }
+
+        media!!.setOnErrorListener { p0, p1, p2 ->
+            serverIssueDialogBinding.tryAgainBtn.visibility =View.VISIBLE
+            true
+        }
+
+        media!!.setOnCompletionListener {
+            serverIssueDialogBinding.tryAgainBtn.visibility =View.VISIBLE
+        }
+
+    }
 
     private fun noInternetDialog(til: String, msg: String) {
         connectionDialogBinding= ConnectionCheckDialogBinding.inflate(layoutInflater)
@@ -767,6 +822,27 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        if(isPause && media!=null){
+            media!!.start()
+        }
+    }
 
+    override fun onPause() {
+        super.onPause()
+        media!!.isPlaying.let {
+            if(it){
+                isPause = true
+                media!!.pause()
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        media?.release()
+        media = null
+    }
 
 }

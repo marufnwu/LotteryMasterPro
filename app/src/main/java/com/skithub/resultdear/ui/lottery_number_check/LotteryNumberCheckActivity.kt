@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.skithub.resultdear.R
 import com.skithub.resultdear.adapter.LotteryNumberRecyclerAdapter
+import com.skithub.resultdear.database.network.api.SecondServerApi
 import com.skithub.resultdear.databinding.ActivityLotteryNumberCheckBinding
 import com.skithub.resultdear.databinding.ConnectionCheckDialogBinding
 import com.skithub.resultdear.databinding.NotFoundBinding
@@ -26,6 +27,7 @@ import com.skithub.resultdear.utils.MyExtensions.shortToast
 
 class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener {
 
+    private lateinit var secodServerApi: SecondServerApi
     private lateinit var binding: ActivityLotteryNumberCheckBinding
     private lateinit var viewModel: LotteryNumberCheckViewModel
     private var list: MutableList<LotteryNumberModel> = arrayListOf()
@@ -50,7 +52,7 @@ class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener {
         supportActionBar?.title = getString(R.string.search_number)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
+        secodServerApi  = (application as MyApplication).secondServerApi
 
         initAll()
 
@@ -155,7 +157,8 @@ class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener {
                 binding.spinKit.visibility= View.VISIBLE
                 list.clear()
                 adapter.notifyDataSetChanged()
-                val response=viewModel.findLotteryInfoUsingLotteryNumber(page_number.toString(),item_count.toString(),lotteryNumber)
+                //val response=viewModel.findLotteryInfoUsingLotteryNumber(page_number.toString(),item_count.toString(),lotteryNumber)
+                val response=secodServerApi.findSimilarLotteryNumberList(page_number.toString(),item_count.toString(),lotteryNumber)
                 if (response.isSuccessful && response.code()==200) {
                     binding.spinKit.visibility= View.GONE
                     if (response.body()?.status.equals("success",true)) {

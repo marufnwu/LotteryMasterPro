@@ -54,7 +54,10 @@
     <string name="weak_internet_message">Your phone\'s internet connection is very weak. Check your data pack or try again.</string>
     <string name="no_internet_message">Your phone does not have Wi-Fi or mobile data turned on. Please connect to the internet and try again</string>
     <string name="no_internet">No Internet connection</string>
+
     <string name="weak_internet">Weak Internet connection</string>
+    <string name="server_issue_msg" translatable="false">আগামী 24 ঘন্টার মধ্যে সমস্যা সমাধান হয়ে যাবে। 24 ঘন্টা অপেক্ষা করুন।</string>
+
     <string name="paid_service_message">Watch the video above to use this service. After watching the video, if you have any questions about numbers/middle or prizes or have difficulty understanding, call or message on WhatsApp.</string>
     <string name="login_status_check">This number is already logged in on a device, please logout from any one device or let us know your problem</string>
     <string name="yearly_text">Yearly</string>

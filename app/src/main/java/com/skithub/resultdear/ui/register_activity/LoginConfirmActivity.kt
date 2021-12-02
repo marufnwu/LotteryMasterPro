@@ -2,14 +2,16 @@ package com.skithub.resultdear.ui.register_activity
 
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.net.ConnectivityManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
-import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
@@ -17,8 +19,8 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.skithub.resultdear.BuildConfig
 import com.skithub.resultdear.R
 import com.skithub.resultdear.databinding.ActivityLoginConfirmBinding
-import com.skithub.resultdear.databinding.ActivityRegisterBinding
 import com.skithub.resultdear.databinding.ConnectionCheckDialogBinding
+import com.skithub.resultdear.databinding.ServerIssueDialogBinding
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.ui.main.MainActivity
 import com.skithub.resultdear.ui.main.MainViewModel
@@ -28,15 +30,20 @@ import com.skithub.resultdear.utils.CommonMethod
 import com.skithub.resultdear.utils.Constants
 import com.skithub.resultdear.utils.Coroutines
 import com.skithub.resultdear.utils.SharedPreUtils
+import java.io.FileInputStream
 import java.util.*
+
 
 class LoginConfirmActivity : AppCompatActivity() {
 
+    private var isPause: Boolean = false
     private lateinit var binding: ActivityLoginConfirmBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var connectivityManager: ConnectivityManager
     private lateinit var connectionDialogBinding: ConnectionCheckDialogBinding
     private var connectionAlertDialog: AlertDialog?=null
+
+     var media :MediaPlayer? = null
 
     private var ISSUE: String? = "Didn't try"
     private var LANG: String? = "Unselected"
@@ -48,7 +55,7 @@ class LoginConfirmActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= ActivityLoginConfirmBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        media = MediaPlayer.create(this, R.raw.serverissue)
         connectivityManager=getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
 
         val factory= MainViewModelFactory((application as MyApplication).myApi)
@@ -141,7 +148,6 @@ class LoginConfirmActivity : AppCompatActivity() {
             }
         }
 
-
         }
 
     private fun registerPhone() {
@@ -185,14 +191,16 @@ class LoginConfirmActivity : AppCompatActivity() {
                                 ISSUE = "Week Internet"
                                 binding.numberSubmitbtn.isEnabled = true
                                 binding.whatsAppBtn.visibility = View.VISIBLE
-                                noInternetDialog(getString(R.string.weak_internet),getString(R.string.weak_internet_message))
+                                serverIssueDialog("Server Down",getString(R.string.server_issue_msg))
+
                             }
                         }
                     }else{
                         ISSUE = "DeviceToken Not working"
                         binding.numberSubmitbtn.isEnabled = true
                         binding.whatsAppBtn.visibility = View.VISIBLE
-                        noInternetDialog(getString(R.string.weak_internet),getString(R.string.weak_internet_message))
+                        serverIssueDialog("Server Down",getString(R.string.server_issue_msg))
+
                     }
                 }
             })
@@ -200,13 +208,66 @@ class LoginConfirmActivity : AppCompatActivity() {
             ISSUE = "Week Internet"
             binding.numberSubmitbtn.isEnabled = true
             binding.whatsAppBtn.visibility = View.VISIBLE
-            noInternetDialog(getString(R.string.weak_internet),getString(R.string.weak_internet_message))
+            serverIssueDialog("Server Down",getString(R.string.server_issue_msg))
+
 
         }
     }
 
 
+    private fun serverIssueDialog(til: String, msg: String) {
 
+        media!!.start()
+
+        var serverIssueDialogBinding  = ServerIssueDialogBinding.inflate(layoutInflater)
+        serverIssueDialogBinding.connectionTitle.text = til
+        serverIssueDialogBinding.connectionMessage.text = msg
+
+        serverIssueDialogBinding.tryAgainBtn.visibility = View.INVISIBLE
+
+
+
+        serverIssueDialogBinding.imgThumb.setOnClickListener {
+            val url = "https://www.youtube.com/watch?v=xf8x1V1JscQ"
+            val webIntent: Intent= Intent(Intent.ACTION_VIEW,Uri.parse(url))
+            startActivity(Intent.createChooser(webIntent,"Choose one:"))
+        }
+        val builder= AlertDialog.Builder(this@LoginConfirmActivity)
+                .setCancelable(false)
+                .setView(serverIssueDialogBinding.root)
+
+        var serverIssueAlertDialog=builder.create()
+        if (serverIssueAlertDialog.window!=null) {
+            serverIssueAlertDialog.window!!.attributes.windowAnimations=R.style.DialogTheme
+        }
+
+        serverIssueDialogBinding.tryAgainBtn.setOnClickListener {
+            if (CommonMethod.haveInternet(connectivityManager)) {
+                registerPhone()
+                serverIssueAlertDialog.dismiss()
+            }
+        }
+
+        if (!isFinishing) {
+            serverIssueAlertDialog.show()
+        }
+
+        serverIssueAlertDialog.setOnDismissListener {
+            if(media!!.isPlaying){
+                media!!.stop()
+            }
+        }
+
+        media!!.setOnErrorListener { p0, p1, p2 ->
+            serverIssueDialogBinding.tryAgainBtn.visibility =View.VISIBLE
+            true
+        }
+
+        media!!.setOnCompletionListener {
+            serverIssueDialogBinding.tryAgainBtn.visibility =View.VISIBLE
+        }
+
+    }
 
 
     private fun noInternetDialog(til: String, msg: String) {
@@ -247,6 +308,29 @@ class LoginConfirmActivity : AppCompatActivity() {
         } else {
             super.attachBaseContext(newBase)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(isPause && media!=null){
+            media!!.start()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        media!!.isPlaying.let {
+            if(it){
+                isPause = true
+                media!!.pause()
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        media?.release()
+        media = null
     }
 
 }

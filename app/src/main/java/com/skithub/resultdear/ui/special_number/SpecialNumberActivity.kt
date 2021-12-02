@@ -81,6 +81,7 @@ class SpecialNumberActivity : AppCompatActivity() {
         mediaPlayer!!.setOnErrorListener { p0, p1, p2 ->
             Toast.makeText(this@SpecialNumberActivity, "error", Toast.LENGTH_SHORT).show()
             audioLoadingDialog.hide()
+            loadingDialog.hide()
             true
         }
 

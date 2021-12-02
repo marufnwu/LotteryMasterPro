@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/update_body_backg"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+   <LinearLayout
+       android:gravity="center"
+       android:paddingTop="@dimen/_10sdp"
+       android:paddingBottom="@dimen/_10sdp"
+       android:paddingLeft="@dimen/_5sdp"
+       android:paddingRight="@dimen/_5sdp"
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <de.hdodenhof.circleimageview.CircleImageView
+           android:layout_width="@dimen/_90sdp"
+           android:layout_height="@dimen/_90sdp"
+           android:layout_marginTop="@dimen/_5sdp"
+           android:src="@drawable/ic_no_connection"/>
+
+       <ImageView
+           android:scaleType="fitXY"
+           android:src="@drawable/serverissuethumb"
+           android:id="@+id/imgThumb"
+           android:layout_margin="@dimen/_15sdp"
+           android:layout_width="match_parent"
+           android:layout_height="@dimen/_150sdp"/>
+
+       <TextView
+           android:id="@+id/connectionTitle"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+           android:textStyle="bold"
+           android:layout_marginTop="@dimen/_10sdp"/>
+
+       <TextView
+           android:id="@+id/connectionMessage"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:layout_margin="@dimen/_15sdp" />
+
+       <Button
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/try_again"
+           android:paddingLeft="@dimen/_15sdp"
+           android:paddingRight="@dimen/_15sdp"
+           android:paddingTop="@dimen/_8sdp"
+           android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+           android:paddingBottom="@dimen/_8sdp"
+           android:id="@+id/tryAgainBtn"/>
+   </LinearLayout>
+
+
+</ScrollView>

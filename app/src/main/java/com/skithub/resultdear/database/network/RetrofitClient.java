@@ -54,13 +54,14 @@ public class RetrofitClient {
 
 
             OkHttpClient okHttpClient=new OkHttpClient.Builder()
+                    .connectTimeout(2, TimeUnit.MINUTES)
+                    .readTimeout(2, TimeUnit.MINUTES)
                     .addInterceptor(httpLoggingInterceptor())
                     .addInterceptor(
                             chain -> {
                                 Request original =chain.request();
                                 Request.Builder requestBuilder=original.newBuilder()
                                         .addHeader("Authorization",AUTH)
-
                                         .method(original.method(), original.body());
                                 Request request=requestBuilder.build();
                                 return chain.proceed(request);

@@ -35,6 +35,20 @@ interface SecondServerApi {
         @Query("userId") itemCount: String
     ): Response<VideoTutorResponse>
 
+    @GET("get_lottery_number_list_by_win_date_slot.php?")
+    suspend fun getLotteryNumberListByDateSlot(
+            @Query("WinDate") winDate: String,
+            @Query("SlotId") slotId: Int,
+            @Query("userId") userId: String
+    ): Response<LotteryNumberResponse>
+
+    @GET("get_similar_lottery_number_list.php?")
+    suspend fun findSimilarLotteryNumberList(
+            @Query("PageNumber") pageNumber: String,
+            @Query("ItemCount") itemCount: String,
+            @Query("LotteryNumber") lotteryNumber: String
+    ): Response<LotteryNumberResponse>
+
 
     companion object {
 

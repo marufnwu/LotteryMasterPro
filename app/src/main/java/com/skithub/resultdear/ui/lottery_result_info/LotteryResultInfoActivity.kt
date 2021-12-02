@@ -101,7 +101,8 @@ class LotteryResultInfoActivity : AppCompatActivity() {
 
         if (CommonMethod.haveInternet(connectivityManager)) {
             setUpRecyclerView()
-            loadLotteryNumberInfoUsingDateAndTime()
+            //loadLotteryNumberInfoUsingDateAndTime()
+            loadLotteryNumberInfoUsingDateAndTimeSecondServer()
             loadAdsImageInfo()
             checkBannerAd()
         }else{
@@ -223,7 +224,8 @@ class LotteryResultInfoActivity : AppCompatActivity() {
         connectionDialogBinding.tryAgainBtn.setOnClickListener {
             if (CommonMethod.haveInternet(connectivityManager)) {
                 setUpRecyclerView()
-                loadLotteryNumberInfoUsingDateAndTime()
+                //loadLotteryNumberInfoUsingDateAndTime()
+                loadLotteryNumberInfoUsingDateAndTimeSecondServer()
                 loadAdsImageInfo()
                 connectionAlertDialog?.dismiss()
             }
@@ -292,6 +294,95 @@ class LotteryResultInfoActivity : AppCompatActivity() {
                 binding.resultRootLayout.visibility=View.GONE
                 binding.waitingRootLayout.visibility=View.GONE
                 val response=viewModelLottery.getLotteryNumberListByDateSlot(resultDate,resultSlotId,
+                    SharedPreUtils.getStringFromStorageWithoutSuspend(this,Constants.userIdKey,Constants.defaultUserId).toString())
+                binding.spinKit.visibility=View.GONE
+                if (response.isSuccessful && response.code()==200) {
+                    if (response.body()!=null) {
+                        if (response.body()?.status.equals("success")) {
+                            list.clear()
+                            list.addAll(response.body()?.data!!)
+                            if (list.size>0) {
+                                 getLotteryClassVideo()
+                                filteringLotteryNumber(list)
+                                binding.resultRootLayout.visibility=View.VISIBLE
+                                binding.waitingRootLayout.visibility=View.GONE
+                                supportActionBar?.title = getString(R.string.view_details)
+
+                                /*val rootArray = JSONArray(response.body().toString())
+                                for (i in 0 until rootArray.length()) {
+                                    val bannerimage = rootArray.getJSONObject(i).getString("viewCount")
+                                    Toast.makeText(this,bannerimage,Toast.LENGTH_LONG).show()
+                                }*/
+                            } else {
+                                binding.resultRootLayout.visibility=View.GONE
+                                binding.waitingRootLayout.visibility=View.VISIBLE
+                                supportActionBar?.title = getString(R.string.result_not_publish_title)
+                                /*val Liveuserdb = FirebaseDatabase.getInstance().getReference("ActiveUsers")
+                                val prefs = RegisterActivity.PreferenceHelper.customPreference(this, CUSTOM_PREF_NAME)
+                                val map: HashMap<String, Any?> = HashMap()
+                                map["phone"] = prefs.userPhone
+                                map["activity"] = getString(R.string.result_not_publish_title)
+                                Liveuserdb.child(prefs.userToken!!).setValue(map)*/
+                            }
+                        } else {
+                            binding.spinKit.visibility=View.GONE
+                            binding.resultRootLayout.visibility=View.GONE
+                            binding.waitingRootLayout.visibility=View.VISIBLE
+                            supportActionBar?.title = getString(R.string.result_not_publish_title)
+                            //shortToast("${response.body()?.message}")
+                            /*val Liveuserdb = FirebaseDatabase.getInstance().getReference("ActiveUsers")
+                            val prefs = RegisterActivity.PreferenceHelper.customPreference(this, CUSTOM_PREF_NAME)
+                            val map: HashMap<String, Any?> = HashMap()
+                            map["phone"] = prefs.userPhone
+                            map["activity"] = getString(R.string.result_not_publish_title)
+                            Liveuserdb.child(prefs.userToken!!).setValue(map)*/
+                        }
+                    } else {
+                        binding.spinKit.visibility=View.GONE
+                        binding.resultRootLayout.visibility=View.GONE
+                        binding.waitingRootLayout.visibility=View.VISIBLE
+                        supportActionBar?.title = getString(R.string.result_not_publish_title)
+                        shortToast("Sorry, Unknown error occurred.")
+                        /*val Liveuserdb = FirebaseDatabase.getInstance().getReference("ActiveUsers")
+                        val prefs = RegisterActivity.PreferenceHelper.customPreference(this, CUSTOM_PREF_NAME)
+                        val map: HashMap<String, Any?> = HashMap()
+                        map["phone"] = prefs.userPhone
+                        map["activity"] = getString(R.string.result_not_publish_title)
+                        Liveuserdb.child(prefs.userToken!!).setValue(map)*/
+                    }
+                } else {
+                    binding.spinKit.visibility=View.GONE
+                    binding.resultRootLayout.visibility=View.GONE
+                    binding.waitingRootLayout.visibility=View.VISIBLE
+                    supportActionBar?.title = getString(R.string.result_not_publish_title)
+                    //shortToast("failed for:- ${response.errorBody()?.string()}")
+                    /*val Liveuserdb = FirebaseDatabase.getInstance().getReference("ActiveUsers")
+                    val prefs = RegisterActivity.PreferenceHelper.customPreference(this, CUSTOM_PREF_NAME)
+                    val map: HashMap<String, Any?> = HashMap()
+                    map["phone"] = prefs.userPhone
+                    map["activity"] = getString(R.string.result_not_publish_title)
+                    Liveuserdb.child(prefs.userToken!!).setValue(map)*/
+                }
+            } catch (e: Exception) {
+                binding.resultRootLayout.visibility=View.GONE
+                binding.waitingRootLayout.visibility=View.VISIBLE
+                supportActionBar?.title = getString(R.string.result_not_publish_title)
+                /*val Liveuserdb = FirebaseDatabase.getInstance().getReference("ActiveUsers")
+                val prefs = RegisterActivity.PreferenceHelper.customPreference(this, CUSTOM_PREF_NAME)
+                val map: HashMap<String, Any?> = HashMap()
+                map["phone"] = prefs.userPhone
+                map["activity"] = getString(R.string.result_not_publish_title)
+                Liveuserdb.child(prefs.userToken!!).setValue(map)*/
+            }
+        }
+    }
+    private fun loadLotteryNumberInfoUsingDateAndTimeSecondServer() {
+        Coroutines.main {
+            try {
+                binding.spinKit.visibility=View.VISIBLE
+                binding.resultRootLayout.visibility=View.GONE
+                binding.waitingRootLayout.visibility=View.GONE
+                val response=secondServerApi.getLotteryNumberListByDateSlot(resultDate,resultSlotId,
                     SharedPreUtils.getStringFromStorageWithoutSuspend(this,Constants.userIdKey,Constants.defaultUserId).toString())
                 binding.spinKit.visibility=View.GONE
                 if (response.isSuccessful && response.code()==200) {
