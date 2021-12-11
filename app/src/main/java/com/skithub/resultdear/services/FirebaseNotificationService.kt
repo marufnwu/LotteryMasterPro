@@ -47,17 +47,34 @@ class FirebaseNotificationService: FirebaseMessagingService() {
         } else {
             notificationIntent= Intent(Intent.ACTION_VIEW, Uri.parse(notification.link.toString()))
         }
-        val notificationPendingIntent: PendingIntent=PendingIntent.getActivity(this,Constants.notificationRequestCode,notificationIntent,PendingIntent.FLAG_ONE_SHOT)
-        val defaultNotificationUri=RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val notificationBuilder: NotificationCompat.Builder=NotificationCompat
-            .Builder(this,(applicationContext as MyApplication).MY_NOTIFICATION_CHANNEL_ID)
-            .setSmallIcon(getNotificationIcon())
-            .setContentTitle(notification.title)
-            .setContentText(notification.body)
-            .setContentIntent(notificationPendingIntent)
-            .setAutoCancel(true)
-            .setSound(defaultNotificationUri)
-        notificationManager?.notify(Constants.notificationRequestCode,notificationBuilder.build())
+//        val notificationPendingIntent: PendingIntent=PendingIntent.getActivity(this,Constants.notificationRequestCode,notificationIntent,PendingIntent.FLAG_ONE_SHOT)
+//        val defaultNotificationUri=RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+//        val notificationBuilder: NotificationCompat.Builder=NotificationCompat
+//            .Builder(this,(applicationContext as MyApplication).MY_NOTIFICATION_CHANNEL_ID)
+//            .setSmallIcon(getNotificationIcon())
+//            .setContentTitle(notification.title)
+//            .setContentText(notification.body)
+//            .setContentIntent(notificationPendingIntent)
+//            .setAutoCancel(true)
+//            .setSound(defaultNotificationUri)
+//        notificationManager?.notify(Constants.notificationRequestCode,notificationBuilder.build())
+
+
+        val nData : NotificationData = NotificationData()
+
+        nData.tittle = notification.title
+        nData.description = notification.body
+        nData.imgUrl = null
+        nData.notiClearAble = 1
+        nData.action = 3
+        nData.notiType = 1
+        nData.actionUrl = null
+        nData.actionActivity = "SplashActivity"
+
+        val notificationUtil = NotificationUtil(applicationContext)
+        notificationUtil.displayNotification(nData)
+
+        return
     }
 
     private fun showDataNotification(notificationData: MutableMap<String,String>) {
@@ -109,7 +126,7 @@ class FirebaseNotificationService: FirebaseMessagingService() {
         return if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
             //notificationBuilder.setColor(context.getResources().getColor(R.color.OrangeRed));
             R.drawable.ic_not_icon
-        } else R.drawable.bell
+        } else R.drawable.ic_not_icon
     }
 
 

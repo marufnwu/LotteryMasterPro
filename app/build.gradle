@@ -16,8 +16,8 @@ android {
         applicationId "com.skithub.resultdear"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 40
-        versionName "1.40"
+        versionCode 43
+        versionName "1.43"
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "Lmp_V"+versionName)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -156,7 +156,7 @@ dependencies {
     implementation "com.hanks:htextview-scale:$htextview_version"
 
 
-
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.16.1'
 
 
 

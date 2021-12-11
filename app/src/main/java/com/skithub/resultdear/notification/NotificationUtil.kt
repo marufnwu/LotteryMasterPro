@@ -160,7 +160,15 @@ class NotificationUtil(val context: Context) {
         }
         val m = (Date().time / 1000L % Int.MAX_VALUE).toInt()
         NOTIFICATION_ID = m
-        notificationManager.notify(NOTIFICATION_ID, notification)
+
+        //notificationManager.notify(NOTIFICATION_ID, notification)
+
+
+        try{
+            notificationManager.notify(NOTIFICATION_ID, notification)
+        }catch (e:Exception){
+            Log.d("NotificationError", e.message!!)
+        }
     }
 
     private fun getBitmapFromURL(strURL: String?): Bitmap? {

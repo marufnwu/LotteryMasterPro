@@ -2,6 +2,7 @@ package com.skithub.resultdear.ui.splash
 
 import android.content.Intent
 import android.content.IntentSender
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
+import com.skithub.resultdear.BuildConfig
 import com.skithub.resultdear.R
 import com.skithub.resultdear.databinding.ActivitySplashBinding
 import com.skithub.resultdear.ui.main.MainActivity
@@ -28,8 +30,13 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
         appUpdate = AppUpdateManagerFactory.create(this)
-        startActivity(Intent(this, MainActivity::class.java));
-        //checkUpdate()
+        //startActivity(Intent(this, MainActivity::class.java));
+        checkUpdate()
+//        if(BuildConfig.DEBUG){
+//           startActivity(Intent(this, MainActivity::class.java));
+//        }else{
+//            checkUpdate()
+//        }
     }
 
 
@@ -51,7 +58,7 @@ class SplashActivity : AppCompatActivity() {
                     appUpdate?.startUpdateFlowForResult(updateInfo,
                         AppUpdateType.IMMEDIATE,this,REQUEST_CODE)
                 }catch (e : IntentSender.SendIntentException){
-
+                    Log.e("PlayUpdateService", e.message!!)
                 }
             }else{
                 Log.d("UpdateChecker", "App up to date")
@@ -60,6 +67,11 @@ class SplashActivity : AppCompatActivity() {
                 finish()
             }
 
+        }!!.addOnFailureListener {
+            Log.d("UpdateChecker", it.message!!)
+
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 

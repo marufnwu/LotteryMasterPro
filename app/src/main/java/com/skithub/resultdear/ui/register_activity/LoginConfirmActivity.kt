@@ -55,7 +55,9 @@ class LoginConfirmActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= ActivityLoginConfirmBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         media = MediaPlayer.create(this, R.raw.serverissue)
+
         connectivityManager=getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
 
         val factory= MainViewModelFactory((application as MyApplication).myApi)
@@ -217,15 +219,18 @@ class LoginConfirmActivity : AppCompatActivity() {
 
     private fun serverIssueDialog(til: String, msg: String) {
 
-       if(!isActivityPause){
-           media!!.start()
-       }
+
 
         var serverIssueDialogBinding  = ServerIssueDialogBinding.inflate(layoutInflater)
         serverIssueDialogBinding.connectionTitle.text = til
         serverIssueDialogBinding.connectionMessage.text = msg
 
-        serverIssueDialogBinding.tryAgainBtn.visibility = View.INVISIBLE
+        if(!isActivityPause){
+            if(media!=null){
+                media!!.start()
+                serverIssueDialogBinding.tryAgainBtn.visibility = View.INVISIBLE
+            }
+        }
 
 
 
@@ -255,19 +260,27 @@ class LoginConfirmActivity : AppCompatActivity() {
         }
 
         serverIssueAlertDialog.setOnDismissListener {
-            if(media!!.isPlaying){
-                media!!.stop()
+            if(media!=null){
+                if(media!!.isPlaying){
+                    media!!.stop()
+                }
             }
         }
 
-        media!!.setOnErrorListener { p0, p1, p2 ->
-            serverIssueDialogBinding.tryAgainBtn.visibility =View.VISIBLE
-            true
+        if(media!=null){
+            media!!.setOnErrorListener { p0, p1, p2 ->
+                serverIssueDialogBinding.tryAgainBtn.visibility =View.VISIBLE
+                true
+            }
         }
 
-        media!!.setOnCompletionListener {
-            serverIssueDialogBinding.tryAgainBtn.visibility =View.VISIBLE
+        if(media!=null){
+            media!!.setOnCompletionListener {
+                serverIssueDialogBinding.tryAgainBtn.visibility =View.VISIBLE
+            }
         }
+
+
 
     }
 
@@ -335,8 +348,10 @@ class LoginConfirmActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        media?.release()
-        media = null
+        if(media!=null){
+            media?.release()
+            media = null
+        }
     }
 
 }

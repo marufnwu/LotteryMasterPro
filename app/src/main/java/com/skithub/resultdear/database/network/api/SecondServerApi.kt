@@ -21,7 +21,14 @@ import java.io.IOException
 import java.lang.Exception
 import java.net.SocketTimeoutException
 import java.net.URI.create
+import java.security.SecureRandom
+import java.security.cert.CertificateException
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 interface SecondServerApi {
 
@@ -80,10 +87,31 @@ interface SecondServerApi {
                 }
             }
 
+            val trustAllCerts: Array<TrustManager> = arrayOf(
+                    object : X509TrustManager {
+                        override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {
+
+                        }
+
+                        override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {
+                        }
+
+
+                        override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+                    }
+            )
+
+            // Install the all-trusting trust manager
+            val sslContext: SSLContext = SSLContext.getInstance("SSL")
+            sslContext.init(null, trustAllCerts, SecureRandom())
+            // Create an ssl socket factory with our all-trusting manager
+            var sslSocketFactory: SSLSocketFactory = sslContext.socketFactory
 
 
 
-            val okHttpClient: OkHttpClient = OkHttpClient.Builder()
+            var okHttpClient: OkHttpClient = OkHttpClient.Builder()
+                    //.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+                    //.hostnameVerifier { _, _ -> true }
                 .readTimeout(2, TimeUnit.MINUTES)
                 .connectTimeout(2, TimeUnit.MINUTES)
                 .callTimeout(2, TimeUnit.MINUTES)
@@ -108,6 +136,10 @@ interface SecondServerApi {
                     chain.proceed(request)
                 }
                 .build()
+
+
+
+
 
             val gsonBuilder = GsonBuilder()
             gsonBuilder.setLenient()

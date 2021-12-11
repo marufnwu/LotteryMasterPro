@@ -4,16 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Point
 import android.media.MediaPlayer
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.telephony.TelephonyManager
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -22,12 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.database.*
-import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.skithub.resultdear.BuildConfig
 import com.skithub.resultdear.R
@@ -60,11 +52,6 @@ import com.skithub.resultdear.ui.tow_nd_middle_plays_more.TwoNdMiddlePlaysMoreAc
 import com.skithub.resultdear.ui.winning_number.WinningNumberActivity
 import com.skithub.resultdear.ui.yes_vs_pre.YesVsPreActivity
 import com.skithub.resultdear.ui.yesterday_result.YesterdayResultActivity
-import com.skithub.resultdear.utils.CommonMethod
-import com.skithub.resultdear.utils.Constants
-import com.skithub.resultdear.utils.Coroutines
-import com.skithub.resultdear.utils.MyExtensions.shortToast
-import com.skithub.resultdear.utils.SharedPreUtils
 import com.skyfishjy.library.RippleBackground
 import org.json.JSONArray
 import org.json.JSONException
@@ -72,14 +59,33 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import okhttp3.ResponseBody
-import android.os.Build
 
-import android.util.DisplayMetrics
 import android.view.*
+import android.media.AudioManager
 
+import android.media.AudioAttributes
+import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.skithub.resultdear.utils.*
+import com.google.android.exoplayer2.upstream.DataSpec
+import com.google.android.exoplayer2.upstream.RawResourceDataSource
+
+enum class AudioPlayingType{
+    homeAudio,
+    serverIssueAudio
+}
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var serverIssueDialogBinding: ServerIssueDialogBinding
+    lateinit var audioPlayingType: AudioPlayingType
+    lateinit var player: ExoPlayer
+    private var isAudioDialogShwoing: Boolean = false;
+    private  var mediaPlayer: MediaPlayer? = null
+    private var isMpPause = false
+    private lateinit var audioLoadingDialog: AudioLoadingDialog
+    private lateinit var loadingDialog: LoadingDialog
 
     private var isActivityPause: Boolean = false
     private var isPause: Boolean = false
@@ -115,8 +121,85 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.home_activity_title)
         myApi = (application as MyApplication).myApi
         connectivityManager=getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        audioLoadingDialog = AudioLoadingDialog(activity = this, cancelable = true)
+        loadingDialog = LoadingDialog(this)
+         serverIssueDialogBinding  = ServerIssueDialogBinding.inflate(layoutInflater)
+        val renderersFactory = DefaultRenderersFactory(this)
+        val trackSelectionFactory = AdaptiveTrackSelection.Factory()
+        val trackSelectSelector = DefaultTrackSelector(trackSelectionFactory)
+        val loadControl = DefaultLoadControl()
 
-        media = MediaPlayer.create(this, R.raw.serverissue)
+
+        player = ExoPlayer.Builder(this)
+            .setLoadControl(loadControl)
+            .setRenderersFactory(renderersFactory)
+            .setTrackSelector(trackSelectSelector)
+            .build()
+
+        audioLoadingDialog.dialog!!.setOnDismissListener {
+            if(audioPlayingType == AudioPlayingType.homeAudio ){
+                player.stop()
+            }
+        }
+
+        player.addListener(object : Player.Listener {
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                super.onIsPlayingChanged(isPlaying)
+            }
+
+            override fun onPlayerError(error: PlaybackException) {
+                super.onPlayerError(error)
+                Log.d("ExoError", error.message!!)
+                if(audioPlayingType == AudioPlayingType.homeAudio){
+                    dismissHomeAudioDialog()
+                }else{
+                    serverIssueDialogBinding.tryAgainBtn.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onIsLoadingChanged(isLoading: Boolean) {
+                super.onIsLoadingChanged(isLoading)
+
+            }
+
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                super.onPlaybackStateChanged(playbackState)
+
+                if(player.isPlaying){
+                    if(isActivityPause){
+                        isPause = true
+                        player.pause()
+                    }
+                }
+
+                if(playbackState == Player.STATE_BUFFERING){
+                    //Player buffering
+                    loadingDialog.show()
+                    Log.d("ExoPlayer", "Buffering")
+                }else{
+                    Log.d("ExoPlayer", "Not Buffering")
+
+                    if(audioPlayingType == AudioPlayingType.homeAudio && player.isPlaying){
+                        audioLoadingDialog.show()
+                    }
+
+                    loadingDialog.hide()
+                }
+
+                if(playbackState == Player.STATE_IDLE){
+                    //the state when the player is stopped
+                }else if(playbackState == Player.STATE_ENDED){
+                    //The player finished playing all media.
+                    if(audioPlayingType == AudioPlayingType.homeAudio){
+                        dismissHomeAudioDialog()
+                    }else{
+                        serverIssueDialogBinding.tryAgainBtn.visibility = View.VISIBLE
+                    }
+                }
+            }
+        })
+
+
 
         val deviceMetadata = Metadata(this)
 
@@ -139,7 +222,23 @@ class MainActivity : AppCompatActivity() {
             noInternetDialog(getString(R.string.no_internet),getString(R.string.no_internet_message))
         }
 
+        //serverIssueDialog("Test", "Test");
 
+    }
+
+    private fun dismissHomeAudioDialog(){
+        if(audioLoadingDialog!=null && audioLoadingDialog.dialog!=null){
+            if(audioLoadingDialog.isLoading){
+                audioLoadingDialog.hide()
+            }
+        }
+    }
+
+    private fun playAudio(mediaItem: MediaItem){
+        player.stop()
+        player.setMediaItem(mediaItem)
+        player.prepare()
+        player.play()
     }
 
 
@@ -395,6 +494,7 @@ class MainActivity : AppCompatActivity() {
                             val TargetUrl = rootArray.getJSONObject(i).getString("TargetUrl")
                             val TargetUrlStatus = rootArray.getJSONObject(i).getString("ActiveStatus")
                             val marqueeTxt = rootArray.getJSONObject(i).getString("text")
+                            val homeAudioUrl = rootArray.getJSONObject(i).getString("homeAudioUrl")
 
                             if (!dbtoken.equals(SharedPreUtils.getStringFromStorageWithoutSuspend(this@MainActivity,Constants.fcmTokenKey,Constants.defaultUserToken)) || !activestatus.equals("1")){
                                 logOutWithoutupdate()
@@ -469,6 +569,10 @@ class MainActivity : AppCompatActivity() {
                                 }
                             }
 
+                            if(!homeAudioUrl.isNullOrEmpty()){
+                                showHomeAudioUrl(homeAudioUrl)
+                            }
+
 
 
 
@@ -488,6 +592,8 @@ class MainActivity : AppCompatActivity() {
                         "Unknown error occurred.",
                         Toast.LENGTH_SHORT
                     ).show()
+                    serverIssueDialog("Server Down",getString(R.string.server_issue_msg))
+
 
 
                 }
@@ -501,6 +607,15 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun showHomeAudioUrl(homeAudioUrl: String) {
+        val mediaItem = MediaItem.fromUri(homeAudioUrl)
+        playAudio(mediaItem)
+        audioPlayingType = AudioPlayingType.homeAudio
+        //audioLoadingDialog.show()
+        //loadingDialog.show()
+    }
+
 
     private fun AcDisibleDialog(){
         disibleDialogBinding= AcDisibledDialogBinding.inflate(layoutInflater)
@@ -597,15 +712,24 @@ class MainActivity : AppCompatActivity() {
     }
     private fun serverIssueDialog(til: String, msg: String) {
 
-        if(!isActivityPause){
-            media!!.start()
-        }
 
-        var serverIssueDialogBinding  = ServerIssueDialogBinding.inflate(layoutInflater)
+
+
         serverIssueDialogBinding.connectionTitle.text = til
         serverIssueDialogBinding.connectionMessage.text = msg
 
-        serverIssueDialogBinding.tryAgainBtn.visibility = View.INVISIBLE
+        if(!isActivityPause){
+            if(player!=null){
+                val rawDataSource = RawResourceDataSource(this)
+                // open the /raw resource file
+                rawDataSource.open(DataSpec(RawResourceDataSource.buildRawResourceUri(R.raw.serverissue)))
+                var mediaItem : MediaItem = MediaItem.fromUri(rawDataSource.uri!!)
+
+                playAudio(mediaItem)
+                audioPlayingType = AudioPlayingType.serverIssueAudio
+                serverIssueDialogBinding.tryAgainBtn.visibility = View.INVISIBLE
+            }
+        }
 
 
 
@@ -636,19 +760,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         serverIssueAlertDialog.setOnDismissListener {
-            if(media!!.isPlaying){
-                media!!.stop()
+            if(media!=null){
+                if(media!!.isPlaying){
+                    media!!.stop()
+                }
             }
         }
 
-        media!!.setOnErrorListener { p0, p1, p2 ->
-            serverIssueDialogBinding.tryAgainBtn.visibility =View.VISIBLE
-            true
-        }
 
-        media!!.setOnCompletionListener {
-            serverIssueDialogBinding.tryAgainBtn.visibility =View.VISIBLE
-        }
 
     }
 
@@ -826,30 +945,38 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onResume() {
+        Log.d("State", "onResume")
         super.onResume()
         isActivityPause = false
-        if(isPause && media!=null){
-            media!!.start()
+
+        if(isPause && player!=null){
+            player.play()
         }
+
     }
 
     override fun onPause() {
+        Log.d("State", "onPause")
+
         super.onPause()
         isActivityPause = true
-        if(media!=null){
-            media!!.isPlaying.let {
-                if(it){
-                    isPause = true
-                    media!!.pause()
-                }
+        if(player!=null){
+            if(player.isPlaying){
+                isPause = true
+                player.pause()
             }
         }
+
     }
 
     override fun onDestroy() {
+        Log.d("State", "onDestroy")
+
         super.onDestroy()
-        media?.release()
-        media = null
+        if(player!=null){
+            player.release()
+        }
+
     }
 
 }

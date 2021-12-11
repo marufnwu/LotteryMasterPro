@@ -69,7 +69,6 @@ class SpecialNumberActivity : AppCompatActivity() {
                     .setUsage(AudioAttributes.USAGE_MEDIA)
                     .build()
             )
-
         }
 
         mediaPlayer!!.setOnPreparedListener {
