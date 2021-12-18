@@ -58,7 +58,6 @@ class SplashActivity : AppCompatActivity() {
                     appUpdate?.startUpdateFlowForResult(updateInfo,
                         AppUpdateType.IMMEDIATE,this,REQUEST_CODE)
                 }catch (e : IntentSender.SendIntentException){
-                    Log.e("PlayUpdateService", e.message!!)
                 }
             }else{
                 Log.d("UpdateChecker", "App up to date")

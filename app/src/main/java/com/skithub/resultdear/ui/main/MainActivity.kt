@@ -150,9 +150,14 @@ class MainActivity : AppCompatActivity() {
             override fun onPlayerError(error: PlaybackException) {
                 super.onPlayerError(error)
                 Log.d("ExoError", error.message!!)
-                if(audioPlayingType == AudioPlayingType.homeAudio){
+                try{
+                    if(audioPlayingType == AudioPlayingType.homeAudio){
+                        dismissHomeAudioDialog()
+                    }else{
+                        serverIssueDialogBinding.tryAgainBtn.visibility = View.VISIBLE
+                    }
+                }catch (e:Exception){
                     dismissHomeAudioDialog()
-                }else{
                     serverIssueDialogBinding.tryAgainBtn.visibility = View.VISIBLE
                 }
             }
@@ -725,8 +730,9 @@ class MainActivity : AppCompatActivity() {
                 rawDataSource.open(DataSpec(RawResourceDataSource.buildRawResourceUri(R.raw.serverissue)))
                 var mediaItem : MediaItem = MediaItem.fromUri(rawDataSource.uri!!)
 
-                playAudio(mediaItem)
                 audioPlayingType = AudioPlayingType.serverIssueAudio
+                playAudio(mediaItem)
+
                 serverIssueDialogBinding.tryAgainBtn.visibility = View.INVISIBLE
             }
         }
@@ -756,7 +762,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (!isFinishing) {
-            serverIssueAlertDialog.show()
+            try{
+                serverIssueAlertDialog.show()
+            }catch (e:Exception){
+
+            }
         }
 
         serverIssueAlertDialog.setOnDismissListener {

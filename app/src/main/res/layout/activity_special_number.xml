@@ -89,43 +89,44 @@
 
     <ScrollView
 
-        android:visibility="visible"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/specialNumberLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <ImageView
-                    android:scaleType="fitXY"
-                    android:visibility="gone"
-                    android:layout_margin="@dimen/_5sdp"
                     android:id="@+id/ivPremBanner"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_160sdp"/>
+                    android:layout_height="@dimen/_160sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:scaleType="fitXY"
+                    android:visibility="gone" />
 
 
                 <TextView
                     android:id="@+id/upload_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="08-06-2021"
-                    android:textStyle="bold"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textAlignment="center"
-                    android:padding="@dimen/_10sdp"
-                    android:textColor="@color/white"
-                    android:background="@color/purple_700"
                     android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@color/purple_700"
+                    android:padding="@dimen/_10sdp"
+                    android:text="08-06-2021"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
                     tools:ignore="MissingConstraints" />
-
 
 
                 <TextView
@@ -137,16 +138,16 @@
                     android:drawableLeft="@drawable/ic_flower_left"
                     android:drawableRight="@drawable/ic_flower_right"
                     android:gravity="center_vertical|center_horizontal"
+                    android:letterSpacing="0.1"
                     android:maxLines="1"
                     android:padding="@dimen/_7sdp"
                     android:shadowColor="@color/lightGray"
                     android:shadowDx="-2"
                     android:shadowDy="-2"
                     android:shadowRadius="1"
-                    android:letterSpacing="0.1"
-                    android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/numberTwo"
@@ -187,6 +188,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/numberFour"
                     android:layout_width="match_parent"
@@ -196,16 +198,17 @@
                     android:drawableLeft="@drawable/ic_flower_left"
                     android:drawableRight="@drawable/ic_flower_right"
                     android:gravity="center_vertical|center_horizontal"
+                    android:letterSpacing="0.1"
                     android:maxLines="1"
                     android:padding="@dimen/_7sdp"
                     android:shadowColor="@color/lightGray"
                     android:shadowDx="-2"
                     android:shadowDy="-2"
                     android:shadowRadius="1"
-                    android:letterSpacing="0.1"
-                    android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/numberFive"
                     android:layout_width="match_parent"
@@ -215,16 +218,16 @@
                     android:drawableLeft="@drawable/ic_flower_left"
                     android:drawableRight="@drawable/ic_flower_right"
                     android:gravity="center_vertical|center_horizontal"
+                    android:letterSpacing="0.1"
                     android:maxLines="1"
                     android:padding="@dimen/_7sdp"
                     android:shadowColor="@color/lightGray"
                     android:shadowDx="-2"
                     android:shadowDy="-2"
                     android:shadowRadius="1"
-                    android:letterSpacing="0.1"
-                    android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/numberSix"
@@ -235,16 +238,16 @@
                     android:drawableLeft="@drawable/ic_flower_left"
                     android:drawableRight="@drawable/ic_flower_right"
                     android:gravity="center_vertical|center_horizontal"
+                    android:letterSpacing="0.1"
                     android:maxLines="1"
                     android:padding="@dimen/_7sdp"
                     android:shadowColor="@color/lightGray"
                     android:shadowDx="-2"
                     android:shadowDy="-2"
                     android:shadowRadius="1"
-                    android:letterSpacing="0.1"
-                    android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/numberSeven"
@@ -255,16 +258,16 @@
                     android:drawableLeft="@drawable/ic_flower_left"
                     android:drawableRight="@drawable/ic_flower_right"
                     android:gravity="center_vertical|center_horizontal"
+                    android:letterSpacing="0.1"
                     android:maxLines="1"
                     android:padding="@dimen/_7sdp"
                     android:shadowColor="@color/lightGray"
                     android:shadowDx="-2"
                     android:shadowDy="-2"
                     android:shadowRadius="1"
-                    android:letterSpacing="0.1"
-                    android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/numberEight"
@@ -275,16 +278,16 @@
                     android:drawableLeft="@drawable/ic_flower_left"
                     android:drawableRight="@drawable/ic_flower_right"
                     android:gravity="center_vertical|center_horizontal"
+                    android:letterSpacing="0.1"
                     android:maxLines="1"
                     android:padding="@dimen/_7sdp"
                     android:shadowColor="@color/lightGray"
                     android:shadowDx="-2"
                     android:shadowDy="-2"
                     android:shadowRadius="1"
-                    android:letterSpacing="0.1"
-                    android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/numberNine"
@@ -295,16 +298,16 @@
                     android:drawableLeft="@drawable/ic_flower_left"
                     android:drawableRight="@drawable/ic_flower_right"
                     android:gravity="center_vertical|center_horizontal"
+                    android:letterSpacing="0.1"
                     android:maxLines="1"
                     android:padding="@dimen/_7sdp"
                     android:shadowColor="@color/lightGray"
                     android:shadowDx="-2"
                     android:shadowDy="-2"
                     android:shadowRadius="1"
-                    android:letterSpacing="0.1"
-                    android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/numberTen"
@@ -315,161 +318,177 @@
                     android:drawableLeft="@drawable/ic_flower_left"
                     android:drawableRight="@drawable/ic_flower_right"
                     android:gravity="center_vertical|center_horizontal"
+                    android:letterSpacing="0.1"
                     android:maxLines="1"
                     android:padding="@dimen/_7sdp"
                     android:shadowColor="@color/lightGray"
                     android:shadowDx="-2"
                     android:shadowDy="-2"
                     android:shadowRadius="1"
-                    android:letterSpacing="0.1"
-                    android:textStyle="bold"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
             </LinearLayout>
+
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/standerdLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
 
                 <LinearLayout
-                    android:padding="@dimen/_10sdp"
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
+                    android:layout_height="match_parent"
                     android:layout_margin="@dimen/_10sdp"
                     android:background="@drawable/service_plan_backg"
-                    android:layout_height="match_parent" >
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp">
+
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <ImageView
                             android:id="@+id/ytthumbail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxHeight="@dimen/_200sdp"
-                            android:adjustViewBounds="true"/>
+                            android:adjustViewBounds="true"
+                            android:maxHeight="@dimen/_200sdp" />
 
                         <com.skyfishjy.library.RippleBackground
+                            android:id="@+id/content"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/content"
-                            app:rb_color="#636200EE"
                             android:layout_gravity="center"
+                            app:rb_color="#636200EE"
+                            app:rb_duration="3000"
                             app:rb_radius="@dimen/_15sdp"
                             app:rb_rippleAmount="4"
-                            app:rb_duration="3000"
                             app:rb_scale="6">
+
                             <ImageView
+                                android:id="@+id/centerImage"
                                 android:layout_width="@dimen/_30sdp"
                                 android:layout_height="@dimen/_30sdp"
                                 android:layout_centerInParent="true"
-                                android:id="@+id/centerImage"
-                                android:src="@drawable/ic_baseline_play_circle_outline_24"/>
+                                android:src="@drawable/ic_baseline_play_circle_outline_24" />
                         </com.skyfishjy.library.RippleBackground>
 
                     </FrameLayout>
+
                     <TextView
                         android:id="@+id/tvInstruction"
-                        android:padding="@dimen/_8sdp"
-                        android:background="@drawable/border_tv_bg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/paid_service_message"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:textColor="#2DFF03"
+                        android:background="@drawable/border_tv_bg"
                         android:justificationMode="inter_word"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/paid_service_message"
                         android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="#2DFF03" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:orientation="vertical">
+
                         <LinearLayout
                             android:id="@+id/PhoneOne"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/_10sdp"
                             android:layout_margin="@dimen/_5sdp"
                             android:background="@drawable/service_plan_backg"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:padding="@dimen/_10sdp">
+
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/service_plan_backg"
                                 android:padding="@dimen/_5sdp"
-                                android:src="@drawable/ic_call_phone"/>
+                                android:src="@drawable/ic_call_phone" />
+
                             <TextView
                                 android:id="@+id/pnOne"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_10sdp"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                                android:textStyle="bold"
                                 android:textColor="@color/white"
-                                android:layout_marginLeft="@dimen/_10sdp"/>
+                                android:textStyle="bold" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/PhoneTwo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/_10sdp"
                             android:layout_margin="@dimen/_5sdp"
                             android:background="@drawable/service_plan_backg"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:padding="@dimen/_10sdp">
+
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/service_plan_backg"
                                 android:padding="@dimen/_5sdp"
-                                android:src="@drawable/ic_call_phone"/>
+                                android:src="@drawable/ic_call_phone" />
+
                             <TextView
                                 android:id="@+id/pnTwo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_10sdp"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                                android:textStyle="bold"
                                 android:textColor="@color/white"
-                                android:layout_marginLeft="@dimen/_10sdp"/>
+                                android:textStyle="bold" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:id="@+id/PhoneThree"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/_10sdp"
                             android:layout_margin="@dimen/_5sdp"
                             android:background="@drawable/service_plan_backg"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:padding="@dimen/_10sdp">
+
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/service_plan_backg"
                                 android:padding="@dimen/_5sdp"
-                                android:src="@drawable/ic_call_phone"/>
+                                android:src="@drawable/ic_call_phone" />
+
                             <TextView
                                 android:id="@+id/pnThree"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/_10sdp"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                                android:textStyle="bold"
                                 android:textColor="@color/white"
-                                android:layout_marginLeft="@dimen/_10sdp"/>
+                                android:textStyle="bold" />
                         </LinearLayout>
+
                         <ImageView
                             android:id="@+id/whatsAppBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_60sdp"
-                            android:src="@drawable/whats_app_icon"
-                            android:adjustViewBounds="true"
-                            android:layout_marginRight="@dimen/_10sdp"
-                            android:layout_marginLeft="@dimen/_10sdp"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/_10sdp"/>
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/whats_app_icon" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
