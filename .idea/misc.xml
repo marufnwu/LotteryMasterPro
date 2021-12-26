@@ -4,10 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/app/src/main/res/layout/activity_login_confirm.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android/app/src/main/res/layout/activity_player.xml" value="0.1734375" />
+        <entry key="..\:/Android/app/src/main/res/layout/activity_privacy_policy.xml" value="0.1734375" />
         <entry key="..\:/Android/app/src/main/res/layout/activity_register.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/app/src/main/res/layout/activity_special_number.xml" value="0.1734375" />
         <entry key="..\:/Android/app/src/main/res/layout/connection_check_dialog.xml" value="0.19655797101449277" />
         <entry key="..\:/Android/app/src/main/res/layout/custom_loading_dialog_layout.xml" value="0.1" />
+        <entry key="..\:/Android/app/src/main/res/layout/dialog_multiple_login_contact.xml" value="0.1734375" />
         <entry key="..\:/Android/app/src/main/res/layout/server_issue_dialog.xml" value="0.19655797101449277" />
         <entry key="..\:/Android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.19375" />
         <entry key="..\:/LotteryMasterPro-10-01-2021/Lottery master/app/src/main/res/drawable/arrow_icon_backg.xml" value="0.19375" />

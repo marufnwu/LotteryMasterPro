@@ -101,8 +101,8 @@ class LotteryResultInfoActivity : AppCompatActivity() {
 
         if (CommonMethod.haveInternet(connectivityManager)) {
             setUpRecyclerView()
-            //loadLotteryNumberInfoUsingDateAndTime()
-            loadLotteryNumberInfoUsingDateAndTimeSecondServer()
+            loadLotteryNumberInfoUsingDateAndTime()
+            //loadLotteryNumberInfoUsingDateAndTimeSecondServer()
             loadAdsImageInfo()
             checkBannerAd()
         }else{

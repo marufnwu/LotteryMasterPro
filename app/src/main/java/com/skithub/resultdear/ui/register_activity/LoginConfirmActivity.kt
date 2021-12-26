@@ -20,6 +20,7 @@ import com.skithub.resultdear.BuildConfig
 import com.skithub.resultdear.R
 import com.skithub.resultdear.databinding.ActivityLoginConfirmBinding
 import com.skithub.resultdear.databinding.ConnectionCheckDialogBinding
+import com.skithub.resultdear.databinding.DialogMultipleLoginContactBinding
 import com.skithub.resultdear.databinding.ServerIssueDialogBinding
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.ui.main.MainActivity
@@ -185,6 +186,8 @@ class LoginConfirmActivity : AppCompatActivity() {
                                             binding.numberSubmitbtn.visibility = View.GONE
                                             binding.loginprogressbar.visibility = View.GONE
 
+                                            //show dialog for multiple login issue
+                                            getContactDetails()
                                         }
                                     }
                                 }
@@ -214,6 +217,60 @@ class LoginConfirmActivity : AppCompatActivity() {
 
 
         }
+    }
+
+    private fun getContactDetails() {
+        Coroutines.main {
+            val res =  viewModel.getPaidForContact("7", "null")
+            if(res.isSuccessful && res.body()!=null){
+                val paidForContactModel = res.body()!!
+
+                val multipleLoginDialogBinding = DialogMultipleLoginContactBinding.inflate(layoutInflater)
+
+                val builder= AlertDialog.Builder(this@LoginConfirmActivity)
+                    .setCancelable(true)
+                    .setView(multipleLoginDialogBinding.root)
+                val multipleLoginDialog = builder.create()
+
+                if (multipleLoginDialog.window!=null) {
+                    multipleLoginDialog.window!!.attributes.windowAnimations=R.style.DialogTheme
+                }
+
+                multipleLoginDialogBinding.pnOne.text = paidForContactModel.phone_one!!
+                multipleLoginDialogBinding.pnTwo.text = paidForContactModel.phone_two!!
+                multipleLoginDialogBinding.pnThree.text = paidForContactModel.phone_three!!
+
+                Glide.with(this).load(paidForContactModel.video_thumbail)
+                    .placeholder(R.drawable.loading_placeholder)
+                    .fitCenter()
+                    .into(multipleLoginDialogBinding.ytthumbail)
+
+                multipleLoginDialogBinding.ytthumbail.setOnClickListener {
+                    val webIntent: Intent= Intent(Intent.ACTION_VIEW,Uri.parse(paidForContactModel.video_link))
+                    startActivity(Intent.createChooser(webIntent,"Choose one:"))
+                }
+
+                multipleLoginDialogBinding.PhoneOne.setOnClickListener {
+                    dial(paidForContactModel.phone_one)
+                }
+                multipleLoginDialogBinding.PhoneTwo.setOnClickListener {
+                    dial(paidForContactModel.phone_two)
+                }
+                multipleLoginDialogBinding.PhoneThree.setOnClickListener {
+                    dial(paidForContactModel.phone_three)
+                }
+
+                if(!isFinishing){
+                    multipleLoginDialog.show()
+                }
+            }
+        }
+    }
+
+    private fun dial(num:String){
+        val dialIntent = Intent(Intent.ACTION_DIAL)
+        dialIntent.data = Uri.parse("tel:" + num)
+        startActivity(dialIntent)
     }
 
 

@@ -33,7 +33,7 @@ class NotificationUtil(val context: Context) {
     private var notification: Notification? = null
 
 
-    @SuppressLint("WrongConstant")
+
     fun displayNotification(notificationData: NotificationData) {
         val tittle = notificationData.tittle
         val message = notificationData.description
@@ -41,18 +41,28 @@ class NotificationUtil(val context: Context) {
         var iconBitmap: Bitmap? = null
         val resultPendingIntent: PendingIntent
         Log.d("intentSelect", Gson().toJson(notificationData))
-        if (notificationData.action === 1) {
+        if (notificationData.action == 1) {
             //open url
             Log.d("intentSelect", "Url")
             val notificationIntent = Intent(Intent.ACTION_VIEW)
             notificationIntent.data = Uri.parse(notificationData.actionUrl)
-            resultPendingIntent = PendingIntent.getActivity(
-                context,
-                0,
-                notificationIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            )
-        } else if (notificationData.action === 2) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+                resultPendingIntent = PendingIntent.getActivity(
+                    context,
+                    0,
+                    notificationIntent,
+                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                )
+            }else{
+                resultPendingIntent = PendingIntent.getActivity(
+                    context,
+                    0,
+                    notificationIntent,
+                     PendingIntent.FLAG_UPDATE_CURRENT
+                )
+            }
+        } else if (notificationData.action == 2) {
             //open activity
             Log.d("intentSelect", "Activity")
             val activity = notificationData.actionActivity
@@ -74,8 +84,14 @@ class NotificationUtil(val context: Context) {
             val stackBuilder = TaskStackBuilder.create(context)
             stackBuilder.addNextIntentWithParentStack(resultIntent)
             // Get the PendingIntent containing the entire back stack
-            resultPendingIntent =
-                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+                resultPendingIntent =
+                    stackBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+            }else{
+                resultPendingIntent =
+                    stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+            }
         } else {
             Log.d("intentSelect", "Splash Activity")
             val resultIntent = Intent(context, SplashActivity::class.java)
@@ -83,17 +99,23 @@ class NotificationUtil(val context: Context) {
             val stackBuilder = TaskStackBuilder.create(context)
             stackBuilder.addNextIntentWithParentStack(resultIntent)
             // Get the PendingIntent containing the entire back stack
-            resultPendingIntent =
-                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+                resultPendingIntent =
+                    stackBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+            }else{
+                resultPendingIntent =
+                    stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+            }
+
         }
-        if (notificationData.notiType === 2) {
+        if (notificationData.notiType == 2) {
             iconBitmap = getBitmapFromURL(iconUrl)
         }
         val icon: Int = R.mipmap.ic_launcher
         val mBuilder = NotificationCompat.Builder(
             context!!, CHANNEL_ID
         )
-        if (notificationData.notiClearAble === 0) {
+        if (notificationData.notiClearAble == 0) {
             mBuilder.setContentIntent(resultPendingIntent).setOngoing(true)
         } else {
             mBuilder.setContentIntent(resultPendingIntent).setOngoing(false)
@@ -138,7 +160,7 @@ class NotificationUtil(val context: Context) {
                 }*/
         }
         val notificationManager =
-            context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name: CharSequence = CHANNEL_NAME
             val description = "Ps Guide Notification"

@@ -70,6 +70,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.skithub.resultdear.utils.*
 import com.google.android.exoplayer2.upstream.DataSpec
 import com.google.android.exoplayer2.upstream.RawResourceDataSource
+import com.skithub.resultdear.ui.PlayerActivity
 
 enum class AudioPlayingType{
     homeAudio,
@@ -232,7 +233,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun dismissHomeAudioDialog(){
-        if(audioLoadingDialog!=null && audioLoadingDialog.dialog!=null){
+        if(audioLoadingDialog.dialog!=null){
             if(audioLoadingDialog.isLoading){
                 audioLoadingDialog.hide()
             }
@@ -678,7 +679,8 @@ class MainActivity : AppCompatActivity() {
                     CommonMethod.shareAppLink(this)
                 }
                 R.id.liveSupport -> {
-                    startActivity(Intent(this,LiveSupportActivity::class.java))
+                    //startActivity(Intent(this,LiveSupportActivity::class.java))
+                    startActivity(Intent(this,PlayerActivity::class.java))
                 }
                 R.id.appPrivacy -> {
                     startActivity(Intent(this,PrivacyPolicyActivity::class.java))
@@ -716,10 +718,6 @@ class MainActivity : AppCompatActivity() {
 
     }
     private fun serverIssueDialog(til: String, msg: String) {
-
-
-
-
         serverIssueDialogBinding.connectionTitle.text = til
         serverIssueDialogBinding.connectionMessage.text = msg
 
@@ -744,38 +742,51 @@ class MainActivity : AppCompatActivity() {
             val webIntent: Intent= Intent(Intent.ACTION_VIEW,Uri.parse(url))
             startActivity(Intent.createChooser(webIntent,"Choose one:"))
         }
-        val builder= AlertDialog.Builder(this)
-                .setCancelable(false)
-                .setView(serverIssueDialogBinding.root)
 
-        var serverIssueAlertDialog=builder.create()
-        if (serverIssueAlertDialog.window!=null) {
-            serverIssueAlertDialog.window!!.attributes.windowAnimations=R.style.DialogTheme
-        }
 
-        serverIssueDialogBinding.tryAgainBtn.setOnClickListener {
-            if (CommonMethod.haveInternet(connectivityManager)) {
-                intil()
-                getPremiumStatus()
-                serverIssueAlertDialog.dismiss()
-            }
-        }
 
-        if (!isFinishing) {
+
+
             try{
-                serverIssueAlertDialog.show()
-            }catch (e:Exception){
 
-            }
-        }
-
-        serverIssueAlertDialog.setOnDismissListener {
-            if(media!=null){
-                if(media!!.isPlaying){
-                    media!!.stop()
+                if(serverIssueDialogBinding.root.parent!=null){
+                    (serverIssueDialogBinding.root.parent as ViewGroup).removeView(serverIssueDialogBinding.root)
                 }
+
+
+                val builder= AlertDialog.Builder(this)
+                    .setCancelable(false)
+                    .setView(serverIssueDialogBinding.root)
+
+                var serverIssueAlertDialog=builder.create()
+                if (serverIssueAlertDialog.window!=null) {
+                    serverIssueAlertDialog.window!!.attributes.windowAnimations=R.style.DialogTheme
+                }
+
+                serverIssueDialogBinding.tryAgainBtn.setOnClickListener {
+                    if (CommonMethod.haveInternet(connectivityManager)) {
+                        intil()
+                        getPremiumStatus()
+                        serverIssueAlertDialog.dismiss()
+                    }
+                }
+
+                serverIssueAlertDialog.setOnDismissListener {
+                    if(media!=null){
+                        if(media!!.isPlaying){
+                            media!!.stop()
+                        }
+                    }
+                }
+                if (!isFinishing) {
+                    serverIssueAlertDialog.show()
+                }
+            }catch (e:Exception){
+                e.printStackTrace()
             }
-        }
+
+
+
 
 
 
