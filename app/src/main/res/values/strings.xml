@@ -106,6 +106,7 @@
     <string name="not_implemented_message">Please wait. This option is not implemented yet.</string>
     <string name="firstDigitFirstPrize">Last Digit Of First Prize</string>
     <string name="gotAprize">Got a prize?</string>
+    <string name="track_selection_title">Track Selection</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

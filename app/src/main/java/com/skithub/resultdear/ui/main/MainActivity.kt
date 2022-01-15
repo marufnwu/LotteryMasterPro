@@ -679,8 +679,8 @@ class MainActivity : AppCompatActivity() {
                     CommonMethod.shareAppLink(this)
                 }
                 R.id.liveSupport -> {
-                    //startActivity(Intent(this,LiveSupportActivity::class.java))
-                    startActivity(Intent(this,PlayerActivity::class.java))
+                    startActivity(Intent(this,LiveSupportActivity::class.java))
+                    //startActivity(Intent(this,PlayerActivity::class.java))
                 }
                 R.id.appPrivacy -> {
                     startActivity(Intent(this,PrivacyPolicyActivity::class.java))

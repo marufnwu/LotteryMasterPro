@@ -23,8 +23,7 @@
     <color name="gradient_start">#1134FA</color>
     <color name="gradient_center">#07E0FB</color>
     <color name="gradient_end">#2D43BC</color>
-
-
+    <color name="colorPrimaryDark">#3F51B5</color>
 
 
 </resources>

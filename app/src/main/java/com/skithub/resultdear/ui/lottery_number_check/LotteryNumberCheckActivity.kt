@@ -157,8 +157,8 @@ class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener {
                 binding.spinKit.visibility= View.VISIBLE
                 list.clear()
                 adapter.notifyDataSetChanged()
-                //val response=viewModel.findLotteryInfoUsingLotteryNumber(page_number.toString(),item_count.toString(),lotteryNumber)
-                val response=secodServerApi.findSimilarLotteryNumberList(page_number.toString(),item_count.toString(),lotteryNumber)
+                val response=viewModel.findLotteryInfoUsingLotteryNumber(page_number.toString(),item_count.toString(),lotteryNumber)
+                //val response=secodServerApi.findSimilarLotteryNumberList(page_number.toString(),item_count.toString(),lotteryNumber)
                 if (response.isSuccessful && response.code()==200) {
                     binding.spinKit.visibility= View.GONE
                     if (response.body()?.status.equals("success",true)) {

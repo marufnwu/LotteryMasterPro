@@ -1,26 +1,38 @@
 package com.skithub.resultdear.ui
 
 import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Display
 import android.view.View
+import android.view.WindowManager
 import android.webkit.WebView
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.SimpleExoPlayer
+import android.widget.Toast
+import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.trackselection.TrackSelectionParameters
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
+import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.util.MimeTypes
 import com.google.android.exoplayer2.util.Util
 import com.skithub.resultdear.R
 import com.skithub.resultdear.databinding.ActivityPlayerBinding
+import com.skithub.resultdear.databinding.CustomPlayerViewBinding
+import com.skithub.resultdear.utils.MyExtensions.shortToast
 
 
 class PlayerActivity : AppCompatActivity() {
+    private val KEY_TRACK_SELECTION_PARAMETERS: String = "trackSelectorParameter"
+    lateinit var  trackSelectionParameters: DefaultTrackSelector.Parameters
+    lateinit var trackSelector: DefaultTrackSelector
     val KEY_PLAYER = "exoplayer"
     val KEY_PLAY_WHEN_READY = "playWhenReady"
     val KEY_CURRENT_WINDOW = "currentWindow"
     val KEY_PLAYBACK_POSITION = "playbackPosition"
+    private var isShowingTrackSelectionDialog = false
 
     private val viewBinding by lazy(LazyThreadSafetyMode.NONE) {
         ActivityPlayerBinding.inflate(layoutInflater)
@@ -33,20 +45,97 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE)
         setContentView(viewBinding.root)
         Log.d("Rotate=>", "onCreate")
 
         if(savedInstanceState!=null){
+
+            // Restore as DefaultTrackSelector.Parameters in case ExoPlayer specific parameters were set.
+            trackSelectionParameters = DefaultTrackSelector.Parameters.CREATOR.fromBundle(
+                savedInstanceState.getBundle(KEY_TRACK_SELECTION_PARAMETERS)!!
+            )
+
             playWhenReady = savedInstanceState.getBoolean(KEY_PLAY_WHEN_READY, playWhenReady)
             currentWindow = savedInstanceState.getInt(KEY_CURRENT_WINDOW)
             playbackPosition = savedInstanceState.getLong(KEY_PLAYBACK_POSITION, playbackPosition)
+        }else{
+            trackSelectionParameters =
+                DefaultTrackSelector.ParametersBuilder( this).build()
+        }
+
+        CustomPlayerViewBinding.inflate(layoutInflater).exoFullscreen.setOnClickListener {
+            Toast.makeText(this, "okkk", Toast.LENGTH_SHORT).show()
+        }
+
+        CustomPlayerViewBinding.inflate(layoutInflater).exoFullscreen.setOnClickListener {
+            Toast.makeText(this, "okkk", Toast.LENGTH_SHORT).show()
+        }
+
+        viewBinding.selectTracksButton.setOnClickListener {
+            selectTrack()
+        }
+        viewBinding.videoView.setControllerVisibilityListener {
+                visibility-> viewBinding.controlsRoot.visibility = visibility
+        }
+
+        viewBinding.back.setOnClickListener {
+            finish()
+        }
+
+        viewBinding.rotate.setOnClickListener {
+
+            val orientation: Int = getResources().getConfiguration().orientation
+            if(orientation== Configuration.ORIENTATION_PORTRAIT){
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE)
+            }else if(orientation== Configuration.ORIENTATION_LANDSCAPE){
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+            }
         }
 
 
     }
 
+    private fun selectTrack() {
+        if (!isShowingTrackSelectionDialog && TrackSelectionDialog.willHaveContent(
+                trackSelector
+            )
+        ) {
+            isShowingTrackSelectionDialog = true
+            val trackSelectionDialog = TrackSelectionDialog.createForTrackSelector(
+                trackSelector
+            )  /* onDismissListener= */
+            { dismissedDialog -> isShowingTrackSelectionDialog = false }
+            trackSelectionDialog.show(supportFragmentManager,  /* tag= */null)
+        }
+    }
+
+    // User controls
+    private fun updateButtonVisibility() {
+        viewBinding.selectTracksButton.setEnabled(
+            player != null && TrackSelectionDialog.willHaveContent(trackSelector)
+        )
+    }
+
+    private fun updateTrackSelectorParameters() {
+        if (player != null) {
+            // Until the demo app is fully migrated to TrackSelectionParameters, rely on ExoPlayer to use
+            // DefaultTrackSelector by default.
+            trackSelectionParameters =
+                player!!.trackSelectionParameters as DefaultTrackSelector.Parameters
+        }
+    }
+
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        updateTrackSelectorParameters()
+        outState.putBundle(KEY_TRACK_SELECTION_PARAMETERS,
+            trackSelectionParameters.toBundle()
+        )
 
         outState.putBoolean(KEY_PLAY_WHEN_READY, playWhenReady)
         outState.putInt(KEY_CURRENT_WINDOW, currentWindow)
@@ -54,29 +143,44 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun initializePlayer() {
-        val trackSelector = DefaultTrackSelector(this).apply {
+         trackSelector = DefaultTrackSelector(this).apply {
             setParameters(buildUponParameters().setMaxVideoSizeSd())
         }
 
-        player = SimpleExoPlayer.Builder(this)
-            .setTrackSelector(trackSelector)
-            .build()
-            .also { exoPlayer ->
-                viewBinding.videoView.player = exoPlayer
+        //val url:String? = "http://192.168.0.103/lmp/convert/dash/1641478345228/file.mpd"
+        val url:String? = intent.getStringExtra("url")
+        if(url!=null){
+            player = SimpleExoPlayer.Builder(this)
+                .setTrackSelector(trackSelector)
+                .build()
+                .also { exoPlayer ->
+                    viewBinding.videoView.player = exoPlayer
 
-                val mediaItem = MediaItem.fromUri("http://192.168.0.103/playtube/embed/TXmqng1O68ipWmJ")
+                    // mediaItem = MediaItem.fromUri("http://192.168.0.103/playtube/embed/TXmqng1O68ipWmJ")
 
-                // With this
-//                val mediaItem = MediaItem.Builder()
-//                    .setUri("https://storage.googleapis.com/exoplayer-test-media-0/BigBuckBunny_320x180.mp4")
-//                    .setMimeType(MimeTypes.APPLICATION_MPD)
-//                    .build()
-                exoPlayer.setMediaItem(mediaItem)
+                    // With this
+                    val mediaItem = MediaItem.Builder()
+                        .setUri(url)
+                        .setMimeType(MimeTypes.APPLICATION_MPD)
+                        .build()
+                    exoPlayer.setMediaItem(mediaItem)
+                    exoPlayer.trackSelectionParameters = trackSelectionParameters
 
-                exoPlayer.playWhenReady = playWhenReady
-                exoPlayer.seekTo(currentWindow, playbackPosition)
-                exoPlayer.prepare()
-            }
+                    exoPlayer.addListener(PlayerEventListener())
+
+                    exoPlayer.playWhenReady = playWhenReady
+                    exoPlayer.seekTo(currentWindow, playbackPosition)
+                    exoPlayer.prepare()
+
+                    updateButtonVisibility()
+
+                }
+
+
+        }else{
+            shortToast("Video link error")
+        }
+
 
     }
 
@@ -85,15 +189,25 @@ class PlayerActivity : AppCompatActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         Log.d("Config", newConfig.orientation.toString())
+
+        if(newConfig.orientation == 1){
+            //portrait
+            viewBinding.videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
+        }else if(newConfig.orientation == 2){
+            //landscape
+            viewBinding.videoView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
+        }
     }
 
     private fun releasePlayer() {
         player?.run {
+            updateTrackSelectorParameters()
             playbackPosition = this.currentPosition
             currentWindow = this.currentWindowIndex
             playWhenReady = this.playWhenReady
             release()
         }
+
         player = null
     }
 
@@ -143,5 +257,29 @@ class PlayerActivity : AppCompatActivity() {
             releasePlayer()
         }
     }
+
+    inner class PlayerEventListener : Player.Listener {
+        override fun onPlaybackStateChanged(playbackState: @Player.State Int) {
+            if (playbackState == Player.STATE_ENDED) {
+                //showControls()
+            }
+            updateButtonVisibility()
+        }
+
+        override fun onPlayerError(error: PlaybackException) {
+            if (error.errorCode == PlaybackException.ERROR_CODE_BEHIND_LIVE_WINDOW) {
+                player!!.seekToDefaultPosition()
+                player!!.prepare()
+            } else {
+                updateButtonVisibility()
+            }
+        }
+
+        override fun onTracksInfoChanged(tracksInfo: TracksInfo) {
+            updateButtonVisibility()
+
+        }
+    }
+
 
 }

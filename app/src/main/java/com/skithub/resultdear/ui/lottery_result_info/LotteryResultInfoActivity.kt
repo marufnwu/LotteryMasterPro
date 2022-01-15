@@ -224,8 +224,8 @@ class LotteryResultInfoActivity : AppCompatActivity() {
         connectionDialogBinding.tryAgainBtn.setOnClickListener {
             if (CommonMethod.haveInternet(connectivityManager)) {
                 setUpRecyclerView()
-                //loadLotteryNumberInfoUsingDateAndTime()
-                loadLotteryNumberInfoUsingDateAndTimeSecondServer()
+                loadLotteryNumberInfoUsingDateAndTime()
+                //loadLotteryNumberInfoUsingDateAndTimeSecondServer()
                 loadAdsImageInfo()
                 connectionAlertDialog?.dismiss()
             }
@@ -470,7 +470,7 @@ class LotteryResultInfoActivity : AppCompatActivity() {
             Coroutines.main {
                 try {
                     binding.spinKit.visibility= View.VISIBLE
-                    val response=secondServerApi.getVideoListInResultInfo("")
+                    val response=myApi.getVideoListInResultInfo("")
                     if (response.isSuccessful && response.code()==200) {
                         binding.spinKit.visibility= View.GONE
                         if (response.body()!=null) {

@@ -23,6 +23,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.skithub.resultdear.R
 import com.skithub.resultdear.database.network.MyApi
+import com.skithub.resultdear.ui.PlayerActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -247,6 +248,12 @@ object CommonMethod {
                                           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                           context.startActivity(intent)
                                       }
+                                  }else if(url.endsWith(".mp4") || url.endsWith(".mpeg") || url.endsWith(".mpd") ||
+                                      url.startsWith("https://lmpclass.sikderithub.com/embed") || url.startsWith("http://lmpclass.sikderithub.com/embed")){
+                                      val intent = Intent(context, PlayerActivity::class.java)
+                                      intent.putExtra("url", url)
+                                      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                      context.startActivity(intent)
                                   } else if (url != null && (url.startsWith("http://") || url.startsWith(
                                           "https://"
                                       ))

@@ -19,6 +19,7 @@
 
 
 
+
     <style name="Theme.Lutt.NoTitle" parent="Theme.Lutt">
         <item name="windowNoTitle">true</item>
         <item name="android:windowNoTitle">true</item>
@@ -115,12 +116,11 @@
 
 
 
+    <style name="TrackSelectionDialogThemeOverlay" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="windowNoTitle">false</item>
+    </style>
 
-
-
-
-
-
-
-
+    <style name="PlayerTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
 </resources>

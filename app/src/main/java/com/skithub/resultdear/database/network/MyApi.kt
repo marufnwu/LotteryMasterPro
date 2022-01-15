@@ -3,10 +3,12 @@ package com.skithub.resultdear.database.network
 import android.util.Base64
 import android.util.Log
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import com.skithub.resultdear.BuildConfig
 import com.skithub.resultdear.model.*
 import com.skithub.resultdear.model.response.*
-import okhttp3.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Response
@@ -14,11 +16,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
-import java.io.IOException
-import java.lang.Exception
-import java.net.SocketTimeoutException
-import java.net.URI.create
 import java.util.concurrent.TimeUnit
+
 
 interface MyApi {
 
@@ -214,6 +213,10 @@ interface MyApi {
     fun getLotteryResultTime(
         @Field("checkActive") checkActive: Boolean
     ): Call<LotterySlotResponse>
+
+    @Multipart
+    @POST("/convert/upload.php")
+    fun uploadImage(@Part file: Part?): Call<JsonObject?>?
 
     //Maruf's work end here
 

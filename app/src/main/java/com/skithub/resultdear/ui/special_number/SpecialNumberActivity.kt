@@ -1,5 +1,6 @@
 package com.skithub.resultdear.ui.special_number
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.media.AudioAttributes
@@ -8,10 +9,12 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +30,7 @@ import com.skithub.resultdear.database.network.RetrofitClient
 import com.skithub.resultdear.databinding.ActivitySpecialNumberBinding
 import com.skithub.resultdear.model.response.AudioResponse
 import com.skithub.resultdear.ui.MyApplication
+import com.skithub.resultdear.ui.PlayerActivity
 import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModel
 import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModelFactory
 import com.skithub.resultdear.utils.*
@@ -104,9 +108,81 @@ class SpecialNumberActivity : AppCompatActivity() {
 
     private fun loadPremiumBanner() {
         Coroutines.main {
-            CommonMethod.getBanner("ProPremium", binding.ivPremBanner,myApi, applicationContext)
+            //CommonMethod.getBanner("ProPremium", binding.ivPremBanner,myApi, applicationContext)
+            getBanner("ProPremium", binding.ivPremBanner,myApi, applicationContext)
         }
     }
+
+    suspend fun  getBanner(bannerName:String, imageView: ImageView, myApi: MyApi, context: Context) {
+        try {
+            val res = myApi.getBanner(bannerName)
+
+            if(res.isSuccessful && res.body()!=null){
+                val banner = res.body()
+                if(!banner!!.error){
+                    if (banner.imageUrl != null) {
+                        imageView.visibility = View.VISIBLE
+
+                        Glide.with(context)
+                            .load(banner.imageUrl)
+                            .thumbnail(Glide.with(context).load(R.drawable.placeholder))
+                            .into(imageView)
+                        imageView.setOnClickListener(View.OnClickListener {
+                            if (banner.actionType == 1) {
+                                //open url
+                                if (banner.actionUrl != null) {
+                                    val url: String = banner.actionUrl!!
+                                    val linkHost = Uri.parse(url).host
+                                    val uri = Uri.parse(url)
+                                    if (linkHost == null) {
+                                        return@OnClickListener
+                                    }
+                                    if (linkHost == "play.google.com") {
+                                        val appId = uri.getQueryParameter("id")
+                                        val intent = Intent(Intent.ACTION_VIEW)
+                                        intent.data = Uri.parse("market://details?id=$appId")
+                                        context.startActivity(intent)
+                                    } else if (linkHost == "www.youtube.com") {
+                                        try {
+                                            val intent = Intent(Intent.ACTION_VIEW, uri)
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                            intent.setPackage("com.google.android.youtube")
+                                            context.startActivity(intent)
+                                        }catch (e : Exception){
+                                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                            context.startActivity(intent)
+                                        }
+                                    }else if(url.endsWith(".mp4") || url.endsWith(".mpeg") || url.endsWith(".mpd") ||
+                                            url.startsWith("https://lmpclass.sikderithub.com/embed") || url.startsWith("http://lmpclass.sikderithub.com/embed")){
+                                        val intent = Intent(this, PlayerActivity::class.java)
+                                        intent.putExtra("url", url)
+                                        startActivity(intent)
+                                    }
+                                    else if ( (url.startsWith("http://") || url.startsWith(
+                                            "https://"
+                                        ))
+                                    ) {
+                                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                        context.startActivity(intent)
+                                    }
+                                }
+                            } else if (banner.actionType === 2) {
+                                //open activity
+                            }
+                        })
+
+                    }
+                }else{
+                    Log.d("Banner", banner.msg!!)
+                }
+            }
+        }catch (e : Exception){
+            Toast.makeText(context, "Something went wrong, related to your network issue.", Toast.LENGTH_LONG).show()
+        }
+    }
+
 
     private fun getContctInformation(isPremium : Boolean) {
         Coroutines.main {

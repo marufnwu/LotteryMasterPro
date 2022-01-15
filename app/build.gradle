@@ -16,8 +16,8 @@ android {
         applicationId "com.skithub.resultdear"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 44
-        versionName "1.44"
+        versionCode 46
+        versionName "1.46"
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "Lmp_V"+versionName)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

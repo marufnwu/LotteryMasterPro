@@ -184,7 +184,7 @@ class ImportentTipsActivity : AppCompatActivity() {
         Coroutines.main {
             try {
                 binding.spinKit.visibility= View.VISIBLE
-                val response=secondServerApi.getVideoList("")
+                val response=viewModel.getVideo("")
                 if (response.isSuccessful && response.code()==200) {
                     binding.spinKit.visibility= View.GONE
                     if (response.body()!=null) {
