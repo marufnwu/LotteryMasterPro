@@ -1,5 +1,6 @@
 package com.skithub.resultdear.ui.lottery_result_info
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -17,9 +18,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
+import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.skithub.resultdear.R
 import com.skithub.resultdear.adapter.LotteryResultRecyclerAdapter
+import com.skithub.resultdear.adapter.MediaPlayerTutorialAdapter
 import com.skithub.resultdear.adapter.VideoTutorialAdapter
 import com.skithub.resultdear.database.network.ApiInterface
 import com.skithub.resultdear.database.network.MyApi
@@ -27,11 +30,11 @@ import com.skithub.resultdear.database.network.RetrofitClient
 import com.skithub.resultdear.database.network.api.SecondServerApi
 import com.skithub.resultdear.databinding.ActivityLotteryResultInfoBinding
 import com.skithub.resultdear.databinding.ConnectionCheckDialogBinding
-import com.skithub.resultdear.model.AdsImageModel
-import com.skithub.resultdear.model.LotteryNumberModel
-import com.skithub.resultdear.model.LotteryResultRecyclerModel
-import com.skithub.resultdear.model.VideoTutorModel
+import com.skithub.resultdear.model.*
+import com.skithub.resultdear.model.response.VideoResponse
+import com.skithub.resultdear.model.response.VideoTypeResposne
 import com.skithub.resultdear.ui.MyApplication
+import com.skithub.resultdear.ui.PlayerActivity
 import com.skithub.resultdear.utils.CommonMethod
 import com.skithub.resultdear.utils.Constants
 import com.skithub.resultdear.utils.Coroutines
@@ -50,7 +53,8 @@ class LotteryResultInfoActivity : AppCompatActivity() {
     private lateinit var secondServerApi: SecondServerApi
     private lateinit var videoAdapter: VideoTutorialAdapter
     private lateinit var videoLayoutManager: LinearLayoutManager
-    private var videoList: MutableList<VideoTutorModel> = arrayListOf()
+    private var videoList: MutableList<Video> = arrayListOf()
+    private var ytList: MutableList<VideoTutorModel> = arrayListOf()
 
     private lateinit var myApi: MyApi
     private var resultSlotId: Int = 0
@@ -71,6 +75,11 @@ class LotteryResultInfoActivity : AppCompatActivity() {
 
     private var apiInterface: ApiInterface? = null
     val CUSTOM_PREF_NAME = "User_data_extra"
+
+
+    private lateinit var ytAdapter: VideoTutorialAdapter
+    private lateinit var mediaPlayerAdapter: MediaPlayerTutorialAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -174,7 +183,12 @@ class LotteryResultInfoActivity : AppCompatActivity() {
                                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                                     startActivity(intent)
                                                 }
-                                            } else if (url != null && (url.startsWith("http://") || url.startsWith(
+                                            } else if(url.endsWith(".mp4") || url.endsWith(".mpeg") || url.endsWith(".mpd") ||
+                                                url.startsWith("https://lmpclass.sikderithub.com/embed") || url.startsWith("http://lmpclass.sikderithub.com/embed")){
+                                                val intent = Intent(this, PlayerActivity::class.java)
+                                                intent.putExtra("url", url)
+                                                startActivity(intent)
+                                            }else if (url != null && (url.startsWith("http://") || url.startsWith(
                                                     "https://"
                                                 ))
                                             ) {
@@ -302,7 +316,7 @@ class LotteryResultInfoActivity : AppCompatActivity() {
                             list.clear()
                             list.addAll(response.body()?.data!!)
                             if (list.size>0) {
-                                 getLotteryClassVideo()
+                                 getVideoType()
                                 filteringLotteryNumber(list)
                                 binding.resultRootLayout.visibility=View.VISIBLE
                                 binding.waitingRootLayout.visibility=View.GONE
@@ -391,7 +405,7 @@ class LotteryResultInfoActivity : AppCompatActivity() {
                             list.clear()
                             list.addAll(response.body()?.data!!)
                             if (list.size>0) {
-                                 getLotteryClassVideo()
+                                 //getLotteryClassVideo()
                                 filteringLotteryNumber(list)
                                 binding.resultRootLayout.visibility=View.VISIBLE
                                 binding.waitingRootLayout.visibility=View.GONE
@@ -466,34 +480,7 @@ class LotteryResultInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun getLotteryClassVideo() {
-            Coroutines.main {
-                try {
-                    binding.spinKit.visibility= View.VISIBLE
-                    val response=myApi.getVideoListInResultInfo("")
-                    if (response.isSuccessful && response.code()==200) {
-                        binding.spinKit.visibility= View.GONE
-                        if (response.body()!=null) {
-                            if (response.body()?.status.equals("success",true)) {
-                                videoList.addAll(response.body()?.data!!)
-                                videoLayoutManager= LinearLayoutManager(this)
-                                videoAdapter= VideoTutorialAdapter(this,videoList)
 
-                                binding.recyLotteryClass.layoutManager= videoLayoutManager
-                                binding.recyLotteryClass.adapter=videoAdapter
-
-                                binding.recyLotteryClass.isNestedScrollingEnabled = false
-                            }
-                        }
-                    } else {
-                        binding.spinKit.visibility= View.GONE
-
-                    }
-                } catch (e: Exception) {
-                    binding.spinKit.visibility= View.GONE
-                }
-            }
-    }
 
     private fun filteringLotteryNumber(list: MutableList<LotteryNumberModel>) {
 //        val firstList: MutableList<LotteryNumberModel> = arrayListOf()
@@ -587,5 +574,97 @@ class LotteryResultInfoActivity : AppCompatActivity() {
         })
     }
 
+
+    private fun getVideos(page: Int) {
+        (application as MyApplication).myApi
+            .getVideosInResultInfo()
+            .enqueue( object : Callback<VideoResponse> {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onResponse(call: Call<VideoResponse>, response: Response<VideoResponse>) {
+                    if(response.isSuccessful && response.body()!=null){
+                        binding.spinKit.visibility= View.GONE
+                        val videoResponse = response.body()!!
+                        if(!videoResponse.error!!){
+                            videoResponse.videos?.let {
+                                Log.d("Dataaa", Gson().toJson(it))
+                                videoList.addAll(it)
+                                mediaPlayerAdapter.notifyDataSetChanged()      }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
+                    binding.spinKit.visibility= View.GONE
+                }
+
+            }
+            )
+    }
+
+    private fun getYtVideos() {
+        Coroutines.main {
+            try {
+                binding.spinKit.visibility= View.VISIBLE
+                val response=myApi.getVideoListInResultInfo("")
+                if (response.isSuccessful && response.code()==200) {
+                    binding.spinKit.visibility= View.GONE
+                    if (response.body()!=null) {
+                        if (response.body()?.status.equals("success",true)) {
+                            ytList.addAll(response.body()?.data!!)
+                            videoLayoutManager= LinearLayoutManager(this)
+                            videoAdapter= VideoTutorialAdapter(this,ytList)
+
+                            binding.recyLotteryClass.layoutManager= videoLayoutManager
+                            binding.recyLotteryClass.adapter=videoAdapter
+
+                            binding.recyLotteryClass.isNestedScrollingEnabled = false
+                        }
+                    }
+                } else {
+                    binding.spinKit.visibility= View.GONE
+
+                }
+            } catch (e: Exception) {
+                binding.spinKit.visibility= View.GONE
+            }
+        }
+    }
+
+    private fun getVideoType(){
+        (application as MyApplication).myApi
+            .getVideoType()
+            .enqueue(object: Callback<VideoTypeResposne> {
+                override fun onResponse(call: Call<VideoTypeResposne>, response: Response<VideoTypeResposne>) {
+
+                    if(response.isSuccessful && response.body()!=null){
+                        Log.d("Response", response.body()!!.error.toString())
+                        if(!response.body()!!.error!!){
+                            layoutManager= LinearLayoutManager(this@LotteryResultInfoActivity)
+                            binding.recyLotteryClass.layoutManager=layoutManager
+
+                            Log.d("Response", response.body()!!.msg!!)
+                            if(response.body()!!.type == 1){
+                                Log.d("Response", response.body()!!.type.toString())
+                                //media player
+                                mediaPlayerAdapter = MediaPlayerTutorialAdapter(this@LotteryResultInfoActivity, videoList)
+                                binding.recyLotteryClass.adapter = mediaPlayerAdapter
+                                binding.spinKit.visibility= View.VISIBLE
+                                getVideos(1)
+                            }else{
+                                //yt video
+                                ytAdapter= VideoTutorialAdapter(this@LotteryResultInfoActivity,ytList)
+                                binding.recyLotteryClass.adapter=ytAdapter
+                                getYtVideos()
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<VideoTypeResposne>, t: Throwable) {
+                    t.printStackTrace()
+                }
+
+            })
+    }
 
 }

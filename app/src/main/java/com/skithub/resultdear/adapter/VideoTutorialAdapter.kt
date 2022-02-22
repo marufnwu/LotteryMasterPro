@@ -2,7 +2,9 @@ package com.skithub.resultdear.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +14,17 @@ import com.skithub.resultdear.R
 import com.skithub.resultdear.databinding.TutorialModelBinding
 import com.skithub.resultdear.model.LotteryNumberModel
 import com.skithub.resultdear.model.LotteryPdfModel
+import com.skithub.resultdear.model.Video
 import com.skithub.resultdear.model.VideoTutorModel
 import com.skithub.resultdear.ui.lottery_result_info.LotteryResultInfoActivity
+import com.skithub.resultdear.utils.CommonMethod
 import com.skithub.resultdear.utils.Constants
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.ContextCompat.startActivity
+
+import android.content.pm.ResolveInfo
+import androidx.core.content.ContextCompat
+
 
 class VideoTutorialAdapter(val context: Context, val list: MutableList<VideoTutorModel>): RecyclerView.Adapter<VideoTutorialAdapter.OldResultRecyclerViewHolder>() {
 
@@ -34,7 +44,7 @@ class VideoTutorialAdapter(val context: Context, val list: MutableList<VideoTuto
     }
 
 
-    inner class OldResultRecyclerViewHolder(val binding: TutorialModelBinding): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    inner class OldResultRecyclerViewHolder(val binding: TutorialModelBinding): RecyclerView.ViewHolder(binding.root){
 
         fun bind(item: VideoTutorModel) {
             Glide.with(context).load(item.thumbail).placeholder(R.drawable.loading_placeholder).fitCenter().into(binding.Thumbail)
@@ -42,28 +52,9 @@ class VideoTutorialAdapter(val context: Context, val list: MutableList<VideoTuto
             binding.videoRootlayout.setOnClickListener {
                 val webIntent: Intent= Intent(Intent.ACTION_VIEW, Uri.parse(item.video_link))
                 context.startActivity(Intent.createChooser(webIntent,"Choose one:"))
-            }
-            /*binding.dateTextView.text=item.winDate
-            binding.timeTextView.text=item.winTime
-            binding.dayNameTextView.text=item.winDayName*/
-            //binding.oldResultRootLayout.setOnClickListener(this)
         }
 
-        override fun onClick(v: View?) {
-            v?.let {
-               /* val oldResultIntent= Intent(context,LotteryResultInfoActivity::class.java)
-                when (it.id) {
-                    R.id.oldResultRootLayout -> {
-                        oldResultIntent.putExtra(Constants.resultTimeKey,list[adapterPosition].winTime)
-                        oldResultIntent.putExtra(Constants.resultDateKey,list[adapterPosition].winDate)
-                        oldResultIntent.putExtra(Constants.isVersusResultKey,false)
-                        context.startActivity(oldResultIntent)
-                    }
-                }*/
-            }
-        }
+
     }
 
-
-
-}
+    }}

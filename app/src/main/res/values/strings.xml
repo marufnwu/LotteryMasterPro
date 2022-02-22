@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name" translatable="false">Lottery Master Pro</string>
 
+    <string name="facebook_app_id" translatable="false">472103417656406</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1234</string>
+    <string name="facebook_client_token" translatable="false">28def6d52623c797d12ed629d345bb20</string>
+
     <string name="notify_title_morning" translatable="false">Morning 01:00pm</string>
     <string name="notify_title_day" translatable="false">Day 06:00pm</string>
     <string name="notify_title_evening" translatable="false">Night 08:00pm</string>
@@ -106,7 +110,15 @@
     <string name="not_implemented_message">Please wait. This option is not implemented yet.</string>
     <string name="firstDigitFirstPrize">Last Digit Of First Prize</string>
     <string name="gotAprize">Got a prize?</string>
-    <string name="track_selection_title">Track Selection</string>
+    <string name="track_selection_title" translatable="false">Track Selection</string>
+    <string name="share_to_facebook">Share Now</string>
+    <string name="last_four_digit">Last Four Numbers</string>
+    <string name="firt_ticket">First Ticket</string>
+    <string name="last_ticket">Last Ticket</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="four_digit_number">Four Digit Number</string>
+
+    <string name="middle_not_matched">The middle of the first box and the middle of the second box do not match</string>
+
+
 </resources>

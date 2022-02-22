@@ -1,23 +1,31 @@
 package com.skithub.resultdear.ui.importent_tips
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.skithub.resultdear.R
+import com.skithub.resultdear.adapter.MediaPlayerTutorialAdapter
 import com.skithub.resultdear.adapter.VideoTutorialAdapter
 import com.skithub.resultdear.database.network.ApiInterface
 import com.skithub.resultdear.database.network.RetrofitClient
 import com.skithub.resultdear.database.network.api.SecondServerApi
 import com.skithub.resultdear.databinding.ActivityImportentTipsBinding
+import com.skithub.resultdear.model.Video
 import com.skithub.resultdear.model.VideoTutorModel
+import com.skithub.resultdear.model.response.VideoResponse
+import com.skithub.resultdear.model.response.VideoTypeResposne
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModel
 import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModelFactory
@@ -25,9 +33,13 @@ import com.skithub.resultdear.utils.CommonMethod
 import com.skithub.resultdear.utils.Constants
 import com.skithub.resultdear.utils.Coroutines
 import com.skithub.resultdear.utils.SharedPreUtils
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ImportentTipsActivity : AppCompatActivity() {
 
+    lateinit var layoutManager: LinearLayoutManager
     private lateinit var secondServerApi: SecondServerApi
     private lateinit var binding: ActivityImportentTipsBinding
     private var apiInterface: ApiInterface? = null
@@ -36,7 +48,20 @@ class ImportentTipsActivity : AppCompatActivity() {
 
     private var list: MutableList<VideoTutorModel> = arrayListOf()
     private lateinit var adapter: VideoTutorialAdapter
-    private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var mediaPlayerAdapter: MediaPlayerTutorialAdapter
+
+    private var videoList : MutableList<Video> = mutableListOf<Video>()
+
+    var pastVisibleItem : Int =0
+    var visibleItemCount = 0
+    var totalItemCount=0
+    var previousTotal = 0
+
+    private var PAGE = 1
+    private var PAGE_SIZE= 30
+    private var TOTAL_PAGE = 0
+    var isLoading = true
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,11 +74,60 @@ class ImportentTipsActivity : AppCompatActivity() {
         secondServerApi = (application as MyApplication).secondServerApi
 
         apiInterface = RetrofitClient.getApiClient().create(ApiInterface::class.java)
+
+
+
         //getPremiumStatus()
 
-        setupRecyclerView()
-        getVideos()
 
+
+        //setupRecyclerView()
+        //initViews()
+        //getVideos(1)
+
+        getVideoType()
+
+    }
+
+    private fun initRecyScrollListener() {
+        binding.recyclerView.addOnScrollListener(
+            object: RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    visibleItemCount = layoutManager.getChildCount()
+                    totalItemCount = layoutManager.getItemCount()
+                    pastVisibleItem = layoutManager.findFirstVisibleItemPosition()
+
+                    if (dy > 0) {
+                        Log.d("Pagination", "Scrolled")
+                        if (!isLoading) {
+                            if (PAGE <= TOTAL_PAGE) {
+                                Log.d("Pagination", "Total Page $TOTAL_PAGE")
+                                Log.d("Pagination", "Page $PAGE")
+                                if (visibleItemCount + pastVisibleItem >= totalItemCount) {
+                                    //postListProgress.setVisibility(View.VISIBLE)
+                                    isLoading = true
+                                    Log.v("...", "Last Item Wow !")
+                                    //Do pagination.. i.e. fetch new data
+                                    PAGE++
+                                    if (PAGE <= TOTAL_PAGE) {
+                                        getVideos(PAGE)
+                                    } else {
+                                        isLoading = false
+                                        //postListProgress.setVisibility(View.GONE)
+                                    }
+                                }
+                            } else {
+
+                                //postListProgress.setVisibility(View.GONE);
+                                Log.d("Pagination", "End of page")
+                            }
+                        } else {
+                            Log.d("Pagination", "Loading")
+                        }
+                    }
+                }
+            })
     }
 
     private fun getPremiumStatus() {
@@ -173,6 +247,8 @@ class ImportentTipsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+
+
     private fun setupRecyclerView() {
         adapter= VideoTutorialAdapter(this,list)
         layoutManager= LinearLayoutManager(this)
@@ -180,7 +256,46 @@ class ImportentTipsActivity : AppCompatActivity() {
         binding.recyclerView.adapter=adapter
     }
 
-    private fun getVideos() {
+    private fun initPlayerRecyclerViews() {
+
+        layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.setHasFixedSize(true)
+        initRecyScrollListener()
+        mediaPlayerAdapter = MediaPlayerTutorialAdapter(this, videoList)
+        binding.recyclerView.adapter = mediaPlayerAdapter
+
+    }
+    private fun getVideos(page: Int) {
+        isLoading = true
+        (application as MyApplication).myApi
+            .getVideos(page)
+            .enqueue( object : Callback<VideoResponse> {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onResponse(call: Call<VideoResponse>, response: Response<VideoResponse>) {
+                    isLoading = false
+                    if(response.isSuccessful && response.body()!=null){
+                        binding.spinKit.visibility= View.GONE
+                        val videoResponse = response.body()!!
+                        if(!videoResponse.error!!){
+                            TOTAL_PAGE = videoResponse.totalPages!!
+                            videoResponse.videos?.let {
+                                Log.d("Dataaa", Gson().toJson(it))
+                                videoList.addAll(it)
+                                mediaPlayerAdapter.notifyDataSetChanged()      }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
+                    isLoading = false
+                }
+
+            }
+            )
+    }
+
+    private fun getYtVideos() {
         Coroutines.main {
             try {
                 binding.spinKit.visibility= View.VISIBLE
@@ -207,6 +322,38 @@ class ImportentTipsActivity : AppCompatActivity() {
                 binding.spinKit.visibility= View.GONE
             }
         }
+    }
+
+    private fun getVideoType(){
+        (application as MyApplication).myApi
+            .getVideoType()
+            .enqueue(object: Callback<VideoTypeResposne> {
+                override fun onResponse(call: Call<VideoTypeResposne>, response: Response<VideoTypeResposne>) {
+
+                    if(response.isSuccessful && response.body()!=null){
+                        Log.d("Response", response.body()!!.error.toString())
+                        if(!response.body()!!.error!!){
+                            Log.d("Response", response.body()!!.msg!!)
+                            if(response.body()!!.type == 1){
+                                Log.d("Response", response.body()!!.type.toString())
+                                //media player
+                                initPlayerRecyclerViews()
+                                binding.spinKit.visibility= View.VISIBLE
+                                getVideos(1)
+                            }else{
+                                //yt video
+                                setupRecyclerView()
+                                getYtVideos()
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<VideoTypeResposne>, t: Throwable) {
+                    t.printStackTrace()
+                }
+
+            })
     }
 
 }

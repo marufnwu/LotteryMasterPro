@@ -16,8 +16,8 @@ android {
         applicationId "com.skithub.resultdear"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 46
-        versionName "1.46"
+        versionCode 50
+        versionName "1.50"
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "Lmp_V"+versionName)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -123,7 +123,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx'
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation("com.google.android.play:core-ktx:1.8.1")
-    def work_version = "2.7.0-alpha05"
+    def work_version = "2.7.0"
     implementation "androidx.work:work-runtime-ktx:$work_version"
     implementation "androidx.work:work-gcm:$work_version"
     implementation "androidx.work:work-multiprocess:$work_version"
@@ -158,6 +158,8 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-core:2.16.1'
     implementation 'com.google.android.exoplayer:exoplayer-dash:2.16.1'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.16.1'
+
+    implementation 'com.facebook.android:facebook-share:latest.release'
 
 
 

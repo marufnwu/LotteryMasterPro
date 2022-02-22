@@ -17,11 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 import java.util.concurrent.TimeUnit
-
-
 interface MyApi {
-
-
     @GET("get_similar_lottery_number_list.php?")
     suspend fun findSimilarLotteryNumberList(
         @Query("PageNumber") pageNumber: String,
@@ -217,6 +213,65 @@ interface MyApi {
     @Multipart
     @POST("/convert/upload.php")
     fun uploadImage(@Part file: Part?): Call<JsonObject?>?
+
+
+    @FormUrlEncoded
+    @POST("api/contact.getCustContactNumber.php")
+    fun getCustContactNumber(
+        @Field("page") page: String
+    ): Response<ContactListResponse>
+
+
+    @FormUrlEncoded
+    @POST("api/contact.getCustContactNumberWithBanner.php")
+    fun getCustContactNumberWithBanner(
+        @Field("page") page: String,
+        @Field("call") banner: String,
+    ): Call<ContactListBannerResponse>
+
+
+    @FormUrlEncoded
+    @POST("api/dialog.getDialogInfo.php")
+    fun getDialogInfo(
+        @Field("activity") activity: String,
+    ): Call<ActivityDialogResponse>
+
+    @FormUrlEncoded
+    @POST("getVideos.php")
+    fun getVideos(
+        @Field("page") page: Int,
+    ): Call<VideoResponse>
+
+    @GET("getVideosInResultInfo.php")
+    fun getVideosInResultInfo(
+    ): Call<VideoResponse>
+
+    @GET("api/helper.getVideoType.php")
+    fun getVideoType(
+    ): Call<VideoTypeResposne>
+
+    @GET("api/helper.fbShareContent.php")
+    fun fbShareContent(
+    ): Call<FbShareContentResponse>
+
+    @FormUrlEncoded
+    @POST("api/get10DaysOldNumber.php")
+    fun get10DaysOldNumber(
+        @Field("startNumber") startNumber: String,
+        @Field("endNumber") endNumber: String,
+    ): Call<LotterySerialCheckResponse>
+
+    @FormUrlEncoded
+    @POST("api/license.getSerialCheckLicense.php")
+    fun getSerialCheckLicense(
+        @Field("userId") userId: String
+    ): Call<SerialCheckLicenseResponse>
+
+    @FormUrlEncoded
+    @POST("api/lotterySerialCheckInfo.php")
+    fun lotterySerialCheckInfo(
+        @Field("userId") userId: String
+    ): Call<LotterySerialCheckInfoResponse>
 
     //Maruf's work end here
 

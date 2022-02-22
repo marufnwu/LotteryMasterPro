@@ -119,7 +119,6 @@ class LotteryResultRecyclerAdapter(val context: Context, val list: MutableList<L
     }
 
     inner class LotteryResultRecyclerViewHolder(val binding: LotteryResultRecyclerViewModelLayoutBinding): RecyclerView.ViewHolder(binding.root) {
-
         fun bind(item: LotteryResultRecyclerModel) {
             try {
                 binding.resultTypeTextView.text="${item.winType} Prize \u20B9 ${getPrizeAmount(item.winType)}"

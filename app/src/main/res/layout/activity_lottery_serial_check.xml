@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/purple_700"
+    android:padding="@dimen/_8sdp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.lottery_serial_check.LotterySerialCheckActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/imgBanner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_160sdp"/>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_10sdp"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:id="@+id/startRoot"
+                android:padding="@dimen/_8sdp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_round_bg"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/firt_ticket"
+                    android:textColor="@color/white"
+                    />
+
+                <EditText
+                    android:background="@drawable/edittext_green_bg"
+                    android:gravity="center"
+                    android:textColorHint="@color/disabledBtnBg"
+                    android:textColor="@color/black"
+                    android:inputType="numberDecimal"
+                    android:id="@+id/edtStartNum"
+                    android:hint="@string/last_four_digit"
+                    android:padding="@dimen/_8sdp"
+                    android:textSize="@dimen/_11sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:padding="@dimen/_8sdp"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_round_bg"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="@string/last_ticket"
+                    android:textColor="@color/white"
+                    />
+
+                <EditText
+                    android:gravity="center"
+                    android:textColorHint="@color/disabledBtnBg"
+                    android:textColor="@color/black"
+                    android:inputType="numberDecimal"
+                    android:id="@+id/edtEndNum"
+                    android:hint="@string/last_four_digit"
+                    android:padding="@dimen/_8sdp"
+                    android:textSize="@dimen/_11sdp"
+                    android:background="@drawable/edittext_green_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSearch"
+            android:paddingStart="@dimen/_20sdp"
+            android:paddingEnd="@dimen/_20sdp"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_green_bg"
+            android:textSize="@dimen/_14sdp"
+            android:text="Search"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyList"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

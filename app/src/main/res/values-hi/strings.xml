@@ -89,4 +89,15 @@
     <string name="result_not_publish_night_time" >रेजॉल्ट जल्द ही आने वाला है</string>
     <string name="result_not_publish_day_time" >रेजॉल्ट जल्द ही आने वाला है</string>
     <string name="gotAprize">पुरस्कार मिला?</string>
+    <string name="share_to_facebook">Share Now</string>
+
+    <string name="last_four_digit">अंतिम चार अंक</string>
+
+    <string name="firt_ticket">पहले टिकट का</string>
+    <string name="last_ticket">आखिरी टिकट का</string>
+
+    <string name="four_digit_number">चार अंकों की संख्या</string>
+    <string name="middle_not_matched">पहले डिब्बे का मध्य और दूसरे डिब्बे का मध्य मेल नहीं खाता</string>
+
+
 </resources>

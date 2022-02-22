@@ -113,7 +113,7 @@ class NotificationUtil(val context: Context) {
         }
         val icon: Int = R.mipmap.ic_launcher
         val mBuilder = NotificationCompat.Builder(
-            context!!, CHANNEL_ID
+            context, CHANNEL_ID
         )
         if (notificationData.notiClearAble == 0) {
             mBuilder.setContentIntent(resultPendingIntent).setOngoing(true)

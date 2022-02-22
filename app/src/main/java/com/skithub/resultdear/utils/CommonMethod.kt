@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Insets
@@ -16,10 +17,12 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.WindowInsets
+import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.webkit.MimeTypeMap
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.skithub.resultdear.R
 import com.skithub.resultdear.database.network.MyApi
@@ -123,9 +126,6 @@ object CommonMethod {
         context.startActivity(shareIntent)
     }
 
-    fun openLink(context: Context,link: String) {
-        context.startActivity(Intent.createChooser(Intent(Intent.ACTION_VIEW, Uri.parse(link)),context.resources.getString(R.string.choose_one)))
-    }
 
     fun openVideo(context: Context, videoId: String) {
         val appIntent: Intent= Intent(Intent.ACTION_VIEW,Uri.parse("vnd.youtube:$videoId"))
@@ -279,6 +279,96 @@ object CommonMethod {
     }
     fun setShakeAnimation(img: ImageView, context: Context?) {
         img.startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake))
+    }
+
+    fun openWhatsapp(ctx:Context, whatsAppBtn:View, mobile:String){
+       whatsAppBtn.setOnClickListener {
+            try {
+                val msg = ""
+                ctx.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://api.whatsapp.com/send?phone=$mobile&text=$msg")
+                    )
+                )
+            } catch (e: java.lang.Exception) {
+                Toast.makeText(
+                    ctx,
+                    "WhatsApp not Installed",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    fun openLink(context: Context, url:String){
+        val linkHost = Uri.parse(url).host
+        val uri = Uri.parse(url)
+        if (linkHost == null) {
+            return
+        }
+        if (linkHost == "play.google.com") {
+            val appId = uri.getQueryParameter("id")
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("market://details?id=$appId")
+            context.startActivity(intent)
+        } else if (linkHost == "www.youtube.com") {
+            try {
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.setPackage("com.google.android.youtube")
+                context.startActivity(intent)
+            }catch (e : Exception){
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            }
+        }else if(url.endsWith(".mp4") || url.endsWith(".mpeg") || url.endsWith(".mpd") ||
+            url.startsWith("https://lmpclass.sikderithub.com/embed") || url.startsWith("http://lmpclass.sikderithub.com/embed")){
+            val intent = Intent(context, PlayerActivity::class.java)
+            intent.putExtra("url", url)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+        } else if (url != null && (url.startsWith("http://") || url.startsWith(
+                "https://"
+            ))
+        ) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+        }
+    }
+
+    fun keepScreenOn(ctx:Activity){
+        ctx.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    fun isVideoAppInstalled(context: Context): Boolean {
+        val uri = "com.lmp.video"
+        val pm = context.packageManager
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES)
+            return true
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return false
+    }
+
+    fun openMediaPlayerApp(ctx:Context){
+        val intent =  Intent(android.content.Intent.ACTION_VIEW);
+
+        intent.data = Uri.parse("https://play.google.com/store/apps/details?id=com.lmp.video");
+
+        ctx.startActivity(intent);
+    }
+
+    fun getLotteryMiddle(number:String): String{
+        return number.toCharArray(number.length-4, (number.length-4)+2).joinToString("")
+    }
+
+    fun  getLast2digit(number:String) : String{
+        return number.toCharArray(number.length-2, (number.length)).joinToString("")
     }
 
 

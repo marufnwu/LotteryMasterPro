@@ -89,4 +89,17 @@
     <string name="result_not_publish_night_time" >শীগ্রই রেজাল্ট পাবলিশ হবে</string>
     <string name="result_not_publish_day_time" >শীগ্রই রেজাল্ট পাবলিশ হবে</string>
     <string name="gotAprize">প্রাইজ পেয়েছেন?</string>
+    <string name="share_to_facebook">Share Now</string>
+
+    <string name="last_four_digit">শেষ চারটি সংখ্যা</string>
+
+    <string name="firt_ticket">প্রথম টিকিট এর</string>
+    <string name="last_ticket">শেষ টিকিট এর</string>
+
+    <string name="four_digit_number">চার ডিজিট নাম্বার</string>
+
+    <string name="middle_not_matched">প্রথম বক্সের মিডিল এবং দ্বিতীয় বক্সের মিডিলের মিল নেই.</string>
+
+
+
 </resources>

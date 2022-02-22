@@ -312,7 +312,7 @@ class LoginConfirmActivity : AppCompatActivity() {
             }
         }
 
-        if (!isFinishing) {
+        if (!isFinishing && !isDestroyed) {
             serverIssueAlertDialog.show()
         }
 

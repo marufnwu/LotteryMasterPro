@@ -5,6 +5,15 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <queries>
+        <package android:name="com.lmp.video" />
+    </queries>
+    <queries>
+        <provider
+            android:authorities="com.facebook.katana.provider.PlatformProvider"
+            android:exported="false" />
+    </queries>
+
     <application
         android:name=".ui.MyApplication"
         android:allowBackup="true"
@@ -19,10 +28,25 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
         <activity
-            android:theme="@style/PlayerTheme"
+            android:name=".ui.buy_button_rule.ButtonBuyRuleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.lottery_serial_check.LotterySerialCheckActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.facebook_share.FbShareActivity"
+            android:exported="false" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider472103417656406"
+            android:exported="true" />
+
+        <activity
             android:name=".ui.PlayerActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/PlayerTheme" />
         <activity
             android:name=".ui.got_a_prize.GotPrizeActivity"
             android:exported="true" />
@@ -90,6 +114,12 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token" />
     </application>
 
 </manifest>

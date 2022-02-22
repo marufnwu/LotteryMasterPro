@@ -55,14 +55,14 @@ class LoadingDialog(var activity: Activity) {
     }
 
     fun show() {
-        if (dialog != null && !dialog!!.isShowing) {
+        if (!activity.isFinishing && dialog != null && !dialog!!.isShowing) {
             dialog!!.show()
         }
     }
 
     fun hide() {
         if (dialog != null && dialog!!.isShowing) {
-           if(!activity.isFinishing){
+           if(!activity.isFinishing && !activity.isDestroyed){
                dialog!!.dismiss()
            }
         }

@@ -18,19 +18,24 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.gson.Gson
 import com.skithub.resultdear.R
+import com.skithub.resultdear.adapter.CustomerCareNumAdapter
 import com.skithub.resultdear.database.network.ApiInterface
 import com.skithub.resultdear.database.network.MyApi
 import com.skithub.resultdear.database.network.RetrofitClient
 import com.skithub.resultdear.databinding.ActivitySpecialNumberBinding
 import com.skithub.resultdear.model.response.AudioResponse
+import com.skithub.resultdear.model.response.ContactListBannerResponse
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.ui.PlayerActivity
+import com.skithub.resultdear.ui.lottery_serial_check.LotterySerialCheckActivity
 import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModel
 import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModelFactory
 import com.skithub.resultdear.utils.*
@@ -65,6 +70,9 @@ class SpecialNumberActivity : AppCompatActivity() {
         loadingDialog = LoadingDialog(this)
         audioLoadingDialog = AudioLoadingDialog(activity = this, cancelable = false)
         license_check = intent.getStringExtra("license_position").toString()
+
+
+
 
          mediaPlayer = MediaPlayer().apply {
             setAudioAttributes(
@@ -185,139 +193,156 @@ class SpecialNumberActivity : AppCompatActivity() {
 
 
     private fun getContctInformation(isPremium : Boolean) {
+        binding.whatsAppBtn.visibility = View.GONE
+
+
         Coroutines.main {
             try {
                 loadingDialog.show()
-                val response=viewModel.getPaidForContact("4",
-                    SharedPreUtils.getStringFromStorageWithoutSuspend(this,Constants.userIdKey,Constants.defaultUserId).toString())
-                if (response.isSuccessful && response.code()==200) {
-                    loadingDialog.hide()
-                    if (response.body()!=null) {
-                        binding.spinKit.visibility= View.GONE
-                        binding.standerdLayout.visibility = View.VISIBLE
-                        if(isPremium){
-                            binding.content.visibility = View.GONE
-                            binding.tvInstruction.visibility = View.GONE
-                            binding.whatsAppBtn.setOnClickListener {
-                                try {
-                                    val mobile = response.body()?.whats_app
-                                    val msg = ""
-                                    startActivity(
-                                        Intent(
-                                            Intent.ACTION_VIEW,
-                                            Uri.parse("https://api.whatsapp.com/send?phone=$mobile&text=$msg")
-                                        )
-                                    )
-                                } catch (e: java.lang.Exception) {
-                                    Toast.makeText(
-                                        this,
-                                        "WhatsApp not Installed",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
+//                val response = viewModel.getPaidForContact("4",
+//                    SharedPreUtils.getStringFromStorageWithoutSuspend(this,Constants.userIdKey,Constants.defaultUserId).toString())
+//
+                myApi.getCustContactNumberWithBanner("Pro", "ProBefore")
+                    .enqueue(
+                        object: Callback<ContactListBannerResponse> {
+                            override fun onResponse(
+                                call: Call<ContactListBannerResponse>,
+                                response: Response<ContactListBannerResponse>
+                            ) {
+                                if (response.isSuccessful && response.code()==200) {
 
-                        }else{
-                            binding.whatsAppBtn.visibility = View.GONE
-                            val rippleBackground = findViewById<View>(R.id.content) as RippleBackground
-                            rippleBackground.startRippleAnimation()
-                            loadingDialog.show()
+                                    loadingDialog.hide()
+                                    if (response.body()!=null) {
 
-                            Glide.with(this)
-                                .load(response.body()?.video_thumbail)
+                                        val bannerRes = response.body()!!.banner
+                                        val contactRes = response.body()!!.contacts
 
-                                .placeholder(R.drawable.loading_placeholder)
-                                .fitCenter()
+                                        binding.spinKit.visibility= View.GONE
+                                        binding.standerdLayout.visibility = View.VISIBLE
+                                        if(isPremium){
+                                            binding.content.visibility = View.GONE
+                                            binding.tvInstruction.visibility = View.GONE
 
-                                .listener(
-                                    object : RequestListener<Drawable> {
-                                        override fun onLoadFailed(
-                                            e: GlideException?,
-                                            model: Any?,
-                                            target: Target<Drawable>?,
-                                            isFirstResource: Boolean
-                                        ): Boolean {
-                                            loadingDialog.hide()
-                                            return true
+                                            contactRes?.let { res->
+                                                res.error?.let { err->
+                                                    if(!err){
+
+                                                        if(!contactRes.whatsapp.isNullOrEmpty()){
+                                                            binding.whatsAppBtn.visibility = View.VISIBLE
+
+                                                            CommonMethod.openWhatsapp(this@SpecialNumberActivity, binding.whatsAppBtn, contactRes.whatsapp!!)
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+
+
+                                        }else{
+                                            binding.whatsAppBtn.visibility = View.GONE
+                                            val rippleBackground = findViewById<View>(R.id.content) as RippleBackground
+                                            rippleBackground.startRippleAnimation()
+                                            loadingDialog.show()
+
+                                            bannerRes?.let { banner->
+                                                if(!banner.error!!){
+                                                    if(!isFinishing){
+                                                        Glide.with(this@SpecialNumberActivity)
+                                                            .load(response.body()!!.banner!!.imageUrl)
+
+                                                            .placeholder(R.drawable.loading_placeholder)
+                                                            .fitCenter()
+
+                                                            .listener(
+                                                                object : RequestListener<Drawable> {
+                                                                    override fun onLoadFailed(
+                                                                        e: GlideException?,
+                                                                        model: Any?,
+                                                                        target: Target<Drawable>?,
+                                                                        isFirstResource: Boolean
+                                                                    ): Boolean {
+                                                                        loadingDialog.hide()
+                                                                        return true
+                                                                    }
+
+                                                                    override fun onResourceReady(
+                                                                        resource: Drawable?,
+                                                                        model: Any?,
+                                                                        target: Target<Drawable>?,
+                                                                        dataSource: DataSource?,
+                                                                        isFirstResource: Boolean
+                                                                    ): Boolean {
+
+                                                                        loadingDialog.hide()
+                                                                        return false
+                                                                    }
+
+                                                                }
+                                                            ).into(binding.ytthumbail)
+                                                    }
+                                                    CommonMethod.setShakeAnimation(binding.ytthumbail, this@SpecialNumberActivity)
+                                                    binding.ytthumbail.setOnClickListener {
+                                                        CommonMethod.openLink(this@SpecialNumberActivity, banner.actionUrl!!);
+                                                    }
+                                                }
+                                            }
+
+
+
+
+
+                                            Coroutines.main {
+                                                val whatsAppRes = myApi.getWhatsapp("Pro")
+                                                if(whatsAppRes.isSuccessful && whatsAppRes.body()!=null){
+                                                    if(!whatsAppRes.body()!!.error!!) {
+                                                        if (whatsAppRes.body()!!.number != null) {
+                                                            binding.whatsAppBtn.visibility = View.VISIBLE
+
+                                                            CommonMethod.openWhatsapp(this@SpecialNumberActivity, binding.whatsAppBtn, whatsAppRes.body()!!.number!!)
+
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+                                            getAudioFile()
+
                                         }
+                                        //place of contact list recycler view
 
-                                        override fun onResourceReady(
-                                            resource: Drawable?,
-                                            model: Any?,
-                                            target: Target<Drawable>?,
-                                            dataSource: DataSource?,
-                                            isFirstResource: Boolean
-                                        ): Boolean {
 
-                                            loadingDialog.hide()
-                                            return false
-                                        }
+                                        contactRes?.let { res->
+                                            res.error?.let { err->
+                                                if(!err){
+                                                    binding.recyCustNumbers.layoutManager = LinearLayoutManager(this@SpecialNumberActivity)
+                                                    binding.recyCustNumbers.setHasFixedSize(true)
 
-                                    }
-                                ).into(binding.ytthumbail)
-                            CommonMethod.setShakeAnimation(binding.ytthumbail, this)
-                            binding.ytthumbail.setOnClickListener {
-                                val webIntent: Intent= Intent(Intent.ACTION_VIEW,Uri.parse(response.body()?.video_link))
-                                startActivity(Intent.createChooser(webIntent,"Choose one:"))
-                            }
 
-                            val whatsAppRes = myApi.getWhatsapp("Pro");
-                            if(whatsAppRes.isSuccessful && whatsAppRes.body()!=null){
-                                if(!whatsAppRes.body()!!.error!!) {
-                                    if (whatsAppRes.body()!!.number != null) {
-                                        binding.whatsAppBtn.visibility = View.VISIBLE
-                                        binding.whatsAppBtn.setOnClickListener {
-                                            try {
-                                                val mobile = whatsAppRes.body()!!.number
-                                                val msg = ""
-                                                startActivity(
-                                                    Intent(
-                                                        Intent.ACTION_VIEW,
-                                                        Uri.parse("https://api.whatsapp.com/send?phone=$mobile&text=$msg")
-                                                    )
-                                                )
-                                            } catch (e: java.lang.Exception) {
-                                                Toast.makeText(
-                                                    this,
-                                                    "WhatsApp not Installed",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
+
+                                                    val contactAdapter = CustomerCareNumAdapter(this@SpecialNumberActivity, contactRes.numberList!!.toMutableList())
+                                                    binding.recyCustNumbers.adapter = contactAdapter
+                                                }
                                             }
                                         }
+
                                     }
+                                } else {
+                                    loadingDialog.hide()
+                                    binding.spinKit.visibility= View.GONE
                                 }
                             }
 
-                            getAudioFile()
+                            override fun onFailure(
+                                call: Call<ContactListBannerResponse>,
+                                t: Throwable
+                            ) {
+                                t.printStackTrace()
+                            }
 
-                        }
-
-                        binding.pnOne.text = response.body()?.phone_one
-                        binding.pnTwo.text = response.body()?.phone_two
-                        binding.pnThree.text = response.body()?.phone_three
+                        })
 
 
-                        binding.PhoneOne.setOnClickListener {
-                            val dialIntent = Intent(Intent.ACTION_DIAL)
-                            dialIntent.data = Uri.parse("tel:" + response.body()?.phone_one)
-                            startActivity(dialIntent)
-                        }
-                        binding.PhoneTwo.setOnClickListener {
-                            val dialIntent = Intent(Intent.ACTION_DIAL)
-                            dialIntent.data = Uri.parse("tel:" + response.body()?.phone_two)
-                            startActivity(dialIntent)
-                        }
-                        binding.PhoneThree.setOnClickListener {
-                            val dialIntent = Intent(Intent.ACTION_DIAL)
-                            dialIntent.data = Uri.parse("tel:" + response.body()?.phone_three)
-                            startActivity(dialIntent)
-                        }
 
-                    }
-                } else {
-                    loadingDialog.hide()
-                    binding.spinKit.visibility= View.GONE
-                }
             } catch (e: Exception) {
                 loadingDialog.hide()
                 binding.spinKit.visibility= View.GONE
@@ -417,6 +442,11 @@ class SpecialNumberActivity : AppCompatActivity() {
 
 
                         binding.uploadDate.text = response.body()?.upload_date
+
+                        binding.btnSerialCheck.visibility = View.VISIBLE
+                        binding.btnSerialCheck.setOnClickListener {
+                            startActivity(Intent(this, LotterySerialCheckActivity::class.java))
+                        }
 
 
                     }

@@ -15,8 +15,7 @@ import com.skithub.resultdear.R
 import com.skithub.resultdear.databinding.ActivitySplashBinding
 import com.skithub.resultdear.ui.main.MainActivity
 import okhttp3.ResponseBody
-
-
+import java.lang.Exception
 
 
 class SplashActivity : AppCompatActivity() {
@@ -75,13 +74,17 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun inProgressUpdate(){
-        appUpdate?.appUpdateInfo?.addOnSuccessListener{ updateInfo->
+       try{
+           appUpdate?.appUpdateInfo?.addOnSuccessListener{ updateInfo->
 
-            if (updateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS){
-                appUpdate?.startUpdateFlowForResult(updateInfo,AppUpdateType.IMMEDIATE,this,REQUEST_CODE)
-            }
+               if (updateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS){
+                   appUpdate?.startUpdateFlowForResult(updateInfo,AppUpdateType.IMMEDIATE,this,REQUEST_CODE)
+               }
 
-        }
+           }
+       }catch (e:Exception){
+
+       }
     }
 
 

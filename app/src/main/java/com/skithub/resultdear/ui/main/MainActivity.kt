@@ -64,13 +64,25 @@ import android.view.*
 import android.media.AudioManager
 
 import android.media.AudioAttributes
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.share.Sharer
+import com.facebook.share.model.ShareHashtag
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.skithub.resultdear.utils.*
 import com.google.android.exoplayer2.upstream.DataSpec
 import com.google.android.exoplayer2.upstream.RawResourceDataSource
+import com.skithub.resultdear.model.response.ActivityDialog
+import com.skithub.resultdear.model.response.ActivityDialogResponse
 import com.skithub.resultdear.ui.PlayerActivity
+import com.facebook.share.model.ShareLinkContent
+import com.facebook.share.widget.MessageDialog
+import com.facebook.share.widget.ShareDialog
+import com.skithub.resultdear.ui.facebook_share.FbShareActivity
+
 
 enum class AudioPlayingType{
     homeAudio,
@@ -230,6 +242,85 @@ class MainActivity : AppCompatActivity() {
 
         //serverIssueDialog("Test", "Test");
 
+        checkDialog()
+
+    }
+
+    private fun checkDialog() {
+        myApi.getDialogInfo("MainActivity")
+            .enqueue(
+                object : Callback<ActivityDialogResponse> {
+                    override fun onResponse(
+                        call: Call<ActivityDialogResponse>,
+                        response: Response<ActivityDialogResponse>
+                    ) {
+
+                        if(response.isSuccessful && response.body()!=null){
+                            val activityDialogResponse = response.body()!!
+                            if(!activityDialogResponse.error!!){
+                                val activityDialog : ActivityDialog = activityDialogResponse.activityDialog!!
+
+                                val dialogBinding = DialogHomeBinding.inflate(layoutInflater)
+
+                                val builder= AlertDialog.Builder(this@MainActivity)
+                                    .setCancelable(true)
+                                    .setView(dialogBinding.root)
+
+                                val qualityDialog = builder.create()
+
+                                qualityDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+
+                                if(!isFinishing && !isDestroyed ){
+                                    if(activityDialog.showImage!! && !activityDialog.imageUrl.isNullOrEmpty()){
+                                    Glide.with(this@MainActivity)
+                                        .load(activityDialog.imageUrl)
+                                        .placeholder(R.drawable.loading_placeholder)
+                                        .into(dialogBinding.imgThumb)
+
+                                    dialogBinding.imgThumb.setOnClickListener {
+                                        CommonMethod.openLink(this@MainActivity, activityDialog.actionUrl!!)
+                                    }
+                                }else{
+                                    dialogBinding.imgThumb.visibility = View.GONE
+                                }
+
+                                if(!activityDialog.description.isNullOrEmpty()){
+                                    dialogBinding.txtDesc.text = activityDialog.description
+                                }else{
+                                    dialogBinding.txtDesc.visibility = View.GONE
+                                }
+
+                                dialogBinding.imgCancel.setOnClickListener {
+                                    qualityDialog.dismiss()
+                                }
+
+                                dialogBinding.btnContinue.setOnClickListener {
+                                    qualityDialog.dismiss()
+                                }
+
+                                if(activityDialog.action!!){
+                                    dialogBinding.rootLayout.setOnClickListener {
+                                        CommonMethod.openLink(this@MainActivity, activityDialog.actionUrl!!)
+                                    }
+
+                                    dialogBinding.txtDesc.setOnClickListener {
+                                        CommonMethod.openLink(this@MainActivity, activityDialog.actionUrl!!)
+                                    }
+                                }
+
+                                qualityDialog.show()
+
+                                }
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ActivityDialogResponse>, t: Throwable) {
+
+                    }
+
+                }
+            )
     }
 
     private fun dismissHomeAudioDialog(){
@@ -328,6 +419,7 @@ class MainActivity : AppCompatActivity() {
         binding.todayResultCardView.setOnClickListener {
             val gridIntent= Intent(applicationContext, TodayResultActivity::class.java)
             startActivity(gridIntent)
+
         }
         binding.yesterDayResultCardView.setOnClickListener {
             val gridIntent= Intent(applicationContext, YesterdayResultActivity::class.java)
@@ -517,8 +609,10 @@ class MainActivity : AppCompatActivity() {
                                 binding.adUpArrowBtn.setImageResource(R.drawable.ic_arrow_down_icon)
                                 Glide.with(applicationContext).load(bannerimage).placeholder(R.drawable.loading_placeholder).into(binding.imageBanner)
                                 binding.imageBanner.setOnClickListener {
-                                    val webIntent: Intent= Intent(Intent.ACTION_VIEW,Uri.parse(targetlink))
-                                    startActivity(Intent.createChooser(webIntent,"Choose one:"))
+//                                    val webIntent: Intent= Intent(Intent.ACTION_VIEW,Uri.parse(targetlink))
+//                                    startActivity(Intent.createChooser(webIntent,"Choose one:"))
+
+                                    CommonMethod.openLink(this@MainActivity, targetlink)
                                 }
                                 /*val hide: Animation =
                                     AnimationUtils.loadAnimation(this@MainActivity, R.anim.bottom_top)
@@ -570,8 +664,8 @@ class MainActivity : AppCompatActivity() {
 
                             if (TargetUrlStatus.equals("true")){
                                 binding.tutorialImageView.setOnClickListener{
-                                    val webIntent: Intent= Intent(Intent.ACTION_VIEW,Uri.parse(TargetUrl))
-                                    startActivity(Intent.createChooser(webIntent,"Choose one:"))
+
+                                    CommonMethod.openLink(this@MainActivity, TargetUrl)
                                 }
                             }
 
@@ -675,11 +769,19 @@ class MainActivity : AppCompatActivity() {
         tog?.syncState()
         binding.navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
+
+                R.id.menuLogout->{
+                    logOut()
+                }
+
                 R.id.share -> {
                     CommonMethod.shareAppLink(this)
                 }
                 R.id.liveSupport -> {
                     startActivity(Intent(this,LiveSupportActivity::class.java))
+                    //startActivity(Intent(this,PlayerActivity::class.java))
+                }R.id.shareToFb -> {
+                    startActivity(Intent(this,FbShareActivity::class.java))
                     //startActivity(Intent(this,PlayerActivity::class.java))
                 }
                 R.id.appPrivacy -> {
@@ -807,6 +909,7 @@ class MainActivity : AppCompatActivity() {
             .setCancelable(false)
             .setView(connectionDialogBinding.root)
         connectionAlertDialog=builder.create()
+
         if (connectionAlertDialog?.window!=null) {
             connectionAlertDialog?.window!!.attributes.windowAnimations=R.style.DialogTheme
         }

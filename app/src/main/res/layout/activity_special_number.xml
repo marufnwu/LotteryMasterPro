@@ -331,6 +331,27 @@
 
             </LinearLayout>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:colorSpace="@dimen/_50sdp"
+                app:colorSpeed="10dp"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:paddingBottom="@dimen/_8sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_15sdp"
+                android:paddingStart="@dimen/_15sdp"
+                android:background="@drawable/gradient_button"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:id="@+id/btnSerialCheck"
+                android:layout_margin="@dimen/_8sdp"
+                android:text="@string/four_digit_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
             <LinearLayout
                 android:id="@+id/standerdLayout"
                 android:layout_width="match_parent"
@@ -391,6 +412,17 @@
                         android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="#2DFF03" />
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyCustNumbers"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -398,86 +430,86 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:orientation="vertical">
 
-                        <LinearLayout
-                            android:id="@+id/PhoneOne"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:background="@drawable/service_plan_backg"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/_10sdp">
+<!--                        <LinearLayout-->
+<!--                            android:id="@+id/PhoneOne"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="@dimen/_5sdp"-->
+<!--                            android:background="@drawable/service_plan_backg"-->
+<!--                            android:orientation="horizontal"-->
+<!--                            android:padding="@dimen/_10sdp">-->
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/service_plan_backg"
-                                android:padding="@dimen/_5sdp"
-                                android:src="@drawable/ic_call_phone" />
+<!--                            <ImageView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:background="@drawable/service_plan_backg"-->
+<!--                                android:padding="@dimen/_5sdp"-->
+<!--                                android:src="@drawable/ic_call_phone" />-->
 
-                            <TextView
-                                android:id="@+id/pnOne"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
-                        </LinearLayout>
+<!--                            <TextView-->
+<!--                                android:id="@+id/pnOne"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_gravity="center_vertical"-->
+<!--                                android:layout_marginLeft="@dimen/_10sdp"-->
+<!--                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
+<!--                                android:textColor="@color/white"-->
+<!--                                android:textStyle="bold" />-->
+<!--                        </LinearLayout>-->
 
-                        <LinearLayout
-                            android:id="@+id/PhoneTwo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:background="@drawable/service_plan_backg"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/_10sdp">
+<!--                        <LinearLayout-->
+<!--                            android:id="@+id/PhoneTwo"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="@dimen/_5sdp"-->
+<!--                            android:background="@drawable/service_plan_backg"-->
+<!--                            android:orientation="horizontal"-->
+<!--                            android:padding="@dimen/_10sdp">-->
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/service_plan_backg"
-                                android:padding="@dimen/_5sdp"
-                                android:src="@drawable/ic_call_phone" />
+<!--                            <ImageView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:background="@drawable/service_plan_backg"-->
+<!--                                android:padding="@dimen/_5sdp"-->
+<!--                                android:src="@drawable/ic_call_phone" />-->
 
-                            <TextView
-                                android:id="@+id/pnTwo"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
-                        </LinearLayout>
+<!--                            <TextView-->
+<!--                                android:id="@+id/pnTwo"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_gravity="center_vertical"-->
+<!--                                android:layout_marginLeft="@dimen/_10sdp"-->
+<!--                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
+<!--                                android:textColor="@color/white"-->
+<!--                                android:textStyle="bold" />-->
+<!--                        </LinearLayout>-->
 
-                        <LinearLayout
-                            android:id="@+id/PhoneThree"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:background="@drawable/service_plan_backg"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/_10sdp">
+<!--                        <LinearLayout-->
+<!--                            android:id="@+id/PhoneThree"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="@dimen/_5sdp"-->
+<!--                            android:background="@drawable/service_plan_backg"-->
+<!--                            android:orientation="horizontal"-->
+<!--                            android:padding="@dimen/_10sdp">-->
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/service_plan_backg"
-                                android:padding="@dimen/_5sdp"
-                                android:src="@drawable/ic_call_phone" />
+<!--                            <ImageView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:background="@drawable/service_plan_backg"-->
+<!--                                android:padding="@dimen/_5sdp"-->
+<!--                                android:src="@drawable/ic_call_phone" />-->
 
-                            <TextView
-                                android:id="@+id/pnThree"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                                android:textColor="@color/white"
-                                android:textStyle="bold" />
-                        </LinearLayout>
+<!--                            <TextView-->
+<!--                                android:id="@+id/pnThree"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_gravity="center_vertical"-->
+<!--                                android:layout_marginLeft="@dimen/_10sdp"-->
+<!--                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
+<!--                                android:textColor="@color/white"-->
+<!--                                android:textStyle="bold" />-->
+<!--                        </LinearLayout>-->
 
                         <ImageView
                             android:id="@+id/whatsAppBtn"
@@ -489,6 +521,8 @@
                             android:layout_marginRight="@dimen/_10sdp"
                             android:adjustViewBounds="true"
                             android:src="@drawable/whats_app_icon" />
+
+
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

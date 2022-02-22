@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuLogout"
+        android:icon="@drawable/sign_out"
+        android:title="@string/log_out" />
+
+    <item
+        android:id="@+id/shareToFb"
+        android:icon="@drawable/ic_facebook"
+        android:title="@string/share_to_facebook" />
+
     <item
         android:id="@+id/liveSupport"
         android:icon="@drawable/ic_live_support"
@@ -13,6 +24,7 @@
         android:icon="@drawable/ic_privacy_tip_24"
         android:title="@string/privacy_policy" />
     <item
+        android:visible="false"
         android:id="@+id/contactUs"
         android:icon="@drawable/mail"
         android:title="@string/contact_us" />

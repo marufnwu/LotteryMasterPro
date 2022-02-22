@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:padding="@dimen/_8sdp"
+    android:background="@color/purple_700"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.facebook_share.FbShareActivity">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/imageRoot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/layout_ripple_bg_image" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvInstruction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/border_tv_bg"
+            android:justificationMode="inter_word"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/paid_service_message"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#2DFF03" />
+
+        <com.smb.glowbutton.NeonButton
+            android:layout_marginTop="@dimen/_25sdp"
+            android:id="@+id/btnSHare"
+            style="@style/MyNeonButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:nb_drawableStart="@drawable/ic_share_24"
+            app:nb_gradientEnd="@color/gradient_center"
+            app:nb_gradientStart="@color/neon_color_one"
+            app:nb_text="@string/share_to_facebook" />
+    </LinearLayout>
+
+</ScrollView>

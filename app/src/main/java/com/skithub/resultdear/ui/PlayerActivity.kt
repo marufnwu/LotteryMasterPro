@@ -21,6 +21,7 @@ import com.google.android.exoplayer2.util.Util
 import com.skithub.resultdear.R
 import com.skithub.resultdear.databinding.ActivityPlayerBinding
 import com.skithub.resultdear.databinding.CustomPlayerViewBinding
+import com.skithub.resultdear.utils.CommonMethod
 import com.skithub.resultdear.utils.MyExtensions.shortToast
 
 
@@ -45,6 +46,7 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CommonMethod.keepScreenOn(this)
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN)
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
