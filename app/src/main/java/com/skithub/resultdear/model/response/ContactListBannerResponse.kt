@@ -2,6 +2,7 @@ package com.skithub.resultdear.model.response
 
 
 import com.google.gson.annotations.SerializedName
+import com.skithub.resultdear.model.Contacts
 
 data class ContactListBannerResponse(
     @SerializedName("banner")

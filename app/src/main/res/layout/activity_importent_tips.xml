@@ -92,10 +92,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:padding="@dimen/_5sdp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/adLayout"/>
+        android:layout_above="@+id/adLayout"
+        android:padding="@dimen/_5sdp" />
     <ScrollView
         android:id="@+id/standerdLayout"
         app:layout_constraintTop_toTopOf="parent"

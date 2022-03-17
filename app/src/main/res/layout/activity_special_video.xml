@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.lmpclass_videos.LmpClassVideoActivity">
+
+   <androidx.core.widget.NestedScrollView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <LinearLayout
+           android:orientation="vertical"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/recyVideo"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"/>
+
+           <LinearLayout
+               android:orientation="vertical"
+               android:layout_margin="@dimen/_8sdp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+
+               <LinearLayout
+                   android:elevation="@dimen/_8sdp"
+                   android:weightSum="5"
+                   android:layout_marginTop="@dimen/_20sdp"
+                   android:padding="@dimen/_5sdp"
+                   android:background="@drawable/gradient_button_2"
+                   android:gravity="center"
+                   android:id="@+id/facebook"
+                   android:orientation="horizontal"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <ImageView
+                       android:padding="@dimen/_2sdp"
+                       android:background="@drawable/text_input_bg"
+                       android:src="@drawable/ic_facebook"
+                       android:layout_width="@dimen/_30sdp"
+                       android:layout_height="@dimen/_30sdp"/>
+                   <TextView
+                       android:gravity="center"
+                       android:layout_weight="3"
+                       android:textStyle="bold"
+                       android:textColor="@color/white"
+                       android:layout_marginStart="@dimen/_20sdp"
+                       android:textSize="@dimen/_20sdp"
+                       android:text="Facebook"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"/>
+               </LinearLayout>
+               <LinearLayout
+                   android:elevation="@dimen/_8sdp"
+                   android:weightSum="5"
+                   android:layout_marginTop="@dimen/_20sdp"
+                   android:padding="@dimen/_5sdp"
+                   android:background="@drawable/gradient_button_2"
+                   android:gravity="center"
+                   android:id="@+id/youtube"
+                   android:orientation="horizontal"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <ImageView
+                       android:scaleType="fitXY"
+                       android:padding="@dimen/_2sdp"
+                       android:background="@drawable/text_input_bg"
+                       android:src="@drawable/youtube"
+                       android:layout_width="@dimen/_30sdp"
+                       android:layout_height="@dimen/_30sdp"/>
+                   <TextView
+                       android:gravity="center"
+                       android:layout_weight="3"
+
+                       android:textStyle="bold"
+                       android:textColor="@color/white"
+                       android:layout_marginStart="@dimen/_20sdp"
+                       android:textSize="@dimen/_20sdp"
+                       android:text="Youtube"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"/>
+               </LinearLayout>
+
+           </LinearLayout>
+       </LinearLayout>
+
+
+
+   </androidx.core.widget.NestedScrollView>
+
+
+
+</LinearLayout>

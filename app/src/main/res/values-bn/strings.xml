@@ -33,7 +33,7 @@
     <string name="no_internet_message">আপনার ফোন এ Wi-Fi বা মোবাইল ডেটা চালু নেই দয়া করে ইন্টারনেট সংযুক্ত করুন এবং আবার চেষ্টা করুন </string>
     <string name="no_internet">ইন্টারনেট সংযোগ নেই</string>
     <string name="weak_internet">দুর্বল ইন্টারনেট সংযোগ</string>
-    <string name="paid_service_message">এই পরিসেবা টি ব্যবহার করতে উপরের ভিডিওটা দেখুন।ভিডিওটা দেখার পর নাম্বার/মিডিল বা প্রাইজ সম্পর্কিত প্রশ্ন থাকলে বা বুঝতে অসুবিধা হলে ফোন করুন বা হোয়াটসঅ্যাপে ম্যাসেজ করুন।</string>
+    <string name="paid_service_message">1 টি মিডিলের ৩ টি করে টার্গেট নাম্বার সার্চ করে নিতে হয়।এই ভিডিওটি সম্পূর্ণ দেখার পর,বাটন কেনার নিয়মের ভিডিওটা দেখুন।</string>
     <string name="login_status_check">এই নম্বরটি ইতিমধ্যেই একটি ডিভাইসে লগ ইন করা আছে, দয়া করে যেকোন একটি ডিভাইস থেকে লগআউট করুন অথবা আপনার সমস্যা আমাদের জানান</string>
     <string name="yearly_text">বার্ষিক</string>
     <string name="submit">কন্টিনিউ</string>
@@ -59,7 +59,7 @@
     <string name="privacy_policy">গোপনীয়তা নীতি</string>
     <string name="contact_us">যোগাযোগ করুন</string>
     <string name="more_apps">আরো অ্যাপ্লিকেশান</string>
-    <string name="last_four_degit_of_lottery_number">লটারির সংখ্যাটির শেষ 4 সংখ্যা</string>
+    <string name="last_four_degit_of_lottery_number">লটারির শেষ চারটি সংখ্যা</string>
     <string name="common_number">এই নাম্বার গুলো বেশি খেলে</string>
     <string name="these_middle_play_less">এই মিডিল গুলো কম খেলে</string>
     <string name="middle_details_first">মাঝখানে </string>
@@ -100,6 +100,11 @@
 
     <string name="middle_not_matched">প্রথম বক্সের মিডিল এবং দ্বিতীয় বক্সের মিডিলের মিল নেই.</string>
 
+    <string name="button_buy_rule">বাটন কেনার নিয়ম</string>
+    <string name="audioVoice">যারা প্রাইজ পেয়েছেন</string>
+
+    <string name="Listentotheircomments">তাদের মন্তব্য শুনুন</string>
+    <string name="special_video">ফ্রি অফার এবং সতর্কতা</string>
 
 
 </resources>

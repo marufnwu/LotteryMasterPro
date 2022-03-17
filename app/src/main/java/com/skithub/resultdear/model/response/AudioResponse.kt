@@ -8,7 +8,7 @@ data class AudioResponse(
     @SerializedName("audio")
     var audio: Audio? = null,
     @SerializedName("error")
-    var error: Boolean? = null,
+    var error: Boolean = false,
     @SerializedName("msg")
     var msg: String? = null
 )

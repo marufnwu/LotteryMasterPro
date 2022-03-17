@@ -16,8 +16,8 @@ android {
         applicationId "com.skithub.resultdear"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 50
-        versionName "1.50"
+        versionCode 55
+        versionName "1.55"
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "Lmp_V"+versionName)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -161,6 +161,9 @@ dependencies {
 
     implementation 'com.facebook.android:facebook-share:latest.release'
 
+    implementation 'com.github.JagarYousef:ChatVoicePlayer:1.1.0'
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.24'
 
 
 }

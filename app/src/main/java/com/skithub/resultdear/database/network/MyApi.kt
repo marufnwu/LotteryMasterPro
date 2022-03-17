@@ -273,6 +273,27 @@ interface MyApi {
         @Field("userId") userId: String
     ): Call<LotterySerialCheckInfoResponse>
 
+    @FormUrlEncoded
+    @POST("api/audio.getAudioTutorial.php")
+    fun getAudioTutorial(
+        @Field("page") page: Int
+    ): Call<AudioTutorialResponse>
+
+    @GET("api/getButtonBuyInfo.php")
+    fun getButtonBuyInfo(
+    ): Call<ButtonBuyRuleResponse>
+
+    @GET("api/lmpclass.getVideo.php")
+    fun getLmpClassVideo(
+        @Query("page") page: Int,
+    ): Call<lmpVideoResponse>
+
+
+    @GET("api/lmpclass.getSpecialVideo.php")
+    fun getSpecialVideo(
+        @Query("page") page: Int,
+    ): Call<SpecialVideoResponse>
+
     //Maruf's work end here
 
     companion object {

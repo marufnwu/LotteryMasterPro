@@ -384,7 +384,7 @@
                         android:shadowRadius="1"
                         android:text="@string/importanttips"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -398,7 +398,7 @@
                         android:paddingRight="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_5sdp"
                         android:text="@string/join_lottery_class"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         app:layout_constraintBottom_toTopOf="@+id/videoTipsButton"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -406,6 +406,57 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!--Special video start-->
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_10sdp">
+
+
+                    <TextView
+                        android:id="@+id/videoSpecialButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="19dp"
+                        android:background="@drawable/special_video_backg"
+                        android:ellipsize="marquee"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingTop="@dimen/_30sdp"
+                        android:paddingBottom="@dimen/_30sdp"
+                        android:shadowColor="@color/gradient_center"
+                        android:shadowDx="-2"
+                        android:shadowDy="-2"
+                        android:shadowRadius="1"
+                        android:text="@string/special_video"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/special_video_backg"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="@string/join_lottery_class"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toTopOf="@+id/videoSpecialButton"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/videoSpecialButton" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <!--Special video end-->
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -436,13 +487,13 @@
 
 
                             <TextView
-                                android:drawableLeft="@drawable/ic_flower_left"
-                                android:drawableRight="@drawable/ic_flower_right"
                                 android:id="@+id/view"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="19dp"
                                 android:background="@drawable/guaranteed_button_text"
+                                android:drawableLeft="@drawable/ic_flower_left"
+                                android:drawableRight="@drawable/ic_flower_right"
                                 android:gravity="center_vertical|center_horizontal"
                                 android:maxLines="1"
                                 android:paddingTop="@dimen/_20sdp"
@@ -492,8 +543,8 @@
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    </LinearLayout>
 
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/pro_title"
@@ -513,30 +564,73 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-                <com.smb.glowbutton.NeonButton
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:id="@+id/btnFirstDigitFirstPrize"
-                    style="@style/MyNeonButtonStyle"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    app:nb_drawableStart="@drawable/ic_search"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_10sdp">
+
+
+                    <TextView
+                        android:id="@+id/btnAudioTutorial"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="19dp"
+                        android:background="@drawable/important_audio_backg"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:maxLines="1"
+                        android:paddingTop="@dimen/_30sdp"
+                        android:paddingBottom="@dimen/_30sdp"
+                        android:shadowColor="@color/gradient_center"
+                        android:shadowDx="-2"
+                        android:shadowDy="-2"
+                        android:shadowRadius="1"
+                        android:text="@string/audioVoice"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/important_audio_backg"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="@string/Listentotheircomments"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/btnAudioTutorial"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btnAudioTutorial" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <com.smb.glowbutton.NeonButton
+                    android:id="@+id/btnButtonBuyRule"
+                    style="@style/MyNeonButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
                     app:nb_gradientEnd="@color/gradient_center"
                     app:nb_gradientStart="@color/neon_color_one"
-                    app:nb_text="@string/firstDigitFirstPrize" />
+                    app:nb_text="@string/button_buy_rule" />
+
 
                 <ImageView
-                    android:src="@drawable/whats_app_icon"
-                    android:layout_marginTop="@dimen/_8sdp"
                     android:id="@+id/btnGotAPrize"
                     style="@style/MyNeonButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_60sdp"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    />
+                    android:src="@drawable/whats_app_icon" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     style="@style/HomeButtonParentLayoutStyle"
@@ -553,17 +647,16 @@
                         app:layout_constraintTop_toTopOf="@+id/todayResultCardView" />
 
                     <com.smb.glowbutton.NeonButton
-                        app:gb_drawablePadding="50dp"
-                        app:gb_drawableTint="@color/black"
                         android:id="@+id/todayResultCardView"
                         style="@style/MyNeonButtonStyle"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        app:gb_drawablePadding="50dp"
+                        app:gb_drawableTint="@color/black"
                         app:layout_constraintEnd_toStartOf="@+id/yesterDayResultCardView"
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:nb_text="@string/today_result" >
-                    </com.smb.glowbutton.NeonButton>
+                        app:nb_text="@string/today_result"></com.smb.glowbutton.NeonButton>
 
                     <com.smb.glowbutton.NeonButton
                         android:id="@+id/yesterDayResultCardView"
@@ -621,6 +714,21 @@
                         android:layout_weight="1"
                         app:nb_text="@string/winning_number" />
                 </LinearLayout>
+
+                <com.smb.glowbutton.NeonButton
+                    android:id="@+id/btnFirstDigitFirstPrize"
+                    style="@style/MyNeonButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:nb_drawableStart="@drawable/ic_search"
+                    app:nb_gradientEnd="@color/gradient_center"
+                    app:nb_gradientStart="@color/neon_color_one"
+                    app:nb_text="@string/firstDigitFirstPrize" />
+
+
             </LinearLayout>
         </ScrollView>
         <com.github.ybq.android.spinkit.SpinKitView

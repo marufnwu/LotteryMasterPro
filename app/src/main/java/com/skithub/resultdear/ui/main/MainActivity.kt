@@ -81,7 +81,12 @@ import com.skithub.resultdear.ui.PlayerActivity
 import com.facebook.share.model.ShareLinkContent
 import com.facebook.share.widget.MessageDialog
 import com.facebook.share.widget.ShareDialog
+import com.skithub.resultdear.model.response.AudioTutorial
+import com.skithub.resultdear.ui.audio_tutorial.AudioTutorialActivity
+import com.skithub.resultdear.ui.buy_button_rule.ButtonBuyRuleActivity
 import com.skithub.resultdear.ui.facebook_share.FbShareActivity
+import com.skithub.resultdear.ui.lmpclass_videos.LmpClassVideoActivity
+import com.skithub.resultdear.ui.lmpclass_videos.SpecialVideoActivity
 
 
 enum class AudioPlayingType{
@@ -224,7 +229,6 @@ class MainActivity : AppCompatActivity() {
         //deviceMetadata.print()
 
         if (CommonMethod.haveInternet(connectivityManager)) {
-
                 if (!SharedPreUtils.getStringFromStorageWithoutSuspend(this,Constants.userIdKey,Constants.defaultUserId).equals("")) {
                     intil()
                     getPremiumStatus()
@@ -235,7 +239,6 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 }
-
         }else{
             noInternetDialog(getString(R.string.no_internet),getString(R.string.no_internet_message))
         }
@@ -489,8 +492,15 @@ class MainActivity : AppCompatActivity() {
                 startActivity(gridIntent)
             }
         }
+
+      ///////////
         binding.videoTipsButton.setOnClickListener {
-            val gridIntent = Intent(applicationContext, ImportentTipsActivity::class.java)
+            val gridIntent = Intent(applicationContext, LmpClassVideoActivity::class.java)
+            startActivity(gridIntent)
+        }
+
+        binding.videoSpecialButton.setOnClickListener {
+            val gridIntent = Intent(applicationContext, SpecialVideoActivity::class.java)
             startActivity(gridIntent)
         }
 
@@ -502,6 +512,15 @@ class MainActivity : AppCompatActivity() {
         binding.btnGotAPrize.setOnClickListener {
                     val intent = Intent(applicationContext, GotPrizeActivity::class.java)
                     startActivity(intent)
+        }
+
+        binding.btnButtonBuyRule.setOnClickListener {
+            startActivity(Intent(this, ButtonBuyRuleActivity::class.java))
+        }
+
+
+        binding.btnAudioTutorial.setOnClickListener {
+            startActivity(Intent(this, AudioTutorialActivity::class.java))
         }
 
 
@@ -844,11 +863,6 @@ class MainActivity : AppCompatActivity() {
             val webIntent: Intent= Intent(Intent.ACTION_VIEW,Uri.parse(url))
             startActivity(Intent.createChooser(webIntent,"Choose one:"))
         }
-
-
-
-
-
             try{
 
                 if(serverIssueDialogBinding.root.parent!=null){
@@ -886,11 +900,6 @@ class MainActivity : AppCompatActivity() {
             }catch (e:Exception){
                 e.printStackTrace()
             }
-
-
-
-
-
 
     }
 

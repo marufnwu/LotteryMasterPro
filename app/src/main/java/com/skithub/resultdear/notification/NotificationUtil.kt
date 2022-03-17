@@ -73,7 +73,7 @@ class NotificationUtil(val context: Context) {
                     Log.d("IntentPending", BuildConfig.APPLICATION_ID+activity)
                     resultIntent = Intent(context, c)
                 }catch (ignored: ClassNotFoundException){
-                    resultIntent = Intent(context, MainActivity::class.java)
+                    resultIntent = Intent(context, SplashActivity::class.java)
                 }
 
             }

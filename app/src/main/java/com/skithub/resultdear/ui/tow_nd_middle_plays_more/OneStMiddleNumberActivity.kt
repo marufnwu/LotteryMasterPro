@@ -37,6 +37,7 @@ import com.skithub.resultdear.databinding.ActivityOneStMiddleNumberBinding
 import com.skithub.resultdear.databinding.ConnectionCheckDialogBinding
 import com.skithub.resultdear.model.response.AudioResponse
 import com.skithub.resultdear.model.response.ContactListBannerResponse
+import com.skithub.resultdear.ui.buy_button_rule.ButtonBuyRuleActivity
 import com.skithub.resultdear.utils.*
 import com.skyfishjy.library.RippleBackground
 import retrofit2.Call
@@ -479,6 +480,10 @@ class OneStMiddleNumberActivity : AppCompatActivity() {
     private fun initAll() {
         connectivityManager=getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
         binding.spinKit.visibility= View.GONE
+
+        binding.btnButtonBuyRule.setOnClickListener {
+            startActivity(Intent(this, ButtonBuyRuleActivity::class.java))
+        }
     }
 
     private fun setupRecyclerView() {

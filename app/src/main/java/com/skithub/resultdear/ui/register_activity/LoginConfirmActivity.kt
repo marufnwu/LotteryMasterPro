@@ -182,8 +182,10 @@ class LoginConfirmActivity : AppCompatActivity() {
                                             finish()
                                         }else{
                                             binding.phoneNumberText.error = getString(R.string.login_status_check)
-                                            binding.whatsAppBtn.visibility = View.VISIBLE
-                                            binding.numberSubmitbtn.visibility = View.GONE
+                                            //binding.whatsAppBtn.visibility = View.VISIBLE
+                                            binding.numberSubmitbtn.visibility = View.VISIBLE
+                                            binding.numberSubmitbtn.isEnabled = true
+
                                             binding.loginprogressbar.visibility = View.GONE
 
                                             //show dialog for multiple login issue
@@ -195,7 +197,7 @@ class LoginConfirmActivity : AppCompatActivity() {
                             }catch (e: Exception){
                                 ISSUE = "Week Internet"
                                 binding.numberSubmitbtn.isEnabled = true
-                                binding.whatsAppBtn.visibility = View.VISIBLE
+                                //binding.whatsAppBtn.visibility = View.VISIBLE
                                 serverIssueDialog("Server Down",getString(R.string.server_issue_msg))
 
                             }
@@ -203,7 +205,7 @@ class LoginConfirmActivity : AppCompatActivity() {
                     }else{
                         ISSUE = "DeviceToken Not working"
                         binding.numberSubmitbtn.isEnabled = true
-                        binding.whatsAppBtn.visibility = View.VISIBLE
+                        //binding.whatsAppBtn.visibility = View.VISIBLE
                         serverIssueDialog("Server Down",getString(R.string.server_issue_msg))
 
                     }
@@ -212,7 +214,7 @@ class LoginConfirmActivity : AppCompatActivity() {
         } catch (e: Exception) {
             ISSUE = "Week Internet"
             binding.numberSubmitbtn.isEnabled = true
-            binding.whatsAppBtn.visibility = View.VISIBLE
+            //binding.whatsAppBtn.visibility = View.VISIBLE
             serverIssueDialog("Server Down",getString(R.string.server_issue_msg))
 
 

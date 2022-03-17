@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.skithub.resultdear.R
+import com.skithub.resultdear.adapter.LmpClassVideoAdapter
 import com.skithub.resultdear.adapter.LotteryResultRecyclerAdapter
 import com.skithub.resultdear.adapter.MediaPlayerTutorialAdapter
 import com.skithub.resultdear.adapter.VideoTutorialAdapter
@@ -33,13 +34,11 @@ import com.skithub.resultdear.databinding.ConnectionCheckDialogBinding
 import com.skithub.resultdear.model.*
 import com.skithub.resultdear.model.response.VideoResponse
 import com.skithub.resultdear.model.response.VideoTypeResposne
+import com.skithub.resultdear.model.response.lmpVideoResponse
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.ui.PlayerActivity
-import com.skithub.resultdear.utils.CommonMethod
-import com.skithub.resultdear.utils.Constants
-import com.skithub.resultdear.utils.Coroutines
+import com.skithub.resultdear.utils.*
 import com.skithub.resultdear.utils.MyExtensions.shortToast
-import com.skithub.resultdear.utils.SharedPreUtils
 import org.json.JSONArray
 import org.json.JSONException
 import retrofit2.Call
@@ -577,24 +576,25 @@ class LotteryResultInfoActivity : AppCompatActivity() {
 
     private fun getVideos(page: Int) {
         (application as MyApplication).myApi
-            .getVideosInResultInfo()
-            .enqueue( object : Callback<VideoResponse> {
+            .getLmpClassVideo(page)
+            .enqueue( object : Callback<lmpVideoResponse> {
                 @SuppressLint("NotifyDataSetChanged")
-                override fun onResponse(call: Call<VideoResponse>, response: Response<VideoResponse>) {
+                override fun onResponse(call: Call<lmpVideoResponse>, response: Response<lmpVideoResponse>) {
                     if(response.isSuccessful && response.body()!=null){
-                        binding.spinKit.visibility= View.GONE
-                        val videoResponse = response.body()!!
-                        if(!videoResponse.error!!){
-                            videoResponse.videos?.let {
+                        val lmpVideoResponse = response.body()!!
+                        if(!lmpVideoResponse.error){
+                            lmpVideoResponse.lmpVideos?.let {
                                 Log.d("Dataaa", Gson().toJson(it))
-                                videoList.addAll(it)
-                                mediaPlayerAdapter.notifyDataSetChanged()      }
+
+                                val adapter = LmpClassVideoAdapter(this@LotteryResultInfoActivity, it.toMutableList())
+                                binding.recyLotteryClass.adapter = adapter
+                            }
                         }
                     }
                 }
 
-                override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
-                    binding.spinKit.visibility= View.GONE
+                override fun onFailure(call: Call<lmpVideoResponse>, t: Throwable) {
+
                 }
 
             }
@@ -646,9 +646,9 @@ class LotteryResultInfoActivity : AppCompatActivity() {
                             if(response.body()!!.type == 1){
                                 Log.d("Response", response.body()!!.type.toString())
                                 //media player
-                                mediaPlayerAdapter = MediaPlayerTutorialAdapter(this@LotteryResultInfoActivity, videoList)
-                                binding.recyLotteryClass.adapter = mediaPlayerAdapter
-                                binding.spinKit.visibility= View.VISIBLE
+//                                mediaPlayerAdapter = MediaPlayerTutorialAdapter(this@LotteryResultInfoActivity, videoList)
+//                                binding.recyLotteryClass.adapter = mediaPlayerAdapter
+//                                binding.spinKit.visibility= View.VISIBLE
                                 getVideos(1)
                             }else{
                                 //yt video

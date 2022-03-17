@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/videoRootlayout"
+    android:layout_marginBottom="@dimen/_10sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="@dimen/_5sdp"
+            android:layout_margin="@dimen/_5sdp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textColor="@color/colorPrimaryDark"
+                    android:id="@+id/videoTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hellow world Hellow  world Hellow world Hellow world Hellow world Hellow world Hellow worldHellow world"
+                    android:textStyle="bold"
+                    android:maxLines="2"
+                    android:justificationMode="inter_word"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:padding="@dimen/_5sdp"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/Thumbail"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_170sdp"
+                        android:src="@drawable/tutorial_thumb"
+                        android:scaleType="fitXY"/>
+                </FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/audioLayout"
+                    android:outlineSpotShadowColor="@color/gray"
+                    android:background="@color/white"
+                    android:padding="@dimen/_3sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:background="@drawable/play"
+                        android:id="@+id/btnPlay"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        />
+
+                    <SeekBar
+                        android:visibility="gone"
+                        android:id="@+id/seekBarAudio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/text_size" />
+                    <pl.droidsonroids.gif.GifImageView
+                        android:scaleType="fitXY"
+                        android:id="@+id/gifView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/equalizer"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="water_mark_alpha" format="float" type="dimen">0.2</item>
+</resources>

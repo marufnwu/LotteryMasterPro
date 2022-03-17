@@ -211,19 +211,23 @@ class LotterySerialCheckActivity : AppCompatActivity() {
 
 
     private fun buildListWithColor(numbers : MutableList<LotterySerialModel>){
+
         val size = numbers.size
 
         val colorSize = (size*30)/100
+
+        Log.d("ColorSize", colorSize.toString())
 
         for(i in 0 until size-1){
 
             Log.d("Looop", "i=> "+i)
 
-            if(i%3==0){
+            if(i%8==0){
                 Log.d("Looop", "i/3==0")
 
-                val rnds = (1..2).random()
+                val rnds = (2..3).random()
                 var pos = i+rnds
+                //var pos = i
 
                 if(pos>-1&& pos<size){
                     Log.d("Looop", "i= $i, rds= $rnds, pos= $pos")

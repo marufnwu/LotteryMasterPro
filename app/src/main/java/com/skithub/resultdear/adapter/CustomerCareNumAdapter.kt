@@ -3,14 +3,11 @@ package com.skithub.resultdear.adapter
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.skithub.resultdear.databinding.CustomerNumberItemBinding
-import com.skithub.resultdear.model.response.CustomerNumber
-import com.skithub.resultdear.model.response.Number
+import com.skithub.resultdear.model.Number
 
 class CustomerCareNumAdapter(val ctx:Context, val contactList : MutableList<Number> ) : RecyclerView.Adapter<CustomerCareNumAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: CustomerNumberItemBinding) : RecyclerView.ViewHolder(binding.root) {

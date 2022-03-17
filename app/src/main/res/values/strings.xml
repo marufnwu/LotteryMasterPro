@@ -62,7 +62,7 @@
     <string name="weak_internet">Weak Internet connection</string>
     <string name="server_issue_msg" translatable="false">আগামী 24 ঘন্টার মধ্যে সমস্যা সমাধান হয়ে যাবে। 24 ঘন্টা অপেক্ষা করুন।</string>
 
-    <string name="paid_service_message">Watch the video above to use this service. After watching the video, if you have any questions about numbers/middle or prizes or have difficulty understanding, call or message on WhatsApp.</string>
+    <string name="paid_service_message">You have to search for 3 target numbers in 1 middle. After watching this video completely, watch the video of the rules for buying buttons.</string>
     <string name="login_status_check">This number is already logged in on a device, please logout from any one device or let us know your problem</string>
     <string name="yearly_text">Yearly</string>
     <string name="result_not_publish_title">Result Time</string>
@@ -119,6 +119,11 @@
     <string name="four_digit_number">Four Digit Number</string>
 
     <string name="middle_not_matched">The middle of the first box and the middle of the second box do not match</string>
+    <string name="button_buy_rule">Button Buying System</string>
+    <string name="audioVoice">Those who got the Prize</string>
+    <string name="Listentotheircomments">Listen to their comments</string>
+    <string name="water_mark" translatable="false">© Lottery Master Pro</string>
+    <string name="special_video">Free Offers &amp; Alarts</string>
 
 
 </resources>

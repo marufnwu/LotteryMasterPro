@@ -35,6 +35,7 @@ import com.skithub.resultdear.model.response.AudioResponse
 import com.skithub.resultdear.model.response.ContactListBannerResponse
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.ui.PlayerActivity
+import com.skithub.resultdear.ui.buy_button_rule.ButtonBuyRuleActivity
 import com.skithub.resultdear.ui.lottery_serial_check.LotterySerialCheckActivity
 import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModel
 import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModelFactory
@@ -71,7 +72,9 @@ class SpecialNumberActivity : AppCompatActivity() {
         audioLoadingDialog = AudioLoadingDialog(activity = this, cancelable = false)
         license_check = intent.getStringExtra("license_position").toString()
 
-
+        binding.btnButtonBuyRule.setOnClickListener {
+            startActivity(Intent(this, ButtonBuyRuleActivity::class.java))
+        }
 
 
          mediaPlayer = MediaPlayer().apply {

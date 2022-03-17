@@ -28,6 +28,19 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
         <activity
+            android:name=".ui.webview.WebViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.lmpclass_videos.LmpClassVideoActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.lmpclass_videos.SpecialVideoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.audio_tutorial.AudioTutorialActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.buy_button_rule.ButtonBuyRuleActivity"
             android:exported="false" />
         <activity

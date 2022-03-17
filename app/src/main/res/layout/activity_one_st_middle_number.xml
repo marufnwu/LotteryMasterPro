@@ -93,6 +93,14 @@
               android:textAlignment="center"
               android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
+          <com.smb.glowbutton.NeonButton
+              app:nb_gradientEnd="@color/gradient_center"
+              app:nb_gradientStart="@color/neon_color_one"
+              android:id="@+id/btnButtonBuyRule"
+              style="@style/MyNeonButtonStyle"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              app:nb_text="@string/button_buy_rule" />
 
           <LinearLayout
               android:id="@+id/contactLayout"

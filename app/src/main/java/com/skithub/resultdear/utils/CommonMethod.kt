@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Insets
+import android.media.Image
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
@@ -26,6 +27,7 @@ import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.skithub.resultdear.R
 import com.skithub.resultdear.database.network.MyApi
+import com.skithub.resultdear.model.response.Banner
 import com.skithub.resultdear.ui.PlayerActivity
 import java.text.SimpleDateFormat
 import java.util.*
@@ -369,6 +371,25 @@ object CommonMethod {
 
     fun  getLast2digit(number:String) : String{
         return number.toCharArray(number.length-2, (number.length)).joinToString("")
+    }
+
+    fun loadBannerWithClick(activity:Activity, banner : Banner, imageView:ImageView){
+       if(!activity.isFinishing && !activity.isDestroyed){
+           Glide.with(activity)
+               .load(banner.imageUrl)
+               .thumbnail(Glide.with(activity).load(R.drawable.placeholder))
+               .into(imageView)
+
+           imageView.setOnClickListener {
+               banner.actionUrl?.let {url->
+                   openLink(activity, url)
+               }
+           }
+       }
+
+
+
+
     }
 
 
