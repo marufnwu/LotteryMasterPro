@@ -1,9 +1,11 @@
 package com.skithub.resultdear.ui.lottery_number_check
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +14,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.skithub.resultdear.R
 import com.skithub.resultdear.adapter.LotteryNumberRecyclerAdapter
 import com.skithub.resultdear.database.network.api.SecondServerApi
@@ -23,10 +27,13 @@ import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.utils.CommonMethod
 import com.skithub.resultdear.utils.Constants
 import com.skithub.resultdear.utils.Coroutines
+import com.skithub.resultdear.utils.LoadingDialog
 import com.skithub.resultdear.utils.MyExtensions.shortToast
+import com.skithub.resultdear.utils.admob.MyInterstitialAd
 
-class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener {
+class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener, MyInterstitialAd.InterstitialAdListener {
 
+    private var isClickedBackButton: Boolean = false
     private lateinit var secodServerApi: SecondServerApi
     private lateinit var binding: ActivityLotteryNumberCheckBinding
     private lateinit var viewModel: LotteryNumberCheckViewModel
@@ -42,6 +49,8 @@ class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener {
     private var page_number: Int=1
     private var item_count: Int=30
 
+    lateinit var loadingDialog : LoadingDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityLotteryNumberCheckBinding.inflate(layoutInflater)
@@ -52,9 +61,14 @@ class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener {
         supportActionBar?.title = getString(R.string.search_number)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        loadingDialog = LoadingDialog(this)
+
+        MyInterstitialAd.init(this)
+
         secodServerApi  = (application as MyApplication).secondServerApi
 
         initAll()
+
 
 
 
@@ -121,8 +135,6 @@ class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.option_menu, menu)
-
-
         return true
     }
 
@@ -195,6 +207,7 @@ class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener {
                 R.id.lotteryNumberCheckButton -> {
                     if (binding.lotteryNumberEditText.length() >= 2){
                         checkNumber()
+                        //showInterstitial()
                     }else{
                        Toast.makeText(this,"Give at least 2 digits",Toast.LENGTH_LONG).show()
                     }
@@ -205,7 +218,7 @@ class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-//        binding.particleView.resume()
+
     }
 
     override fun onPause() {
@@ -221,5 +234,49 @@ class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+
+
+
+    @SuppressLint("LongLogTag")
+    private fun finishActivity(){
+        Log.d("LotterySerialCheckActivity", "finishCalled")
+        loadingDialog.hide()
+        finish()
+        //goToMainactivity()
+    }
+    override fun onAdDismissedFullScreenContent() {
+        finishActivity()
+    }
+
+    override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+        finishActivity()
+    }
+
+    override fun onAdShowedFullScreenContent() {
+        loadingDialog.hide()
+    }
+
+    override fun onAdFailedToLoad(adError: LoadAdError?) {
+        //ad failed to load, dismiss waiting dialog and finish the activity
+        finishActivity()
+
+    }
+
+    override fun onAdLoaded(interstitialAd: InterstitialAd) {
+        if(isClickedBackButton){
+            loadingDialog.hide()
+            MyInterstitialAd.showInterstitial()
+        }
+    }
+
+    override fun onBackPressed() {
+        isClickedBackButton = true
+        if(MyInterstitialAd.isAdAvailable()){
+            MyInterstitialAd.showInterstitial()
+        }else{
+            loadingDialog.show()
+            MyInterstitialAd.load()
+        }
+    }
 
 }

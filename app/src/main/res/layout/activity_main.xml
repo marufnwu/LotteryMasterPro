@@ -409,51 +409,16 @@
 
                 <!--Special video start-->
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+
+                <com.smb.glowbutton.NeonButton
+                    android:id="@+id/videoSpecialButton"
+                    style="@style/MyNeonButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_10sdp">
-
-
-                    <TextView
-                        android:id="@+id/videoSpecialButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="19dp"
-                        android:background="@drawable/special_video_backg"
-                        android:ellipsize="marquee"
-                        android:gravity="center_vertical|center_horizontal"
-                        android:paddingTop="@dimen/_30sdp"
-                        android:paddingBottom="@dimen/_30sdp"
-                        android:shadowColor="@color/gradient_center"
-                        android:shadowDx="-2"
-                        android:shadowDy="-2"
-                        android:shadowRadius="1"
-                        android:text="@string/special_video"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/white"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/special_video_backg"
-                        android:paddingLeft="@dimen/_10sdp"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:paddingRight="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_5sdp"
-                        android:text="@string/join_lottery_class"
-                        android:textColor="@color/white"
-                        app:layout_constraintBottom_toTopOf="@+id/videoSpecialButton"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/videoSpecialButton" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:nb_drawableStart="@drawable/ic_baseline_add_alert_24"
+                    app:nb_text="@string/special_video" />
 
 
                 <!--Special video end-->

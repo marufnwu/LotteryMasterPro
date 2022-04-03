@@ -169,6 +169,12 @@ interface MyApi {
         @Query("bannerName") bannerName: String,
     ): Response<BannerRes>
 
+
+    @GET("api/banner.getAddUserInfoBanner.php")
+    fun getAddUserInfoBanner(
+        @Query("bannerName") bannerName: String,
+    ): Call<AddUserInfoDataResponse>
+
     @GET("api/helper.getWhatsapp.php")
     suspend fun getWhatsapp(
         @Query("place") place: String,
@@ -293,6 +299,21 @@ interface MyApi {
     fun getSpecialVideo(
         @Query("page") page: Int,
     ): Call<SpecialVideoResponse>
+
+
+    @FormUrlEncoded
+    @POST("api/user.addUserDetails.php")
+    fun addUserDetails(
+        @Field("userId") userId: String,
+        @Field("name") name: String,
+        @Field("zila") zila: String,
+        @Field("thana") thana: String,
+        @Field("village") village: String,
+        @Field("postOffice") postOffice: String,
+        @Field("pinCode") pinCode: String,
+        @Field("phone") phone: String,
+        @Field("whatsApp") whatsApp: String,
+    ): Call<GenericResponse>
 
     //Maruf's work end here
 

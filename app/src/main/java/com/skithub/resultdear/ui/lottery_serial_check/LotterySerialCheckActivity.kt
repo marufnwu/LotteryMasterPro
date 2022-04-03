@@ -1,5 +1,6 @@
 package com.skithub.resultdear.ui.lottery_serial_check
 
+import android.annotation.SuppressLint
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,10 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.skithub.resultdear.R
 import com.skithub.resultdear.adapter.LotterySerialListAdapter
 import com.skithub.resultdear.databinding.ActivityLotteryNumberCheckBinding
@@ -21,23 +26,35 @@ import com.skithub.resultdear.model.response.LotterySerialCheckInfoResponse
 import com.skithub.resultdear.model.response.LotterySerialCheckResponse
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.utils.*
+import com.skithub.resultdear.utils.admob.MyInterstitialAd
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.Exception
+import android.content.Intent
 
-class LotterySerialCheckActivity : AppCompatActivity() {
+import com.skithub.resultdear.ui.main.MainActivity
+
+
+
+
+class LotterySerialCheckActivity : AppCompatActivity(), MyInterstitialAd.InterstitialAdListener {
     lateinit var binding : ActivityLotterySerialCheckBinding
     lateinit var loadingDialog: LoadingDialog
     lateinit var adapter : LotterySerialListAdapter
     private  var mediaPlayer: MediaPlayer? = null
     private lateinit var audioLoadingDialog: AudioLoadingDialog
+    private var isClickedBackButton = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLotterySerialCheckBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        MyInterstitialAd.init(this)
+
+        //MyInterstitialAd.load()
 
         loadingDialog = LoadingDialog(this)
         audioLoadingDialog = AudioLoadingDialog(this, false)
@@ -138,6 +155,7 @@ class LotterySerialCheckActivity : AppCompatActivity() {
         binding.btnSearch.setOnClickListener {
             if(res.isLicensed){
                 search()
+                //MyInterstitialAd.showInterstitial()
             }else{
                 playAudio(res.audioUrl)
             }
@@ -145,6 +163,15 @@ class LotterySerialCheckActivity : AppCompatActivity() {
 
 
     }
+
+    fun goToMainactivity(){
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
+
+
 
     private fun playAudio(audioUrl: String?) {
         audioUrl?.let {
@@ -158,6 +185,7 @@ class LotterySerialCheckActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun search() {
 
@@ -239,5 +267,47 @@ class LotterySerialCheckActivity : AppCompatActivity() {
 
         adapter = LotterySerialListAdapter(this@LotterySerialCheckActivity, numbers)
         binding.recyList.adapter = adapter
+    }
+
+    @SuppressLint("LongLogTag")
+    private fun finishActivity(){
+        Log.d("LotterySerialCheckActivity", "finishCalled")
+        loadingDialog.hide()
+        finish()
+        //goToMainactivity()
+    }
+    override fun onAdDismissedFullScreenContent() {
+        finishActivity()
+    }
+
+    override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+        finishActivity()
+    }
+
+    override fun onAdShowedFullScreenContent() {
+        loadingDialog.hide()
+    }
+
+    override fun onAdFailedToLoad(adError: LoadAdError?) {
+        //ad failed to load, dismiss waiting dialog and finish the activity
+        finishActivity()
+
+    }
+
+    override fun onAdLoaded(interstitialAd: InterstitialAd) {
+        if(isClickedBackButton){
+            loadingDialog.hide()
+            MyInterstitialAd.showInterstitial()
+        }
+    }
+
+    override fun onBackPressed() {
+        isClickedBackButton = true
+        if(MyInterstitialAd.isAdAvailable()){
+            MyInterstitialAd.showInterstitial()
+        }else{
+            loadingDialog.show()
+            MyInterstitialAd.load()
+        }
     }
 }

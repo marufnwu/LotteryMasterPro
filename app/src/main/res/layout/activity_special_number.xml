@@ -87,7 +87,7 @@
     </LinearLayout>
 
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -98,6 +98,73 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!--Before membership video text layout start-->
+            <LinearLayout
+                android:id="@+id/standerdLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ytthumbail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:maxHeight="@dimen/_200sdp" />
+
+                        <com.skyfishjy.library.RippleBackground
+                            android:id="@+id/content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            app:rb_color="#636200EE"
+                            app:rb_duration="3000"
+                            app:rb_radius="@dimen/_15sdp"
+                            app:rb_rippleAmount="4"
+                            app:rb_scale="6">
+
+                            <ImageView
+                                android:id="@+id/centerImage"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_baseline_play_circle_outline_24" />
+                        </com.skyfishjy.library.RippleBackground>
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tvInstruction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/border_tv_bg"
+                        android:justificationMode="inter_word"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/paid_service_message"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="#2DFF03" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <!--Before membership video text layout end-->
+
+
+            <!--Pro user middle number start-->
             <LinearLayout
                 android:id="@+id/specialNumberLayout"
                 android:layout_width="match_parent"
@@ -330,7 +397,32 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
+            <!--Pro user middle number end-->
 
+            <!--Button buy rule start-->
+            <com.smb.glowbutton.NeonButton
+                app:nb_gradientEnd="#fff"
+                app:nb_gradientStart="#fff"
+                android:id="@+id/btnButtonBuyRule"
+                style="@style/MyNeonButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:nb_text="@string/button_buy_rule" />
+            <!--Button buy rule end-->
+
+
+            <!--Button alert start-->
+            <com.smb.glowbutton.NeonButton
+                app:nb_gradientEnd="#fff"
+                app:nb_gradientStart="#fff"
+                android:id="@+id/btnCareful"
+                style="@style/MyNeonButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:nb_text="@string/button_alert" />
+            <!--Button alert rule end-->
+
+            <!--Four digit number button start-->
             <androidx.appcompat.widget.AppCompatButton
                 android:textAllCaps="false"
                 android:textColor="@color/white"
@@ -351,195 +443,73 @@
                 android:text="@string/four_digit_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <!--Four digit number button end-->
 
-            <LinearLayout
-                android:id="@+id/standerdLayout"
+
+            <FrameLayout
+                android:visibility="gone"
+                android:id="@+id/afterProBannerLayout2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-
-                <LinearLayout
+                android:layout_height="@dimen/_170sdp">
+                <ImageView
+                    android:id="@+id/imgAfterPro2"
+                    android:src="@color/white"
+                    android:layout_margin="@dimen/_5sdp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:background="@drawable/service_plan_backg"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_10sdp">
+                    android:layout_height="match_parent"/>
 
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/ytthumbail"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:maxHeight="@dimen/_200sdp" />
-
-                        <com.skyfishjy.library.RippleBackground
-                            android:id="@+id/content"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            app:rb_color="#636200EE"
-                            app:rb_duration="3000"
-                            app:rb_radius="@dimen/_15sdp"
-                            app:rb_rippleAmount="4"
-                            app:rb_scale="6">
-
-                            <ImageView
-                                android:id="@+id/centerImage"
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/ic_baseline_play_circle_outline_24" />
-                        </com.skyfishjy.library.RippleBackground>
-
-                    </FrameLayout>
-
-                    <TextView
-                        android:id="@+id/tvInstruction"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:background="@drawable/border_tv_bg"
-                        android:justificationMode="inter_word"
-                        android:padding="@dimen/_8sdp"
-                        android:text="@string/paid_service_message"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="#2DFF03" />
+                <ImageView
+                    android:src="@drawable/play_icon"
+                    android:layout_gravity="center"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"/>
+            </FrameLayout>
 
 
-                    <com.smb.glowbutton.NeonButton
 
-                        app:nb_gradientEnd="#fff"
-                        app:nb_gradientStart="#fff"
-                        android:id="@+id/btnButtonBuyRule"
-                        style="@style/MyNeonButtonStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:nb_text="@string/button_buy_rule" />
+            <!--Customer care number list start-->
+            <LinearLayout
+                android:background="@drawable/service_plan_backg"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_margin="@dimen/_5sdp"
+                    android:id="@+id/recyCustNumbers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyCustNumbers"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:orientation="vertical">
-
-<!--                        <LinearLayout-->
-<!--                            android:id="@+id/PhoneOne"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_margin="@dimen/_5sdp"-->
-<!--                            android:background="@drawable/service_plan_backg"-->
-<!--                            android:orientation="horizontal"-->
-<!--                            android:padding="@dimen/_10sdp">-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:background="@drawable/service_plan_backg"-->
-<!--                                android:padding="@dimen/_5sdp"-->
-<!--                                android:src="@drawable/ic_call_phone" />-->
-
-<!--                            <TextView-->
-<!--                                android:id="@+id/pnOne"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_gravity="center_vertical"-->
-<!--                                android:layout_marginLeft="@dimen/_10sdp"-->
-<!--                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
-<!--                                android:textColor="@color/white"-->
-<!--                                android:textStyle="bold" />-->
-<!--                        </LinearLayout>-->
-
-<!--                        <LinearLayout-->
-<!--                            android:id="@+id/PhoneTwo"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_margin="@dimen/_5sdp"-->
-<!--                            android:background="@drawable/service_plan_backg"-->
-<!--                            android:orientation="horizontal"-->
-<!--                            android:padding="@dimen/_10sdp">-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:background="@drawable/service_plan_backg"-->
-<!--                                android:padding="@dimen/_5sdp"-->
-<!--                                android:src="@drawable/ic_call_phone" />-->
-
-<!--                            <TextView-->
-<!--                                android:id="@+id/pnTwo"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_gravity="center_vertical"-->
-<!--                                android:layout_marginLeft="@dimen/_10sdp"-->
-<!--                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
-<!--                                android:textColor="@color/white"-->
-<!--                                android:textStyle="bold" />-->
-<!--                        </LinearLayout>-->
-
-<!--                        <LinearLayout-->
-<!--                            android:id="@+id/PhoneThree"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_margin="@dimen/_5sdp"-->
-<!--                            android:background="@drawable/service_plan_backg"-->
-<!--                            android:orientation="horizontal"-->
-<!--                            android:padding="@dimen/_10sdp">-->
-
-<!--                            <ImageView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:background="@drawable/service_plan_backg"-->
-<!--                                android:padding="@dimen/_5sdp"-->
-<!--                                android:src="@drawable/ic_call_phone" />-->
-
-<!--                            <TextView-->
-<!--                                android:id="@+id/pnThree"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_gravity="center_vertical"-->
-<!--                                android:layout_marginLeft="@dimen/_10sdp"-->
-<!--                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
-<!--                                android:textColor="@color/white"-->
-<!--                                android:textStyle="bold" />-->
-<!--                        </LinearLayout>-->
-
-                        <ImageView
-                            android:id="@+id/whatsAppBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/_60sdp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginRight="@dimen/_10sdp"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/whats_app_icon" />
-
-
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
+            <!--Customer care number list end-->
+
+
+            <!--Whatsapp number start-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/whatsAppBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/whats_app_icon" />
+
+
+            </LinearLayout>
+            <!--Whatsapp number end-->
+
+
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.card.MaterialCardView
         android:visibility="gone"

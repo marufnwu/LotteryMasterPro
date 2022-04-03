@@ -1,8 +1,13 @@
 package com.skithub.resultdear.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.util.Log
+import com.skithub.resultdear.utils.admob.MyInterstitialAd
+import java.text.SimpleDateFormat
+import java.util.*
 
 object SharedPreUtils {
 
@@ -20,6 +25,43 @@ object SharedPreUtils {
         val editor: SharedPreferences.Editor=initSharedPref(context).edit()
         editor.putString(key,value)
         editor.apply()
+    }
+
+    @SuppressLint("SimpleDateFormat")
+     fun setLastAdTimeToStorage(context: Context) {
+        var adCount = getAdCountWithoutSuspend(context)
+        val editor: SharedPreferences.Editor=initSharedPref(context).edit()
+        val currentTimesInMill = System.currentTimeMillis()
+
+
+        if(CommonMethod.getHoursDifBetweenToTime(currentTimesInMill, getLastAdTimeWithoutSuspend(context)) < MyInterstitialAd.AD_SHOW_HOUR) {
+            //time less than 4 hour
+            //show ad
+
+            if(adCount < MyInterstitialAd.AD_SIZE){
+                //ad size expired
+                //let update ad size => 0
+                    adCount++
+                editor.putInt("AdCount", adCount)
+            }
+        }else{
+
+            editor.putInt("AdCount", 1)
+            editor.putLong("AdmobAdTime",currentTimesInMill)
+        }
+        editor.apply()
+    }
+
+
+
+     fun getLastAdTimeWithoutSuspend(context: Context) : Long {
+        return initSharedPref(context).getLong("AdmobAdTime",0)
+    }
+
+     fun getAdCountWithoutSuspend(context: Context) : Int {
+         val adCount = initSharedPref(context).getInt("AdCount",0)
+         Log.d("Ad Count", adCount.toString())
+        return adCount
     }
 
     suspend fun setBooleanToStorage(context: Context,key: String, value: Boolean) {

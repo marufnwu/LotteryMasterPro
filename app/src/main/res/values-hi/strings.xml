@@ -99,11 +99,12 @@
     <string name="four_digit_number">चार अंकों की संख्या</string>
     <string name="middle_not_matched">पहले डिब्बे का मध्य और दूसरे डिब्बे का मध्य मेल नहीं खाता</string>
 
-    <string name="button_buy_rule">बटन खरीदने के नियम</string>
+    <string name="button_buy_rule">🤑बटन खरीदने के नए नियम</string>
     <string name="audioVoice">जिन्हें पुरस्कार मिला</string>
 
     <string name="Listentotheircomments">सुनिए उनके कमेंट</string>
     <string name="special_video">मुफ़्त ऑफ़र और अलर्ट</string>
+    <string name="button_alert">"🤩सावधान रहे"</string>
 
 
 </resources>

@@ -27,13 +27,47 @@
         android:theme="@style/Theme.Lutt"
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
+
+        <!--Real ad ca-app-pub-8326396827024206~5599193882-->
+        <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8326396827024206~5599193882"
+            />
+
+        <activity
+            android:theme="@style/Theme.Lutt.SplashScreen"
+            android:name=".ui.splash.PreLoaderActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Lutt.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".ui.careful.CarefulActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Lutt" />
+        <activity
+            android:name=".ui.user_details.UserDetailsActivity"
+            android:exported="false"
+            android:label="Add Address"
+            android:theme="@style/Theme.Lutt" />
         <activity
             android:name=".ui.webview.WebViewActivity"
             android:exported="false" />
         <activity
             android:name=".ui.lmpclass_videos.LmpClassVideoActivity"
             android:exported="false" />
-
         <activity
             android:name=".ui.lmpclass_videos.SpecialVideoActivity"
             android:exported="false" />
@@ -66,16 +100,6 @@
         <activity
             android:name=".ui.last_digit_first_prize.LastDigitFirstPrizeActivity"
             android:exported="true" />
-        <activity
-            android:name=".ui.splash.SplashActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Lutt.NoTitle">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".ui.register_activity.LoginConfirmActivity"
             android:theme="@style/Theme.Lutt.NoTitle" />

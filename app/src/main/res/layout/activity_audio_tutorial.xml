@@ -12,43 +12,15 @@
    <FrameLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent">
-       <androidx.core.widget.NestedScrollView
+       <LinearLayout
+           android:orientation="vertical"
            android:layout_width="match_parent"
            android:layout_height="match_parent">
-
-           <LinearLayout
-               android:orientation="vertical"
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/recyAudio"
                android:layout_width="match_parent"
-               android:layout_height="match_parent">
-               <androidx.recyclerview.widget.RecyclerView
-                   android:id="@+id/recyAudio"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"/>
-
-
-               <FrameLayout
-                   android:visibility="gone"
-                   android:id="@+id/layoutBanner"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content">
-                   <ImageView
-                       android:id="@+id/banner"
-                       android:layout_width="match_parent"
-                       android:layout_height="@dimen/_160sdp"
-                       android:layout_margin="@dimen/_5sdp"
-                       android:scaleType="fitXY"
-                       android:visibility="visible" />
-
-                   <ImageView
-                       android:layout_gravity="center"
-                       android:src="@drawable/play_icon"
-                       android:layout_width="@dimen/_60sdp"
-                       android:layout_height="@dimen/_60sdp"/>
-               </FrameLayout>
-
-           </LinearLayout>
-
-       </androidx.core.widget.NestedScrollView>
+               android:layout_height="match_parent"/>
+       </LinearLayout>
 
 
         <include layout="@layout/layout_water_mark"/>

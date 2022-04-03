@@ -7,9 +7,19 @@
         android:title="@string/log_out" />
 
     <item
+        android:id="@+id/menuUserDetails"
+        android:icon="@drawable/home"
+        android:title="Update Address" />
+
+    <item
         android:id="@+id/shareToFb"
         android:icon="@drawable/ic_facebook"
         android:title="@string/share_to_facebook" />
+
+    <item
+        android:id="@+id/updateCheck"
+        android:icon="@drawable/download"
+        android:title="Check Update" />
 
     <item
         android:id="@+id/liveSupport"

@@ -18,6 +18,7 @@ import com.skithub.resultdear.R
 import com.skithub.resultdear.ui.main.MainActivity
 import com.skithub.resultdear.ui.middle_number.MiddleNumberActivity
 import com.skithub.resultdear.ui.splash.SplashActivity
+import com.skithub.resultdear.ui.webview.WebViewActivity
 import com.skithub.resultdear.utils.Constants.ACTIVITY
 import com.skithub.resultdear.utils.Constants.ACTIVITY_CREATED_BY_NOTI
 import java.io.IOException
@@ -47,21 +48,46 @@ class NotificationUtil(val context: Context) {
             val notificationIntent = Intent(Intent.ACTION_VIEW)
             notificationIntent.data = Uri.parse(notificationData.actionUrl)
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
-                resultPendingIntent = PendingIntent.getActivity(
-                    context,
-                    0,
-                    notificationIntent,
-                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-                )
+
+            val url = notificationData.actionUrl!!
+
+            val actionUri = Uri.parse(url)
+            if(actionUri.host == "lmpclass.sikderithub.com"){
+                //resultIntent.putExtra("id", notificationData.id);
+                // Create the TaskStackBuilder and add the intent, which inflates the back stack
+
+                val resultIntent = Intent(context, WebViewActivity::class.java)
+                resultIntent.putExtra("url", url)
+
+                val stackBuilder = TaskStackBuilder.create(context)
+                stackBuilder.addNextIntentWithParentStack(resultIntent)
+                // Get the PendingIntent containing the entire back stack
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+                    resultPendingIntent =
+                        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+                }else{
+                    resultPendingIntent =
+                        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+                }
             }else{
-                resultPendingIntent = PendingIntent.getActivity(
-                    context,
-                    0,
-                    notificationIntent,
-                     PendingIntent.FLAG_UPDATE_CURRENT
-                )
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+                    resultPendingIntent = PendingIntent.getActivity(
+                        context,
+                        0,
+                        notificationIntent,
+                        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                    )
+                }else{
+                    resultPendingIntent = PendingIntent.getActivity(
+                        context,
+                        0,
+                        notificationIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                    )
+                }
             }
+
         } else if (notificationData.action == 2) {
             //open activity
             Log.d("intentSelect", "Activity")

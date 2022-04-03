@@ -36,6 +36,7 @@ import com.skithub.resultdear.model.response.ContactListBannerResponse
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.ui.PlayerActivity
 import com.skithub.resultdear.ui.buy_button_rule.ButtonBuyRuleActivity
+import com.skithub.resultdear.ui.careful.CarefulActivity
 import com.skithub.resultdear.ui.lottery_serial_check.LotterySerialCheckActivity
 import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModel
 import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModelFactory
@@ -76,6 +77,10 @@ class SpecialNumberActivity : AppCompatActivity() {
             startActivity(Intent(this, ButtonBuyRuleActivity::class.java))
         }
 
+        binding.btnCareful.setOnClickListener {
+            startActivity(Intent(this, CarefulActivity::class.java))
+        }
+
 
          mediaPlayer = MediaPlayer().apply {
             setAudioAttributes(
@@ -106,14 +111,26 @@ class SpecialNumberActivity : AppCompatActivity() {
 
 
         if (license_check.equals("0")){
+            //free member
             getContctInformation(false)
         }else if (license_check.equals("2")){
             binding.coomingSoon.visibility = View.VISIBLE
             binding.standerdLayout.visibility = View.GONE
         }else{
+            //pro member
             getDataLoad()
             getContctInformation(true)
             loadPremiumBanner()
+            loadPremiumBanner2()
+        }
+    }
+
+    private fun loadPremiumBanner2() {
+        Coroutines.main {
+            //CommonMethod.getBanner("ProPremium", binding.ivPremBanner,myApi, applicationContext)
+            getBanner("ProPremium2", binding.imgAfterPro2,myApi, applicationContext).apply {
+                binding.afterProBannerLayout2.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -143,41 +160,7 @@ class SpecialNumberActivity : AppCompatActivity() {
                                 //open url
                                 if (banner.actionUrl != null) {
                                     val url: String = banner.actionUrl!!
-                                    val linkHost = Uri.parse(url).host
-                                    val uri = Uri.parse(url)
-                                    if (linkHost == null) {
-                                        return@OnClickListener
-                                    }
-                                    if (linkHost == "play.google.com") {
-                                        val appId = uri.getQueryParameter("id")
-                                        val intent = Intent(Intent.ACTION_VIEW)
-                                        intent.data = Uri.parse("market://details?id=$appId")
-                                        context.startActivity(intent)
-                                    } else if (linkHost == "www.youtube.com") {
-                                        try {
-                                            val intent = Intent(Intent.ACTION_VIEW, uri)
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                            intent.setPackage("com.google.android.youtube")
-                                            context.startActivity(intent)
-                                        }catch (e : Exception){
-                                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                            context.startActivity(intent)
-                                        }
-                                    }else if(url.endsWith(".mp4") || url.endsWith(".mpeg") || url.endsWith(".mpd") ||
-                                            url.startsWith("https://lmpclass.sikderithub.com/embed") || url.startsWith("http://lmpclass.sikderithub.com/embed")){
-                                        val intent = Intent(this, PlayerActivity::class.java)
-                                        intent.putExtra("url", url)
-                                        startActivity(intent)
-                                    }
-                                    else if ( (url.startsWith("http://") || url.startsWith(
-                                            "https://"
-                                        ))
-                                    ) {
-                                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                        context.startActivity(intent)
-                                    }
+                                    CommonMethod.openLink(this, url)
                                 }
                             } else if (banner.actionType === 2) {
                                 //open activity

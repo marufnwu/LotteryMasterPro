@@ -29,13 +29,15 @@ import com.skithub.resultdear.R
 import com.skithub.resultdear.database.network.MyApi
 import com.skithub.resultdear.model.response.Banner
 import com.skithub.resultdear.ui.PlayerActivity
+import com.skithub.resultdear.ui.webview.WebViewActivity
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 object CommonMethod {
 
-
+    var accountAge : String? = null
 
     fun increaseDecreaseDaysUsingValue(days: Int, locale: Locale): String {
         val calendar: Calendar=Calendar.getInstance()
@@ -76,6 +78,15 @@ object CommonMethod {
             null
         }
     }
+    fun getHoursDifBetweenToTime(startTime: Long, endTime: Long): Long {
+        val date1 = startTime.toLong()
+        val date2 = endTime.toLong()
+        val difference = date1-date2
+        val d = TimeUnit.MILLISECONDS.toMinutes(difference)
+        Log.d("c", d.toString())
+        return d
+    }
+
 
     fun getMinuteDifBetweenToTime(startTime: String, endTime: String): String? {
         return try {
@@ -256,7 +267,11 @@ object CommonMethod {
                                       intent.putExtra("url", url)
                                       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                       context.startActivity(intent)
-                                  } else if (url != null && (url.startsWith("http://") || url.startsWith(
+                                  } else if(url.startsWith("https://lmpclass.sikderithub.com") || url.startsWith("http://lmpclass.sikderithub.com")){
+                                      val intent = Intent(context, WebViewActivity::class.java)
+                                      intent.putExtra("url", url)
+                                      context.startActivity(intent)
+                                  }else if (url != null && (url.startsWith("http://") || url.startsWith(
                                           "https://"
                                       ))
                                   ) {
@@ -331,7 +346,12 @@ object CommonMethod {
             intent.putExtra("url", url)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
-        } else if (url != null && (url.startsWith("http://") || url.startsWith(
+        }else if(url.startsWith("https://lmpclass.sikderithub.com") || url.startsWith("http://lmpclass.sikderithub.com")){
+            val intent = Intent(context, WebViewActivity::class.java)
+            intent.putExtra("url", url)
+            context.startActivity(intent)
+        }
+        else if (url != null && (url.startsWith("http://") || url.startsWith(
                 "https://"
             ))
         ) {
@@ -386,9 +406,9 @@ object CommonMethod {
                }
            }
        }
+    }
 
-
-
+    fun getAccountAgeInDays(){
 
     }
 

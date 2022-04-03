@@ -64,29 +64,28 @@ import android.view.*
 import android.media.AudioManager
 
 import android.media.AudioAttributes
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.share.Sharer
-import com.facebook.share.model.ShareHashtag
+
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.skithub.resultdear.utils.*
 import com.google.android.exoplayer2.upstream.DataSpec
 import com.google.android.exoplayer2.upstream.RawResourceDataSource
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.skithub.resultdear.model.response.ActivityDialog
 import com.skithub.resultdear.model.response.ActivityDialogResponse
 import com.skithub.resultdear.ui.PlayerActivity
-import com.facebook.share.model.ShareLinkContent
-import com.facebook.share.widget.MessageDialog
-import com.facebook.share.widget.ShareDialog
+
 import com.skithub.resultdear.model.response.AudioTutorial
 import com.skithub.resultdear.ui.audio_tutorial.AudioTutorialActivity
 import com.skithub.resultdear.ui.buy_button_rule.ButtonBuyRuleActivity
 import com.skithub.resultdear.ui.facebook_share.FbShareActivity
 import com.skithub.resultdear.ui.lmpclass_videos.LmpClassVideoActivity
 import com.skithub.resultdear.ui.lmpclass_videos.SpecialVideoActivity
+import com.skithub.resultdear.ui.user_details.UserDetailsActivity
+import com.skithub.resultdear.utils.admob.MyInterstitialAd
 
 
 enum class AudioPlayingType{
@@ -94,7 +93,7 @@ enum class AudioPlayingType{
     serverIssueAudio
 }
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
     lateinit var serverIssueDialogBinding: ServerIssueDialogBinding
     lateinit var audioPlayingType: AudioPlayingType
@@ -137,6 +136,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = getString(R.string.home_activity_title)
+
         myApi = (application as MyApplication).myApi
         connectivityManager=getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
         audioLoadingDialog = AudioLoadingDialog(activity = this, cancelable = true)
@@ -612,6 +612,7 @@ class MainActivity : AppCompatActivity() {
                             val TargetUrlStatus = rootArray.getJSONObject(i).getString("ActiveStatus")
                             val marqueeTxt = rootArray.getJSONObject(i).getString("text")
                             val homeAudioUrl = rootArray.getJSONObject(i).getString("homeAudioUrl")
+                            CommonMethod.accountAge = rootArray.getJSONObject(i).getString("account_age")
 
                             if (!dbtoken.equals(SharedPreUtils.getStringFromStorageWithoutSuspend(this@MainActivity,Constants.fcmTokenKey,Constants.defaultUserToken)) || !activestatus.equals("1")){
                                 logOutWithoutupdate()
@@ -786,11 +787,21 @@ class MainActivity : AppCompatActivity() {
         tog=ActionBarDrawerToggle(this,binding.drawerLayout,binding.toolbar,R.string.open,R.string.close)
         binding.drawerLayout.addDrawerListener(tog!!)
         tog?.syncState()
+
+
+
+
         binding.navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
 
                 R.id.menuLogout->{
                     logOut()
+                }
+                R.id.menuUserDetails->{
+                    startActivity(Intent(this,UserDetailsActivity::class.java))
+                }
+                R.id.updateCheck->{
+                    CommonMethod.openAppLink(this@MainActivity)
                 }
 
                 R.id.share -> {

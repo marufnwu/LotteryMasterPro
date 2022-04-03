@@ -66,16 +66,7 @@ class AudioTutorialActivity : AppCompatActivity(), MediaPlayerUtils.Listener {
             val banner = res.body()!!
             if(!banner.error){
                 if (banner.imageUrl != null) {
-                    binding.layoutBanner.visibility = View.VISIBLE
 
-                    Glide.with(this)
-                        .load(banner.imageUrl)
-                        .thumbnail(Glide.with(this).load(R.drawable.placeholder))
-                        .into(binding.banner)
-
-                    binding.banner.setOnClickListener {
-                        CommonMethod.openLink(this, banner.actionUrl!!)
-                    }
                 }
             }
         }

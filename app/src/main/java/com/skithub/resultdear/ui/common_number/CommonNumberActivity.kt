@@ -31,11 +31,9 @@ import com.skithub.resultdear.databinding.ActivityCommonNumberBinding
 import com.skithub.resultdear.databinding.ConnectionCheckDialogBinding
 import com.skithub.resultdear.model.LotteryNumberModel
 import com.skithub.resultdear.ui.MyApplication
-import com.skithub.resultdear.utils.CommonMethod
-import com.skithub.resultdear.utils.Constants
-import com.skithub.resultdear.utils.Coroutines
+import com.skithub.resultdear.utils.*
 import com.skithub.resultdear.utils.MyExtensions.shortToast
-import com.skithub.resultdear.utils.SharedPreUtils
+import com.skithub.resultdear.utils.admob.MyInterstitialAd
 import com.skyfishjy.library.RippleBackground
 import org.json.JSONArray
 import org.json.JSONException
@@ -45,7 +43,7 @@ import retrofit2.Response
 import java.util.HashMap
 
 class CommonNumberActivity : AppCompatActivity() {
-
+    lateinit var loadingDialog: LoadingDialog
     private lateinit var connectivityManager: ConnectivityManager
     private lateinit var binding: ActivityCommonNumberBinding
     private lateinit var viewModel: CommonNumberViewModel
@@ -73,6 +71,9 @@ class CommonNumberActivity : AppCompatActivity() {
         val factory=CommonNumberViewModelFactory((application as MyApplication).myApi)
         viewModel=ViewModelProvider(this,factory).get(CommonNumberViewModel::class.java)
         setContentView(binding.root)
+        loadingDialog = LoadingDialog(this)
+
+        MyInterstitialAd.init(this)
 
         supportActionBar?.title = getString(R.string.common_number)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
