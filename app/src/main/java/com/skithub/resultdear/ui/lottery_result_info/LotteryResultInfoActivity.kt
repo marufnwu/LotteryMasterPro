@@ -39,6 +39,7 @@ import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.ui.PlayerActivity
 import com.skithub.resultdear.utils.*
 import com.skithub.resultdear.utils.MyExtensions.shortToast
+import com.skithub.resultdear.utils.admob.MyInterstitialAd
 import org.json.JSONArray
 import org.json.JSONException
 import retrofit2.Call
@@ -48,7 +49,7 @@ import java.util.*
 
 
 class LotteryResultInfoActivity : AppCompatActivity() {
-
+    lateinit var myInterstitialAd: MyInterstitialAd
     private lateinit var secondServerApi: SecondServerApi
     private lateinit var videoAdapter: VideoTutorialAdapter
     private lateinit var videoLayoutManager: LinearLayoutManager
@@ -87,7 +88,7 @@ class LotteryResultInfoActivity : AppCompatActivity() {
         viewModelLottery=ViewModelProvider(this,factoryLottery).get(LotteryResultInfoViewModel::class.java)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-
+        myInterstitialAd = MyInterstitialAd(this)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         apiInterface = RetrofitClient.getApiClient().create(ApiInterface::class.java)
 
@@ -665,6 +666,10 @@ class LotteryResultInfoActivity : AppCompatActivity() {
                 }
 
             })
+    }
+
+    override fun onBackPressed() {
+        myInterstitialAd.onBackPress()
     }
 
 }

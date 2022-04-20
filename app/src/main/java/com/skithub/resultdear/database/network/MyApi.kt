@@ -124,6 +124,18 @@ interface MyApi {
         @Query("userId") itemCount: String
     ): Response<VideoTutorResponse>
 
+
+    @GET("get_facebook_video_in_user_app.php?")
+    suspend fun getFacebookVideoList(
+        @Query("userId") itemCount: String
+    ): Response<VideoTutorResponse>
+
+
+    @GET("get_facebook_video_in_user_app.php?")
+    suspend fun getFacebookVideoListPaging(
+        @Query("page") page: Int = 1
+    ): Response<VideoTutorResponse>
+
     @GET("get_video_in_result_info.php?")
     suspend fun getVideoListInResultInfo(
         @Query("userId") itemCount: String

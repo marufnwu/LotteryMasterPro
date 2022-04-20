@@ -247,6 +247,8 @@ class MainActivity : AppCompatActivity(){
 
         checkDialog()
 
+
+
     }
 
     private fun checkDialog() {
@@ -496,6 +498,7 @@ class MainActivity : AppCompatActivity(){
       ///////////
         binding.videoTipsButton.setOnClickListener {
             val gridIntent = Intent(applicationContext, LmpClassVideoActivity::class.java)
+            //val gridIntent = Intent(applicationContext, ImportentTipsActivity::class.java)
             startActivity(gridIntent)
         }
 

@@ -27,10 +27,11 @@ import com.skithub.resultdear.utils.CommonMethod
 import com.skithub.resultdear.utils.Constants
 import com.skithub.resultdear.utils.Coroutines
 import com.skithub.resultdear.utils.MyExtensions.shortToast
+import com.skithub.resultdear.utils.TryAgainAlert
+import com.skithub.resultdear.utils.admob.MyInterstitialAd
 import java.util.HashMap
 
 class OneStMiddleDetailsActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityOneStMiddleDetailsBinding
     private lateinit var viewModel: MiddleDetailsViewModel
     private var list: MutableList<LotteryNumberModel> = arrayListOf()
@@ -41,7 +42,7 @@ class OneStMiddleDetailsActivity : AppCompatActivity() {
     //val CUSTOM_PREF_NAME = "User_data_extra"
     private var connectionAlertDialog: AlertDialog?=null
     private lateinit var connectionDialogBinding: ConnectionCheckDialogBinding
-
+    lateinit var myInterstitialAd: MyInterstitialAd
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityOneStMiddleDetailsBinding.inflate(layoutInflater)
@@ -50,7 +51,7 @@ class OneStMiddleDetailsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        myInterstitialAd = MyInterstitialAd(this)
 
         val bundle=intent.extras
         if (bundle!=null) {
@@ -130,6 +131,16 @@ class OneStMiddleDetailsActivity : AppCompatActivity() {
     }
 
     private fun loadLotteryNumberList() {
+
+        val tryAgain = TryAgainAlert(this)
+            .create()
+            .setTryAgainButtonText(null, object: TryAgainAlert.OnTryAgainClick {
+                override fun onClick() {
+                    loadLotteryNumberList()
+                }
+
+            })
+
         Coroutines.main {
             try {
                 binding.spinKit.visibility= View.VISIBLE
@@ -161,9 +172,11 @@ class OneStMiddleDetailsActivity : AppCompatActivity() {
                     }
                 } else {
                     binding.spinKit.visibility= View.GONE
+                    tryAgain.show()
                 }
             } catch (e: Exception) {
                 binding.spinKit.visibility= View.GONE
+                tryAgain.show()
             }
         }
     }

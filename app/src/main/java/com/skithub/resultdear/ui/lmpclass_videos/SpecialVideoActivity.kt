@@ -24,7 +24,7 @@ import java.util.ArrayList
 class SpecialVideoActivity : AppCompatActivity() {
     lateinit var lmpClassVideoAdapter: LmpClassVideoAdapter
     lateinit var layoutManager: LinearLayoutManager
-    private var lmpVideo : MutableList<LmpVideo> = mutableListOf<LmpVideo>()
+    private var lmpVideo : MutableList<Any> = mutableListOf<Any>()
     var audioStatusList: MutableList<AudioStatus> = ArrayList<AudioStatus>()
     var pastVisibleItem : Int =0
     var visibleItemCount = 0

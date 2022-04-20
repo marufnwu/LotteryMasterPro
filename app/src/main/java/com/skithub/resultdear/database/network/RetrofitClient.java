@@ -4,6 +4,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.skithub.resultdear.BuildConfig;
+import com.skithub.resultdear.utils.TryAgainAlert;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;

@@ -20,9 +20,6 @@ import com.skithub.resultdear.adapter.DuplicateLotteryNumberRecyclerAdapter
 import com.skithub.resultdear.databinding.ActivityMiddleNumberBinding
 import com.skithub.resultdear.model.LotteryNumberModel
 import com.skithub.resultdear.ui.MyApplication
-import com.skithub.resultdear.utils.CommonMethod
-import com.skithub.resultdear.utils.Constants
-import com.skithub.resultdear.utils.Coroutines
 import com.skithub.resultdear.utils.MyExtensions.shortToast
 
 import android.content.pm.PackageManager
@@ -30,7 +27,8 @@ import com.google.gson.JsonElement
 import com.skithub.resultdear.database.network.ApiInterface
 import com.skithub.resultdear.database.network.RetrofitClient
 import com.skithub.resultdear.databinding.ConnectionCheckDialogBinding
-import com.skithub.resultdear.utils.SharedPreUtils
+import com.skithub.resultdear.utils.*
+import com.skithub.resultdear.utils.admob.MyInterstitialAd
 import com.skyfishjy.library.RippleBackground
 import org.json.JSONArray
 import org.json.JSONException
@@ -40,7 +38,7 @@ import retrofit2.Response
 
 
 class MiddleNumberActivity : AppCompatActivity() {
-
+    lateinit var myInterstitialAd: MyInterstitialAd
     private lateinit var binding: ActivityMiddleNumberBinding
     private lateinit var viewModel: MiddleNumberViewModel
     private var list: MutableList<LotteryNumberModel> = arrayListOf()
@@ -65,6 +63,9 @@ class MiddleNumberActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.title = getString(R.string.middle_number)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        myInterstitialAd = MyInterstitialAd(this)
+
         apiInterface = RetrofitClient.getApiClient().create(ApiInterface::class.java)
 
         license_check = intent.getStringExtra("license_position").toString()
@@ -273,6 +274,15 @@ class MiddleNumberActivity : AppCompatActivity() {
     }
 
     private fun loadDuplicateLotteryNumber() {
+
+        val tryAgain = TryAgainAlert(this)
+            .create()
+            .setTryAgainButtonText(null, object: TryAgainAlert.OnTryAgainClick {
+                override fun onClick() {
+                    loadDuplicateLotteryNumber()
+                }
+
+            })
         Coroutines.main {
             try {
                 binding.spinKit.visibility= View.VISIBLE
@@ -297,9 +307,11 @@ class MiddleNumberActivity : AppCompatActivity() {
                     }
                 } else {
                     binding.spinKit.visibility= View.GONE
+                    tryAgain.show()
                 }
             } catch (e: Exception) {
                 binding.spinKit.visibility= View.GONE
+                tryAgain.show()
             }
         }
     }
@@ -390,6 +402,10 @@ class MiddleNumberActivity : AppCompatActivity() {
         } else {
             super.attachBaseContext(newBase)
         }
+    }
+
+    override fun onBackPressed() {
+        myInterstitialAd.onBackPress()
     }
 
 

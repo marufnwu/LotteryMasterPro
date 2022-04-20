@@ -82,7 +82,7 @@ object CommonMethod {
         val date1 = startTime.toLong()
         val date2 = endTime.toLong()
         val difference = date1-date2
-        val d = TimeUnit.MILLISECONDS.toMinutes(difference)
+        val d = TimeUnit.MILLISECONDS.toHours(difference)
         Log.d("c", d.toString())
         return d
     }

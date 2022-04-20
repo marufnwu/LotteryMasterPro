@@ -38,7 +38,7 @@ import com.skithub.resultdear.ui.main.MainActivity
 
 
 
-class LotterySerialCheckActivity : AppCompatActivity(), MyInterstitialAd.InterstitialAdListener {
+class LotterySerialCheckActivity : AppCompatActivity() {
     lateinit var binding : ActivityLotterySerialCheckBinding
     lateinit var loadingDialog: LoadingDialog
     lateinit var adapter : LotterySerialListAdapter
@@ -46,13 +46,14 @@ class LotterySerialCheckActivity : AppCompatActivity(), MyInterstitialAd.Interst
     private lateinit var audioLoadingDialog: AudioLoadingDialog
     private var isClickedBackButton = false
 
+    lateinit var myInterstitialAd: MyInterstitialAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLotterySerialCheckBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        MyInterstitialAd.init(this)
+        myInterstitialAd = MyInterstitialAd(this)
 
         //MyInterstitialAd.load()
 
@@ -276,38 +277,9 @@ class LotterySerialCheckActivity : AppCompatActivity(), MyInterstitialAd.Interst
         finish()
         //goToMainactivity()
     }
-    override fun onAdDismissedFullScreenContent() {
-        finishActivity()
-    }
 
-    override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
-        finishActivity()
-    }
-
-    override fun onAdShowedFullScreenContent() {
-        loadingDialog.hide()
-    }
-
-    override fun onAdFailedToLoad(adError: LoadAdError?) {
-        //ad failed to load, dismiss waiting dialog and finish the activity
-        finishActivity()
-
-    }
-
-    override fun onAdLoaded(interstitialAd: InterstitialAd) {
-        if(isClickedBackButton){
-            loadingDialog.hide()
-            MyInterstitialAd.showInterstitial()
-        }
-    }
 
     override fun onBackPressed() {
-        isClickedBackButton = true
-        if(MyInterstitialAd.isAdAvailable()){
-            MyInterstitialAd.showInterstitial()
-        }else{
-            loadingDialog.show()
-            MyInterstitialAd.load()
-        }
+        myInterstitialAd.onBackPress()
     }
 }

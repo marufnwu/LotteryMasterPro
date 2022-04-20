@@ -318,7 +318,7 @@ class OneStMiddleNumberActivity : AppCompatActivity() {
 
                                             bannerRes?.let { banner->
                                                 if(!banner.error!!){
-                                                    if(!isFinishing){
+                                                    if(!isFinishing && !isDestroyed){
                                                         Glide.with(this@OneStMiddleNumberActivity)
                                                             .load(response.body()!!.banner!!.imageUrl)
 

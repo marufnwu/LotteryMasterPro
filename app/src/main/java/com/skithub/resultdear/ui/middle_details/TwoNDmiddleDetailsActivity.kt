@@ -30,10 +30,12 @@ import com.skithub.resultdear.utils.CommonMethod
 import com.skithub.resultdear.utils.Constants
 import com.skithub.resultdear.utils.Coroutines
 import com.skithub.resultdear.utils.MyExtensions.shortToast
+import com.skithub.resultdear.utils.TryAgainAlert
+import com.skithub.resultdear.utils.admob.MyInterstitialAd
 import java.util.HashMap
 
 class TwoNDmiddleDetailsActivity : AppCompatActivity() {
-
+    lateinit var myInterstitialAd: MyInterstitialAd
     private lateinit var binding: ActivityTwoNdmiddleDetailsBinding
     private lateinit var viewModel: MiddleDetailsViewModel
     private var list: MutableList<LotteryNumberModel> = arrayListOf()
@@ -53,7 +55,7 @@ class TwoNDmiddleDetailsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        myInterstitialAd = MyInterstitialAd(this)
 
         val bundle=intent.extras
         if (bundle!=null) {
@@ -133,6 +135,16 @@ class TwoNDmiddleDetailsActivity : AppCompatActivity() {
     }
 
     private fun loadLotteryNumberList() {
+
+        val tryAgain = TryAgainAlert(this)
+            .create()
+            .setTryAgainButtonText(null, object: TryAgainAlert.OnTryAgainClick {
+                override fun onClick() {
+                    loadLotteryNumberList()
+                }
+
+            })
+
         Coroutines.main {
             try {
                 binding.spinKit.visibility= View.VISIBLE
@@ -164,9 +176,11 @@ class TwoNDmiddleDetailsActivity : AppCompatActivity() {
                     }
                 } else {
                     binding.spinKit.visibility= View.GONE
+                    tryAgain.show()
                 }
             } catch (e: Exception) {
                 binding.spinKit.visibility= View.GONE
+                tryAgain.show()
             }
         }
     }
@@ -185,6 +199,10 @@ class TwoNDmiddleDetailsActivity : AppCompatActivity() {
         } else {
             super.attachBaseContext(newBase)
         }
+    }
+
+    override fun onBackPressed() {
+        myInterstitialAd.onBackPress()
     }
 
 

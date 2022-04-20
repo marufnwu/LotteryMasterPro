@@ -29,6 +29,8 @@ import com.skithub.resultdear.utils.CommonMethod
 import com.skithub.resultdear.utils.Constants
 import com.skithub.resultdear.utils.Coroutines
 import com.skithub.resultdear.utils.MyExtensions.shortToast
+import com.skithub.resultdear.utils.TryAgainAlert
+import com.skithub.resultdear.utils.admob.MyInterstitialAd
 import java.util.HashMap
 
 class MiddleDetailsActivity : AppCompatActivity() {
@@ -43,6 +45,7 @@ class MiddleDetailsActivity : AppCompatActivity() {
     //val CUSTOM_PREF_NAME = "User_data_extra"
     private var connectionAlertDialog: AlertDialog?=null
     private lateinit var connectionDialogBinding: ConnectionCheckDialogBinding
+    lateinit var myInterstitialAd: MyInterstitialAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +55,7 @@ class MiddleDetailsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        myInterstitialAd = MyInterstitialAd(this)
 
         val bundle=intent.extras
         if (bundle!=null) {
@@ -132,6 +135,16 @@ class MiddleDetailsActivity : AppCompatActivity() {
     }
 
     private fun loadLotteryNumberList() {
+
+        val tryAgain = TryAgainAlert(this)
+            .create()
+            .setTryAgainButtonText(null, object: TryAgainAlert.OnTryAgainClick {
+                override fun onClick() {
+                    loadLotteryNumberList()
+                }
+
+        })
+
         Coroutines.main {
             try {
                 binding.spinKit.visibility= View.VISIBLE
@@ -163,9 +176,11 @@ class MiddleDetailsActivity : AppCompatActivity() {
                     }
                 } else {
                     binding.spinKit.visibility= View.GONE
+                    tryAgain.show()
                 }
             } catch (e: Exception) {
                 binding.spinKit.visibility= View.GONE
+                tryAgain.show()
             }
         }
     }
@@ -184,6 +199,10 @@ class MiddleDetailsActivity : AppCompatActivity() {
         } else {
             super.attachBaseContext(newBase)
         }
+    }
+
+    override fun onBackPressed() {
+        myInterstitialAd.onBackPress()
     }
 
 

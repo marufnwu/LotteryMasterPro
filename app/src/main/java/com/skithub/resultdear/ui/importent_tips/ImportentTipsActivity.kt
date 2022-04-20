@@ -29,10 +29,8 @@ import com.skithub.resultdear.model.response.VideoTypeResposne
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModel
 import com.skithub.resultdear.ui.middle_number.MiddleNumberViewModelFactory
-import com.skithub.resultdear.utils.CommonMethod
-import com.skithub.resultdear.utils.Constants
-import com.skithub.resultdear.utils.Coroutines
-import com.skithub.resultdear.utils.SharedPreUtils
+import com.skithub.resultdear.utils.*
+import com.skithub.resultdear.utils.MyExtensions.shortToast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -85,7 +83,11 @@ class ImportentTipsActivity : AppCompatActivity() {
         //initViews()
         //getVideos(1)
 
-        getVideoType()
+
+
+        //getVideoType()
+        setupRecyclerView()
+        getYtVideos()
 
     }
 
@@ -261,7 +263,7 @@ class ImportentTipsActivity : AppCompatActivity() {
         layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.setHasFixedSize(true)
-        initRecyScrollListener()
+        //initRecyScrollListener()
         mediaPlayerAdapter = MediaPlayerTutorialAdapter(this, videoList)
         binding.recyclerView.adapter = mediaPlayerAdapter
 
@@ -295,28 +297,33 @@ class ImportentTipsActivity : AppCompatActivity() {
             )
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getYtVideos() {
         Coroutines.main {
             try {
                 binding.spinKit.visibility= View.VISIBLE
-                val response=viewModel.getVideo("")
+                //val response=viewModel.getVideo("")
+                val response=(application as MyApplication).myApi.getFacebookVideoList("")
                 if (response.isSuccessful && response.code()==200) {
                     binding.spinKit.visibility= View.GONE
                     if (response.body()!=null) {
                         if (response.body()?.status.equals("success",true)) {
                             list.addAll(response.body()?.data!!)
+                            Log.d("ResponseData", Gson().toJson(list))
                             adapter.notifyDataSetChanged()
+                            binding.recyclerView.visibility = View.VISIBLE
+
                         } else {
-                            //shortToast("message:- ${response.body()?.message}")
+                            shortToast("message:- ${response.body()?.message}")
                             //Log.d(Constants.TAG,"message:- ${response.body()?.message}")
                             binding.coomingSoon.visibility = View.VISIBLE
                             binding.recyclerView.visibility = View.GONE
                         }
                     }
                 } else {
+                    binding.recyclerView.visibility = View.GONE
                     binding.spinKit.visibility= View.GONE
                     binding.coomingSoon.visibility = View.VISIBLE
-                    binding.recyclerView.visibility = View.GONE
                 }
             } catch (e: Exception) {
                 binding.spinKit.visibility= View.GONE

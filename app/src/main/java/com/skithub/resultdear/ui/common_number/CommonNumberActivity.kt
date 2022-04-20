@@ -64,6 +64,7 @@ class CommonNumberActivity : AppCompatActivity() {
 
     private var apiInterface: ApiInterface? = null
     val CUSTOM_PREF_NAME = "User_data_extra"
+    lateinit var myInterstitialAd: MyInterstitialAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +74,7 @@ class CommonNumberActivity : AppCompatActivity() {
         setContentView(binding.root)
         loadingDialog = LoadingDialog(this)
 
-        MyInterstitialAd.init(this)
+        myInterstitialAd = MyInterstitialAd(this)
 
         supportActionBar?.title = getString(R.string.common_number)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -286,6 +287,17 @@ class CommonNumberActivity : AppCompatActivity() {
     }
 
     private fun loadDuplicateLotteryNumber() {
+
+        val tryAgain = TryAgainAlert(this)
+            .create()
+            .setTryAgainButtonText(null, object: TryAgainAlert.OnTryAgainClick {
+                override fun onClick() {
+                    loadDuplicateLotteryNumber()
+                }
+
+            })
+
+
         Coroutines.main {
             try {
                 binding.spinKit.visibility= View.VISIBLE
@@ -309,9 +321,11 @@ class CommonNumberActivity : AppCompatActivity() {
                     }
                 } else {
                     binding.spinKit.visibility= View.GONE
+                    tryAgain.show()
                 }
             } catch (e: Exception) {
                 binding.spinKit.visibility= View.GONE
+                tryAgain.show()
             }
         }
     }
@@ -332,6 +346,10 @@ class CommonNumberActivity : AppCompatActivity() {
         } else {
             super.attachBaseContext(newBase)
         }
+    }
+
+    override fun onBackPressed() {
+        myInterstitialAd.onBackPress()
     }
 
 

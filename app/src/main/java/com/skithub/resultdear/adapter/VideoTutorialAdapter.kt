@@ -23,7 +23,10 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.ContextCompat.startActivity
 
 import android.content.pm.ResolveInfo
+import android.util.Log
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.skithub.resultdear.ui.webview.WebViewActivity
 
 
 class VideoTutorialAdapter(val context: Context, val list: MutableList<VideoTutorModel>): RecyclerView.Adapter<VideoTutorialAdapter.OldResultRecyclerViewHolder>() {
@@ -47,11 +50,14 @@ class VideoTutorialAdapter(val context: Context, val list: MutableList<VideoTuto
     inner class OldResultRecyclerViewHolder(val binding: TutorialModelBinding): RecyclerView.ViewHolder(binding.root){
 
         fun bind(item: VideoTutorModel) {
+            Log.d("bbbbbbb", item.video_title)
             Glide.with(context).load(item.thumbail).placeholder(R.drawable.loading_placeholder).fitCenter().into(binding.Thumbail)
             binding.videoTitle.text = item.video_title
             binding.videoRootlayout.setOnClickListener {
-                val webIntent: Intent= Intent(Intent.ACTION_VIEW, Uri.parse(item.video_link))
-                context.startActivity(Intent.createChooser(webIntent,"Choose one:"))
+//                val webIntent: Intent= Intent(Intent.ACTION_VIEW, Uri.parse(item.video_link))
+//                context.startActivity(Intent.createChooser(webIntent,"Choose one:"))
+
+                context.startActivity(Intent(context, WebViewActivity::class.java).putExtra("url", "https://lmpclass.sikderithub.com/watch.php?link="+item.video_link))
         }
 
 

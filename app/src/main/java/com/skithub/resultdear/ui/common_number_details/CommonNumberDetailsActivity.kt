@@ -26,10 +26,12 @@ import com.skithub.resultdear.utils.CommonMethod
 import com.skithub.resultdear.utils.Constants
 import com.skithub.resultdear.utils.Coroutines
 import com.skithub.resultdear.utils.MyExtensions.shortToast
+import com.skithub.resultdear.utils.admob.MyInterstitialAd
 import java.util.HashMap
 
 class CommonNumberDetailsActivity : AppCompatActivity() {
 
+    lateinit var myInterstitialAd: MyInterstitialAd
     private lateinit var binding: ActivityCommonNumberDetailsBinding
     private lateinit var viewModel: CommonNumberDetailsViewModel
     private var list: MutableList<LotteryNumberModel> = arrayListOf()
@@ -50,7 +52,7 @@ class CommonNumberDetailsActivity : AppCompatActivity() {
 
         supportActionBar?.title = getString(R.string.view_details)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        myInterstitialAd = MyInterstitialAd(this)
 
         val bundle=intent.extras
         if (bundle!=null) {
@@ -182,6 +184,10 @@ class CommonNumberDetailsActivity : AppCompatActivity() {
         } else {
             super.attachBaseContext(newBase)
         }
+    }
+
+    override fun onBackPressed() {
+        myInterstitialAd.onBackPress()
     }
 
 

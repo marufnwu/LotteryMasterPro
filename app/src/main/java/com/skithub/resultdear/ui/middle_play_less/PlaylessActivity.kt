@@ -33,11 +33,9 @@ import com.skithub.resultdear.model.LotteryNumberModel
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.ui.common_number.CommonNumberViewModel
 import com.skithub.resultdear.ui.common_number.CommonNumberViewModelFactory
-import com.skithub.resultdear.utils.CommonMethod
-import com.skithub.resultdear.utils.Constants
-import com.skithub.resultdear.utils.Coroutines
+import com.skithub.resultdear.utils.*
 import com.skithub.resultdear.utils.MyExtensions.shortToast
-import com.skithub.resultdear.utils.SharedPreUtils
+import com.skithub.resultdear.utils.admob.MyInterstitialAd
 import com.skyfishjy.library.RippleBackground
 import org.json.JSONArray
 import org.json.JSONException
@@ -47,7 +45,7 @@ import retrofit2.Response
 import java.util.HashMap
 
 class PlaylessActivity : AppCompatActivity() {
-
+    lateinit var myInterstitialAd: MyInterstitialAd
     private lateinit var binding: ActivityPlaylessBinding
     private lateinit var viewModel: MiddleLessViewModel
     private var list: MutableList<LotteryNumberModel> = arrayListOf()
@@ -72,6 +70,8 @@ class PlaylessActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.title = getString(R.string.these_middle_play_less)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        myInterstitialAd = MyInterstitialAd(this)
 
         apiInterface = RetrofitClient.getApiClient().create(ApiInterface::class.java)
        license_check = intent.getStringExtra("license_position").toString()
@@ -280,6 +280,15 @@ class PlaylessActivity : AppCompatActivity() {
     }
 
     private fun loadDuplicateLotteryNumber() {
+
+        val tryAgain = TryAgainAlert(this)
+            .setTryAgainButtonText(null, object: TryAgainAlert.OnTryAgainClick {
+                override fun onClick() {
+                    loadDuplicateLotteryNumber()
+                }
+
+            })
+
         Coroutines.main {
             try {
                 binding.spinKit.visibility= View.VISIBLE
@@ -304,9 +313,11 @@ class PlaylessActivity : AppCompatActivity() {
                     }
                 } else {
                     binding.spinKit.visibility= View.GONE
+                    tryAgain.show()
                 }
             } catch (e: Exception) {
                 binding.spinKit.visibility= View.GONE
+                tryAgain.show()
             }
         }
     }
@@ -393,6 +404,10 @@ class PlaylessActivity : AppCompatActivity() {
         } else {
             super.attachBaseContext(newBase)
         }
+    }
+
+    override fun onBackPressed() {
+        myInterstitialAd.onBackPress()
     }
 
 

@@ -64,6 +64,7 @@
             android:theme="@style/Theme.Lutt" />
         <activity
             android:name=".ui.webview.WebViewActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity
             android:name=".ui.lmpclass_videos.LmpClassVideoActivity"

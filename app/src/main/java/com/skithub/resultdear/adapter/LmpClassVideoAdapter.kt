@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.skithub.resultdear.databinding.TutorialModelBinding
 import com.skithub.resultdear.model.LmpVideo
+import com.skithub.resultdear.model.VideoTutorModel
 import com.skithub.resultdear.ui.webview.WebViewActivity
+import java.util.*
 
-class LmpClassVideoAdapter(val context: Context, val videoList : MutableList<LmpVideo>) : RecyclerView.Adapter<LmpClassVideoAdapter.ViewHolder>() {
+class LmpClassVideoAdapter(val context: Context, val videoList : MutableList<Any>) : RecyclerView.Adapter<LmpClassVideoAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LmpClassVideoAdapter.ViewHolder {
@@ -26,15 +28,32 @@ class LmpClassVideoAdapter(val context: Context, val videoList : MutableList<Lmp
     }
 
     inner class ViewHolder(val binding: TutorialModelBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(video : LmpVideo){
-            binding.videoTitle.text = video.title
-            Glide.with(context)
-                .load(video.thumbnail)
-                .into(binding.Thumbail)
+        fun bind(obj : Any){
 
-            binding.root.setOnClickListener {
-                context.startActivity(Intent(context, WebViewActivity::class.java).putExtra("url", video.videoUrl))
+            if(obj is LmpVideo){
+                val value = LmpVideo::class.java.cast(obj)
+                binding.videoTitle.text = value.title
+                Glide.with(context)
+                    .load(value.thumbnail)
+                    .into(binding.Thumbail)
+
+                binding.root.setOnClickListener {
+                    context.startActivity(Intent(context, WebViewActivity::class.java).putExtra("url", value.videoUrl))
+                }
+            }else if(obj is VideoTutorModel){
+                val value = VideoTutorModel::class.java.cast(obj)
+
+                binding.videoTitle.text = value.video_title
+                Glide.with(context)
+                    .load(value.thumbail)
+                    .into(binding.Thumbail)
+
+                binding.root.setOnClickListener {
+                    context.startActivity(Intent(context, WebViewActivity::class.java).putExtra("url", "https://lmpclass.sikderithub.com/watch.php?link="+value.video_link))
+                }
             }
+
+
         }
     }
 }

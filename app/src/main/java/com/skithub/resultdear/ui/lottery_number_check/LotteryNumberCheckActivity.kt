@@ -31,7 +31,7 @@ import com.skithub.resultdear.utils.LoadingDialog
 import com.skithub.resultdear.utils.MyExtensions.shortToast
 import com.skithub.resultdear.utils.admob.MyInterstitialAd
 
-class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener, MyInterstitialAd.InterstitialAdListener {
+class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener{
 
     private var isClickedBackButton: Boolean = false
     private lateinit var secodServerApi: SecondServerApi
@@ -50,6 +50,7 @@ class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener, My
     private var item_count: Int=30
 
     lateinit var loadingDialog : LoadingDialog
+    lateinit var myInterstitialAd: MyInterstitialAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,8 +63,8 @@ class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener, My
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         loadingDialog = LoadingDialog(this)
+        myInterstitialAd = MyInterstitialAd(this)
 
-        MyInterstitialAd.init(this)
 
         secodServerApi  = (application as MyApplication).secondServerApi
 
@@ -244,39 +245,10 @@ class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener, My
         finish()
         //goToMainactivity()
     }
-    override fun onAdDismissedFullScreenContent() {
-        finishActivity()
-    }
 
-    override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
-        finishActivity()
-    }
-
-    override fun onAdShowedFullScreenContent() {
-        loadingDialog.hide()
-    }
-
-    override fun onAdFailedToLoad(adError: LoadAdError?) {
-        //ad failed to load, dismiss waiting dialog and finish the activity
-        finishActivity()
-
-    }
-
-    override fun onAdLoaded(interstitialAd: InterstitialAd) {
-        if(isClickedBackButton){
-            loadingDialog.hide()
-            MyInterstitialAd.showInterstitial()
-        }
-    }
 
     override fun onBackPressed() {
-        isClickedBackButton = true
-        if(MyInterstitialAd.isAdAvailable()){
-            MyInterstitialAd.showInterstitial()
-        }else{
-            loadingDialog.show()
-            MyInterstitialAd.load()
-        }
+        myInterstitialAd.onBackPress()
     }
 
 }

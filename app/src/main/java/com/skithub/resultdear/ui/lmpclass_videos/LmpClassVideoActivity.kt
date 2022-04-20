@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -13,7 +14,9 @@ import com.skithub.resultdear.model.LmpVideo
 import com.skithub.resultdear.model.response.lmpVideoResponse
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.utils.AudioStatus
+import com.skithub.resultdear.utils.Coroutines
 import com.skithub.resultdear.utils.LoadingDialog
+import com.skithub.resultdear.utils.MyExtensions.shortToast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +25,7 @@ import java.util.ArrayList
 class LmpClassVideoActivity : AppCompatActivity() {
     lateinit var lmpClassVideoAdapter: LmpClassVideoAdapter
     lateinit var layoutManager: LinearLayoutManager
-    private var lmpVideo : MutableList<LmpVideo> = mutableListOf<LmpVideo>()
+    private var lmpVideo : MutableList<Any> = mutableListOf<Any>()
     var audioStatusList: MutableList<AudioStatus> = ArrayList<AudioStatus>()
     var pastVisibleItem : Int =0
     var visibleItemCount = 0
@@ -33,8 +36,17 @@ class LmpClassVideoActivity : AppCompatActivity() {
     private var PAGE_SIZE= 30
     private var TOTAL_PAGE = 0
     var isLoading = true
+
+
+
     lateinit var loadingDialog: LoadingDialog
     lateinit var binding : ActivityLmpClassVideoBinding
+    var videoCallingType: VideoCallingType? = null
+
+    enum class VideoCallingType{
+        FACEBOOK_VIDEO,
+        LMPCLASS_VIDEO
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +57,18 @@ class LmpClassVideoActivity : AppCompatActivity() {
 
 
         setRecyclerViewAdapter()
-        getVideos(PAGE)
+
+        videoCallingType = VideoCallingType.FACEBOOK_VIDEO
+
+        getYtVideos(PAGE)
+    }
+
+    fun choseCallingFunction(page: Int){
+        if(videoCallingType == VideoCallingType.FACEBOOK_VIDEO){
+            getYtVideos(page)
+        }else if(videoCallingType == VideoCallingType.LMPCLASS_VIDEO){
+            getVideos(page)
+        }
     }
 
     private fun initViews() {
@@ -85,16 +108,29 @@ class LmpClassVideoActivity : AppCompatActivity() {
                                     //Do pagination.. i.e. fetch new data
                                     PAGE++
                                     if (PAGE <= TOTAL_PAGE) {
-                                        getVideos(PAGE)
+                                        choseCallingFunction(page = PAGE)
                                     } else {
                                         isLoading = false
                                         //postListProgress.setVisibility(View.GONE)
+                                        if(videoCallingType == VideoCallingType.FACEBOOK_VIDEO){
+                                            videoCallingType = VideoCallingType.LMPCLASS_VIDEO
+                                            PAGE = 1
+                                            TOTAL_PAGE = 0
+                                            choseCallingFunction(PAGE)
+                                        }
                                     }
                                 }
                             } else {
-
+                                if(videoCallingType == VideoCallingType.FACEBOOK_VIDEO){
+                                    videoCallingType = VideoCallingType.LMPCLASS_VIDEO
+                                    PAGE = 1
+                                    TOTAL_PAGE = 0
+                                    choseCallingFunction(PAGE)
+                                }else{
+                                    Log.d("Pagination", "End of page")
+                                }
                                 //postListProgress.setVisibility(View.GONE);
-                                Log.d("Pagination", "End of page")
+
                             }
                         } else {
                             Log.d("Pagination", "Loading")
@@ -106,7 +142,7 @@ class LmpClassVideoActivity : AppCompatActivity() {
 
     private fun getVideos(page: Int) {
         if(page==1){
-            loadingDialog.show()
+            //loadingDialog.show()
         }
         isLoading = true
         (application as MyApplication).myApi
@@ -123,13 +159,12 @@ class LmpClassVideoActivity : AppCompatActivity() {
                             lmpVideoResponse.lmpVideos?.let {
                                 Log.d("Dataaa", Gson().toJson(it))
 
-                                it.forEach { audioTutorial ->
-                                    audioStatusList.add(AudioStatus(AudioStatus.AUDIO_STATE.IDLE.ordinal, 0))
-                                }
-
 
                                 lmpVideo.addAll(it)
-                                lmpClassVideoAdapter.notifyDataSetChanged()      }
+                                lmpClassVideoAdapter.notifyDataSetChanged()
+                                Log.d("scrollstate", binding.recyVideo.scrollState.toString())
+
+                            }
                         }
                     }
                 }
@@ -141,5 +176,61 @@ class LmpClassVideoActivity : AppCompatActivity() {
 
             }
             )
+    }
+
+    private fun getYtVideos(page :Int) {
+        if(page==1){
+            loadingDialog.show()
+        }
+        isLoading = true
+
+        Coroutines.main {
+            try {
+                //val response=viewModel.getVideo("")
+                val response=(application as MyApplication).myApi.getFacebookVideoListPaging(page)
+                if (response.isSuccessful && response.code()==200) {
+                    if (response.body()!=null) {
+                        loadingDialog.hide()
+                        isLoading = false
+
+                        if (response.body()?.status.equals("success",true)) {
+                            val list = response.body()?.data!!
+                            lmpVideo.addAll(list)
+                            lmpClassVideoAdapter.notifyDataSetChanged()
+
+                            if(list.size<10){
+                                loadingDialog.hide()
+                                isLoading = false
+
+                                videoCallingType = VideoCallingType.LMPCLASS_VIDEO
+                                PAGE = 1
+                                TOTAL_PAGE = 0
+                                choseCallingFunction(PAGE)
+                            }
+
+                        } else {
+
+                            loadingDialog.hide()
+                            isLoading = false
+
+                            videoCallingType = VideoCallingType.LMPCLASS_VIDEO
+                            PAGE = 1
+                            TOTAL_PAGE = 0
+                            choseCallingFunction(PAGE)
+
+                        }
+                    }else{
+                        loadingDialog.hide()
+                        isLoading = false
+                    }
+                } else {
+                    loadingDialog.hide()
+                    isLoading = false
+                }
+            } catch (e: Exception) {
+                loadingDialog.hide()
+                isLoading = false
+            }
+        }
     }
 }
