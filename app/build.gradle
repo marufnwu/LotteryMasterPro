@@ -16,8 +16,8 @@ android {
         applicationId "com.skithub.resultdear"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 59
-        versionName "1.59"
+        versionCode 67
+        versionName "1.67"
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "Lmp_V"+versionName)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -34,12 +34,16 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+
         buildTypes.each {
             it.buildConfigField 'String', 'BASE_URL', lotteryBaseUrl
             it.buildConfigField 'String', 'USER_NAME', userName
             it.buildConfigField 'String', 'USER_PASSWORD', userPassword
             it.buildConfigField 'String', 'SECOND_SERVER_BASE_URL', SecondServer
         }
+
+
     }
     buildFeatures{
         viewBinding true
@@ -168,6 +172,8 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.24'
 
     implementation 'com.google.android.gms:play-services-ads:20.6.0'
+
+    implementation 'com.akexorcist:screenshot-detection:1.0.2'
 
 
 }

@@ -136,6 +136,11 @@ interface MyApi {
         @Query("page") page: Int = 1
     ): Response<VideoTutorResponse>
 
+    @GET("get_facebook_video_with_view_count_in_user_app.php?")
+    suspend fun getFacebookVideoListWithCountPaging(
+        @Query("page") page: Int = 1
+    ): Response<FacebookVideoResponse>
+
     @GET("get_video_in_result_info.php?")
     suspend fun getVideoListInResultInfo(
         @Query("userId") itemCount: String
@@ -311,6 +316,13 @@ interface MyApi {
     fun getSpecialVideo(
         @Query("page") page: Int,
     ): Call<SpecialVideoResponse>
+
+
+    @GET("add_facebook_video_views.php")
+    suspend fun addFbVideoView(
+        @Query("userId") userId: String,
+        @Query("videoId") videoId: String,
+    ): Response<GenericResponse>
 
 
     @FormUrlEncoded

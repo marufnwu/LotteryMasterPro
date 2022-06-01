@@ -1,8 +1,10 @@
 package com.skithub.resultdear.ui.main
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.ConnectivityManager
@@ -64,6 +66,8 @@ import android.view.*
 import android.media.AudioManager
 
 import android.media.AudioAttributes
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
@@ -94,6 +98,10 @@ enum class AudioPlayingType{
 }
 
 class MainActivity : AppCompatActivity(){
+
+    companion object {
+        private const val REQUEST_CODE_READ_EXTERNAL_STORAGE_PERMISSION = 3009
+    }
 
     lateinit var serverIssueDialogBinding: ServerIssueDialogBinding
     lateinit var audioPlayingType: AudioPlayingType
@@ -133,9 +141,14 @@ class MainActivity : AppCompatActivity(){
         binding = ActivityMainBinding.inflate(layoutInflater)
         val factory= MainViewModelFactory((application as MyApplication).myApi)
         viewModel= ViewModelProvider(this,factory).get(MainViewModel::class.java)
+
+
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = getString(R.string.home_activity_title)
+
+
+        checkReadExternalStoragePermission()
 
         myApi = (application as MyApplication).myApi
         connectivityManager=getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -1086,10 +1099,6 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
-    companion object {
-        private const val TIME_INTERVAL = 2000
-    }
-
 
     override fun onResume() {
         Log.d("State", "onResume")
@@ -1124,6 +1133,31 @@ class MainActivity : AppCompatActivity(){
             player.release()
         }
 
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            REQUEST_CODE_READ_EXTERNAL_STORAGE_PERMISSION -> {
+                if (grantResults.getOrNull(0) == PackageManager.PERMISSION_DENIED) {
+                    showReadExternalStoragePermissionDeniedMessage()
+                }
+            }
+            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
+
+    private fun checkReadExternalStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestReadExternalStoragePermission()
+        }
+    }
+
+    private fun requestReadExternalStoragePermission() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE_READ_EXTERNAL_STORAGE_PERMISSION)
+    }
+
+    private fun showReadExternalStoragePermissionDeniedMessage() {
+        Toast.makeText(this, "Read external storage permission has denied", Toast.LENGTH_SHORT).show()
     }
 
 }

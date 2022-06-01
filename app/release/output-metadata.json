@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 58,
-      "versionName": "1.58",
-      "outputFile": "Lmp_V1.58-release.apk"
+      "versionCode": 65,
+      "versionName": "1.65",
+      "outputFile": "Lmp_V1.65-release.apk"
     }
   ],
   "elementType": "File"

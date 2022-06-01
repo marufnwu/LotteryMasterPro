@@ -134,6 +134,7 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="button_alert">"🤩 Be Careful"</string>
+    <string name="old_result_publish_date">We are working to improve this button. This button can be used after 15/07/2022.</string>
 
 
 </resources>

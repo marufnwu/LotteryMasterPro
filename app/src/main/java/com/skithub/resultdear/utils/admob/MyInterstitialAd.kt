@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -20,6 +21,10 @@ class MyInterstitialAd(val context: Context) {
     lateinit var loadingDialog : LoadingDialog
     private var interstitialAdListener : InterstitialAdListener? = null
 
+    init {
+        load()
+    }
+
     interface InterstitialAdListener{
         fun onAdDismissedFullScreenContent()
         fun onAdFailedToShowFullScreenContent(adError: AdError?)
@@ -34,7 +39,7 @@ class MyInterstitialAd(val context: Context) {
         val AD_SIZE = 1
 
 
-        private val AD_UNIT_ID: String = "ca-app-pub-8326396827024206/5546334944" //real ad
+        private val AD_UNIT_ID: String = "ca-app-pub-8326396827024206/9759913678" //real ad
         //private val AD_UNIT_ID: String = "ca-app-pub-3940256099942544/1033173712" //test  ad
 
         private var mInterstitialAd: InterstitialAd? = null
@@ -62,8 +67,10 @@ class MyInterstitialAd(val context: Context) {
         if(isAdAvailable()){
             showInterstitial()
         }else{
-            loadingDialog.show()
-            load()
+            //loadingDialog.show()
+            //load()
+            //Toast.makeText(context, "isAdAvailable not", Toast.LENGTH_SHORT).show()
+            finishActivity()
         }
     }
 
@@ -100,6 +107,7 @@ class MyInterstitialAd(val context: Context) {
                     Log.d(TAG, "Ad showed fullscreen content.")
                     // Called when ad is dismissed.
                     //interstitialAdListener?.onAdShowedFullScreenContent()
+                    SharedPreUtils.setLastAdTimeToStorage(context)
                 }
             }
             mInterstitialAd?.show(context as Activity)
@@ -130,7 +138,7 @@ class MyInterstitialAd(val context: Context) {
 
                     val error = "domain: ${adError.domain}, code: ${adError.code}, " +
                             "message: ${adError.message}"
-                    finishActivity()
+
 
                 }
 
@@ -139,8 +147,8 @@ class MyInterstitialAd(val context: Context) {
                     mInterstitialAd = interstitialAd
                     mAdIsLoading = false
                     //interstitialAdListener?.onAdLoaded(interstitialAd)
-                    showInterstitial()
-                    SharedPreUtils.setLastAdTimeToStorage(context)
+                    //showInterstitial()
+                    //SharedPreUtils.setLastAdTimeToStorage(context)
 
 
                 }
@@ -156,7 +164,7 @@ class MyInterstitialAd(val context: Context) {
             //loadingDialog.hide()
             //interstitialAdListener?.onAdFailedToLoad(null)
 
-            finishActivity()
+            //finishActivity()
         }
     }
 

@@ -13,16 +13,26 @@ import com.skithub.resultdear.utils.LoadingDialog
 import android.widget.FrameLayout
 
 import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.webkit.WebChromeClient.CustomViewCallback
 import android.webkit.WebResourceRequest
 import com.facebook.FacebookSdk.getApplicationContext
+import com.skithub.resultdear.ui.MyApplication
+import com.skithub.resultdear.utils.Constants
+import com.skithub.resultdear.utils.Coroutines
+import com.skithub.resultdear.utils.MyExtensions.shortToast
+import com.skithub.resultdear.utils.SharedPreUtils
+import kotlinx.coroutines.CoroutineScope
 
 
 class WebViewActivity : AppCompatActivity() {
     lateinit var loadingDialog: LoadingDialog
     var url : String? = null
+    var videoId: String? = null
 
     lateinit var binding : ActivityWebViewBinding
 
@@ -39,6 +49,8 @@ class WebViewActivity : AppCompatActivity() {
         binding.webView.webChromeClient = MyChromeClient()
 
         url = intent?.getStringExtra("url")
+        videoId = intent?.getStringExtra("videoId")
+
         if(url!=null){
             loadingDialog.show()
             binding.webView.loadUrl(url!!)
@@ -100,7 +112,6 @@ class WebViewActivity : AppCompatActivity() {
 
     inner class MyWebViewClient : WebViewClient() {
 
-
         override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
             Log.d("url", request?.url?.host.toString())
 
@@ -123,6 +134,32 @@ class WebViewActivity : AppCompatActivity() {
             super.onPageFinished(view, url)
             loadingDialog.hide()
 
+            addFbVideoView()
+
         }
+    }
+
+    private fun addFbVideoView() {
+        val userId = SharedPreUtils.getStringFromStorageWithoutSuspend(this, Constants.userIdKey, "")!!
+
+        if(videoId==null){
+            videoId = Uri.parse(url).getQueryParameter("id")
+
+
+        }
+
+        if(userId.isNotEmpty() && videoId!=null){
+            Handler(Looper.getMainLooper()).postDelayed({
+                Coroutines.main {
+                    (application as MyApplication)
+                        .myApi
+                        .addFbVideoView(userId, videoId!!)
+
+                }
+            }, 1000)
+
+        }
+
+
     }
 }

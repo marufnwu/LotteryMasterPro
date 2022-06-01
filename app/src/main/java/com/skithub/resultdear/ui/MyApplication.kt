@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import com.akexorcist.screenshotdetection.ScreenshotDetectionDelegate
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
@@ -22,7 +23,6 @@ class MyApplication : Application() {
     lateinit var firebaseAnalytics: FirebaseAnalytics
     val MY_NOTIFICATION_CHANNEL_ID: String="MY_NOTIFICATION_CHANNEL_ID"
     private lateinit var notificationManager: NotificationManager
-//    val appDatabase by lazy { AppDatabase.getDatabase(this) }
     val myApi by lazy {
         MyApi.invoke()
     }

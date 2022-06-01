@@ -17,18 +17,21 @@
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/drawable/special_video_backg.xml" value="0.26614583333333336" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/drawable/splash_screen_bg.xml" value="0.26614583333333336" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/drawable/top_round_bg.xml" value="0.26205128205128203" />
+        <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/drawable/view_count_bg.xml" value="0.26614583333333336" />
+        <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/ac_disibled_dialog.xml" value="0.25" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_audio_tutorial.xml" value="0.264" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_button_buy_rule.xml" value="0.25" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_careful.xml" value="0.25" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_fb_share.xml" value="0.18590240123934934" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_importent_tips.xml" value="0.18981481481481483" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_last_digit_first_prize.xml" value="0.25" />
-        <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_lmp_class_video.xml" value="0.25" />
+        <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_lmp_class_video.xml" value="0.1" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_login_confirm.xml" value="0.25" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_lottery_number_check.xml" value="0.25" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_lottery_result_info.xml" value="0.25" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_lottery_serial_check.xml" value="0.2" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_main.xml" value="0.24351851851851852" />
+        <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_old_result.xml" value="0.25" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_one_st_middle_details.xml" value="0.25" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_one_st_middle_number.xml" value="0.1" />
         <entry key="..\:/Android Projects/LotteryMasterPro/app/src/main/res/layout/activity_player.xml" value="0.25416666666666665" />

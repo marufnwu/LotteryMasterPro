@@ -187,8 +187,8 @@ class LmpClassVideoActivity : AppCompatActivity() {
         Coroutines.main {
             try {
                 //val response=viewModel.getVideo("")
-                val response=(application as MyApplication).myApi.getFacebookVideoListPaging(page)
-                if (response.isSuccessful && response.code()==200) {
+                val response=(application as MyApplication).myApi.getFacebookVideoListWithCountPaging(page)
+                if (response.isSuccessful && response.code() == 200) {
                     if (response.body()!=null) {
                         loadingDialog.hide()
                         isLoading = false
@@ -197,8 +197,9 @@ class LmpClassVideoActivity : AppCompatActivity() {
                             val list = response.body()?.data!!
                             lmpVideo.addAll(list)
                             lmpClassVideoAdapter.notifyDataSetChanged()
-
+                            TOTAL_PAGE = response.body()?.totalPage!!
                             if(list.size<10){
+
                                 loadingDialog.hide()
                                 isLoading = false
 
@@ -209,7 +210,6 @@ class LmpClassVideoActivity : AppCompatActivity() {
                             }
 
                         } else {
-
                             loadingDialog.hide()
                             isLoading = false
 
@@ -228,6 +228,7 @@ class LmpClassVideoActivity : AppCompatActivity() {
                     isLoading = false
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 loadingDialog.hide()
                 isLoading = false
             }

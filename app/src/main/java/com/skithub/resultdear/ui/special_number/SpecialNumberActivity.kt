@@ -46,7 +46,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SpecialNumberActivity : AppCompatActivity() {
+class SpecialNumberActivity : ScreenShotDetectWithBase() {
     private var isPause: Boolean = false
     private  var mediaPlayer: MediaPlayer? = null
     private lateinit var loadingDialog: LoadingDialog
@@ -61,6 +61,9 @@ class SpecialNumberActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivitySpecialNumberBinding.inflate(layoutInflater)
+
+        CommonMethod.disableScreenCapture(this)
+
         setContentView(binding.root)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         myApi = (application as MyApplication).myApi
@@ -232,7 +235,7 @@ class SpecialNumberActivity : AppCompatActivity() {
 
                                             bannerRes?.let { banner->
                                                 if(!banner.error!!){
-                                                    if(!isFinishing){
+                                                    if(!isFinishing && !isDestroyed){
                                                         Glide.with(this@SpecialNumberActivity)
                                                             .load(response.body()!!.banner!!.imageUrl)
 

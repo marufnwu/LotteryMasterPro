@@ -66,6 +66,7 @@ class LotteryNumberCheckActivity : AppCompatActivity(), View.OnClickListener{
         myInterstitialAd = MyInterstitialAd(this)
 
 
+
         secodServerApi  = (application as MyApplication).secondServerApi
 
         initAll()

@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
@@ -37,9 +38,11 @@ import com.skithub.resultdear.model.response.VideoTypeResposne
 import com.skithub.resultdear.model.response.lmpVideoResponse
 import com.skithub.resultdear.ui.MyApplication
 import com.skithub.resultdear.ui.PlayerActivity
+import com.skithub.resultdear.ui.lmpclass_videos.LmpClassVideoActivity
 import com.skithub.resultdear.utils.*
 import com.skithub.resultdear.utils.MyExtensions.shortToast
 import com.skithub.resultdear.utils.admob.MyInterstitialAd
+import com.skithub.resultdear.utils.fan.FANInterstitialAd
 import org.json.JSONArray
 import org.json.JSONException
 import retrofit2.Call
@@ -49,7 +52,24 @@ import java.util.*
 
 
 class LotteryResultInfoActivity : AppCompatActivity() {
+    lateinit var lmpClassVideoAdapter: LmpClassVideoAdapter
+    private var lmpVideo : MutableList<Any> = mutableListOf<Any>()
+    var audioStatusList: MutableList<AudioStatus> = ArrayList<AudioStatus>()
+    var pastVisibleItem : Int =0
+    var visibleItemCount = 0
+    var totalItemCount=0
+    var previousTotal = 0
+
+    private var PAGE = 1
+    private var PAGE_SIZE= 30
+    private var TOTAL_PAGE = 0
+    var isLoading = true
+
+
     lateinit var myInterstitialAd: MyInterstitialAd
+    lateinit var fanInterstitialAd: FANInterstitialAd
+
+
     private lateinit var secondServerApi: SecondServerApi
     private lateinit var videoAdapter: VideoTutorialAdapter
     private lateinit var videoLayoutManager: LinearLayoutManager
@@ -79,6 +99,7 @@ class LotteryResultInfoActivity : AppCompatActivity() {
 
     private lateinit var ytAdapter: VideoTutorialAdapter
     private lateinit var mediaPlayerAdapter: MediaPlayerTutorialAdapter
+    var videoCallingType: LmpClassVideoActivity.VideoCallingType? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,9 +109,15 @@ class LotteryResultInfoActivity : AppCompatActivity() {
         viewModelLottery=ViewModelProvider(this,factoryLottery).get(LotteryResultInfoViewModel::class.java)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+
         myInterstitialAd = MyInterstitialAd(this)
+//        fanInterstitialAd = FANInterstitialAd(this)
+//        fanInterstitialAd.loadAd()
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         apiInterface = RetrofitClient.getApiClient().create(ApiInterface::class.java)
+
+        videoCallingType = LmpClassVideoActivity.VideoCallingType.FACEBOOK_VIDEO
 
         myApi = (application as MyApplication).myApi
         secondServerApi = (application as MyApplication).secondServerApi
@@ -104,7 +131,14 @@ class LotteryResultInfoActivity : AppCompatActivity() {
 
         initAll()
 
+        layoutManager = LinearLayoutManager(this)
+        binding.recyLotteryClass.layoutManager = layoutManager
+        binding.recyLotteryClass.setHasFixedSize(true)
+        initTutorialRecyScrollListener()
 
+
+        lmpClassVideoAdapter = LmpClassVideoAdapter(this, lmpVideo)
+        binding.recyLotteryClass.adapter = lmpClassVideoAdapter
 
 
 
@@ -316,7 +350,10 @@ class LotteryResultInfoActivity : AppCompatActivity() {
                             list.clear()
                             list.addAll(response.body()?.data!!)
                             if (list.size>0) {
-                                 getVideoType()
+                                 //getVideoType()
+                                 getFacebookVideos(PAGE)
+
+
                                 filteringLotteryNumber(list)
                                 binding.resultRootLayout.visibility=View.VISIBLE
                                 binding.waitingRootLayout.visibility=View.GONE
@@ -574,28 +611,143 @@ class LotteryResultInfoActivity : AppCompatActivity() {
         })
     }
 
+    private fun initTutorialRecyScrollListener() {
+        binding.recyLotteryClass.addOnScrollListener(
+            object: RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    visibleItemCount = layoutManager.getChildCount()
+                    totalItemCount = layoutManager.getItemCount()
+                    pastVisibleItem = layoutManager.findFirstVisibleItemPosition()
+
+                    if (dy > 0) {
+                        Log.d("Pagination", "Scrolled")
+                        if (!isLoading) {
+                            if (PAGE <= TOTAL_PAGE) {
+                                Log.d("Pagination", "Total Page $TOTAL_PAGE")
+                                Log.d("Pagination", "Page $PAGE")
+                                if (visibleItemCount + pastVisibleItem >= totalItemCount) {
+                                    //postListProgress.setVisibility(View.VISIBLE)
+                                    isLoading = true
+                                    Log.v("...", "Last Item Wow !")
+                                    //Do pagination.. i.e. fetch new data
+                                    PAGE++
+                                    if (PAGE <= TOTAL_PAGE) {
+                                        choseCallingFunction(page = PAGE)
+                                    } else {
+                                        isLoading = false
+                                        //postListProgress.setVisibility(View.GONE)
+                                        if(videoCallingType == LmpClassVideoActivity.VideoCallingType.FACEBOOK_VIDEO){
+                                            videoCallingType = LmpClassVideoActivity.VideoCallingType.LMPCLASS_VIDEO
+                                            PAGE = 1
+                                            TOTAL_PAGE = 0
+                                            choseCallingFunction(PAGE)
+                                        }
+                                    }
+                                }
+                            } else {
+                                if(videoCallingType == LmpClassVideoActivity.VideoCallingType.FACEBOOK_VIDEO){
+                                    videoCallingType = LmpClassVideoActivity.VideoCallingType.LMPCLASS_VIDEO
+                                    PAGE = 1
+                                    TOTAL_PAGE = 0
+                                    choseCallingFunction(PAGE)
+                                }else{
+                                    Log.d("Pagination", "End of page")
+                                }
+                                //postListProgress.setVisibility(View.GONE);
+
+                            }
+                        } else {
+                            Log.d("Pagination", "Loading")
+                        }
+                    }else{
+
+                    }
+                }
+            })
+    }
+
+
+    fun choseCallingFunction(page: Int){
+        if(videoCallingType == LmpClassVideoActivity.VideoCallingType.FACEBOOK_VIDEO){
+            getFacebookVideos(page)
+        }else if(videoCallingType == LmpClassVideoActivity.VideoCallingType.LMPCLASS_VIDEO){
+            getVideos(page)
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun getFacebookVideos(page: Int) {
+        Coroutines.main {
+            try {
+                //val response=viewModel.getVideo("")
+                val response=(application as MyApplication).myApi.getFacebookVideoListWithCountPaging(page)
+                if (response.isSuccessful && response.code()==200) {
+                    if (response.body()!=null) {
+                        isLoading = false
+
+                        if (response.body()?.status.equals("success",true)) {
+                            val list = response.body()?.data!!
+                            lmpVideo.addAll(list)
+                            lmpClassVideoAdapter.notifyDataSetChanged()
+
+                            if(list.size<10){
+                                isLoading = false
+
+                                videoCallingType = LmpClassVideoActivity.VideoCallingType.LMPCLASS_VIDEO
+                                PAGE = 1
+                                TOTAL_PAGE = 0
+                                choseCallingFunction(PAGE)
+                            }
+
+                        } else {
+                            isLoading = false
+
+                            videoCallingType = LmpClassVideoActivity.VideoCallingType.LMPCLASS_VIDEO
+                            PAGE = 1
+                            TOTAL_PAGE = 0
+                            choseCallingFunction(PAGE)
+
+                        }
+                    }else{
+                        isLoading = false
+                    }
+                } else {
+                    isLoading = false
+                }
+            } catch (e: Exception) {
+                isLoading = false
+            }
+        }
+    }
+
 
     private fun getVideos(page: Int) {
+        isLoading = true
         (application as MyApplication).myApi
             .getLmpClassVideo(page)
             .enqueue( object : Callback<lmpVideoResponse> {
                 @SuppressLint("NotifyDataSetChanged")
                 override fun onResponse(call: Call<lmpVideoResponse>, response: Response<lmpVideoResponse>) {
+                    isLoading = false
                     if(response.isSuccessful && response.body()!=null){
                         val lmpVideoResponse = response.body()!!
                         if(!lmpVideoResponse.error){
+                            TOTAL_PAGE = lmpVideoResponse.totalPages
                             lmpVideoResponse.lmpVideos?.let {
                                 Log.d("Dataaa", Gson().toJson(it))
 
-                                val adapter = LmpClassVideoAdapter(this@LotteryResultInfoActivity, it.toMutableList())
-                                binding.recyLotteryClass.adapter = adapter
+
+                                lmpVideo.addAll(it)
+                                lmpClassVideoAdapter.notifyDataSetChanged()
+
                             }
                         }
                     }
                 }
 
                 override fun onFailure(call: Call<lmpVideoResponse>, t: Throwable) {
-
+                    isLoading = false
                 }
 
             }
@@ -670,6 +822,7 @@ class LotteryResultInfoActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         myInterstitialAd.onBackPress()
+        //fanInterstitialAd.onBackPress()
     }
 
 }

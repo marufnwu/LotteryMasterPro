@@ -45,7 +45,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class OneStMiddleNumberActivity : AppCompatActivity() {
+class OneStMiddleNumberActivity : ScreenShotDetectWithBase() {
     private lateinit var audioLoadingDialog: AudioLoadingDialog
     private var isPause: Boolean = false
     private lateinit var loadingDialog: LoadingDialog
@@ -73,6 +73,10 @@ class OneStMiddleNumberActivity : AppCompatActivity() {
         myApi = (application as MyApplication).myApi
         val factory= TwoNdMiddleNumberViewModelFactory(myApi)
         viewModel= ViewModelProvider(this,factory).get(TwoNdNumberViewModel::class.java)
+
+        CommonMethod.disableScreenCapture(this)
+
+
         setContentView(binding.root)
         supportActionBar?.title = getString(R.string.two_nd_middle_body)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

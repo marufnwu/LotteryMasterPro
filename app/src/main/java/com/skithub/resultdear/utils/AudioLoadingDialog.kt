@@ -57,13 +57,13 @@ class AudioLoadingDialog(var activity: Activity, cancelable:Boolean = false) {
     }
 
     fun show() {
-        if (dialog != null && !dialog!!.isShowing) {
+        if (dialog != null && !dialog!!.isShowing && !activity.isDestroyed) {
             dialog!!.show()
         }
     }
 
     fun hide() {
-        if (dialog != null && dialog!!.isShowing) {
+        if (dialog != null && dialog!!.isShowing && !activity.isDestroyed) {
            if(!activity.isFinishing){
                dialog!!.dismiss()
            }

@@ -1,5 +1,6 @@
 package com.skithub.resultdear.utils
 
+import android.app.ActionBar
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -16,6 +17,7 @@ import android.os.Build
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
+import android.view.Display.FLAG_SECURE
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -38,6 +40,11 @@ import java.util.concurrent.TimeUnit
 object CommonMethod {
 
     var accountAge : String? = null
+
+    fun disableScreenCapture(activity: Activity){
+        activity.window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE)
+    }
 
     fun increaseDecreaseDaysUsingValue(days: Int, locale: Locale): String {
         val calendar: Calendar=Calendar.getInstance()

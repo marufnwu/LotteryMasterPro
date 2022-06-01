@@ -171,6 +171,8 @@ class OldResultActivity : AppCompatActivity() {
                             map["phone"] = prefs.userPhone
                             map["activity"] = getString(R.string.old_result)
                             Liveuserdb.child(prefs.userToken!!).setValue(map)*/
+                        }else if (response.body()!!.status.equals("failed",true)) {
+                            binding.buttonActiveNotice.visibility = View.VISIBLE
                         }
                     }
                 }
